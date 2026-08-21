@@ -1,123 +1,80 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T23:15:09+00:00
+published_at=2026-08-21T23:19:56+00:00
 ============================================================
 
 ============================================================
- REAL PLAYER IP V12
- EXTERNAL DOMAIN / PORT 28000 DIAGNOSTIC
+ REAL PLAYER IP V14
+ TESTSERVER222 PROXY + PUBLIC-IP OVERRIDE
 ============================================================
-start=2026-08-21T23:15:08+00:00
-SCRIPT_VERSION=REAL_PLAYER_IP_V12_EXTERNAL_PORT_DIAG
+start=2026-08-21T23:19:46+00:00
+SCRIPT_VERSION=REAL_PLAYER_IP_V14_TESTSERVER222
 
-[1/9] DNS / SRV ...
+gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v14-20260821-231946.bak
+env_backup=/etc/ctrlpanel/wake-gateway.env.v14-20260821-231946.bak
 
---- A RECORD ---
-5.61.167.129    STREAM xhoelserver.free.mc-serverhost.net
-5.61.167.129    DGRAM  
-5.61.167.129    RAW    
+[1/9] Domain / Backend bestimmen ...
+domain=testserver222.free.mc-serverhost.net
+backend_host=[PRIVATE_IP]
+backend_port=27010
+identifier=dc4c2e9b
 
---- SRV RECORD ---
-0 0 28000 xhoelserver.free.mc-serverhost.net.
+[2/9] Oeffentliche IPv4 bestimmen ...
+public_ip=5.61.167.129
 
-[2/9] Gateway service ...
-active
-● ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway
-     Loaded: loaded (/etc/systemd/system/ctrlpanel-wake-gateway.service; enabled; preset: enabled)
-    Drop-In: /etc/systemd/system/ctrlpanel-wake-gateway.service.d
-             └─10-wake-api.conf, 90-restart.conf, 95-stack-hardening.conf, 99-dependency-reset.conf
-     Active: active (running) since Fri 2026-08-21 23:12:58 UTC; 2min 9s ago
- Invocation: 50de43705228481a9b6029f97751101d
-    Process: 11829 ExecStartPre=/usr/local/sbin/ctrlpanel-wake-api-wait 45 (code=exited, status=0/SUCCESS)
-    Process: 11833 ExecStartPost=/usr/local/sbin/ctrlpanel-wake-gateway-wait 60 (code=exited, status=0/SUCCESS)
-   Main PID: 11832 (python3)
-      Tasks: 2 (limit: 309150)
-     Memory: 17.1M (peak: 25.2M)
-        CPU: 441ms
-     CGroup: /system.slice/ctrlpanel-wake-gateway.service
-             └─11832 /usr/bin/python3 /opt/ctrlpanel-wake-gateway/gateway.py
+[3/9] Domain in JAVA_PROXY_PROTOCOL_DOMAINS eintragen ...
+JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net,testserver222.free.mc-serverhost.net
 
-Aug 21 23:12:58 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:12:58 ctrlpanel ctrlpanel-wake-api-wait[11830]: wake_api_ready=YES
-Aug 21 23:12:58 ctrlpanel python3[11832]: 2026-08-21 23:12:58,601 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 21 23:12:58 ctrlpanel python3[11832]: 2026-08-21 23:12:58,601 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 21 23:12:58 ctrlpanel python3[11832]: 2026-08-21 23:12:58,611 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 21 23:12:58 ctrlpanel ctrlpanel-wake-gateway-wait[11834]: java_listener=READY
-Aug 21 23:12:58 ctrlpanel ctrlpanel-wake-gateway-wait[11834]: bedrock_listeners=100/100
-Aug 21 23:12:58 ctrlpanel ctrlpanel-wake-gateway-wait[11834]: gateway_ready=YES
-Aug 21 23:12:58 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+[4/9] Private Client-IP Override setzen ...
+JAVA_PRIVATE_CLIENT_IP_OVERRIDE=5.61.167.129
 
-[3/9] TCP Listener ...
-LISTEN 0      512          0.0.0.0:28000      0.0.0.0:*    users:(("python3",pid=11832,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+[5/9] Gateway fuer logische Client-IP patchen ...
+GATEWAY_PATCH=OK
+GATEWAY_SYNTAX=OK
 
-[4/9] UDP Listener ...
-UNCONN 0      0            0.0.0.0:28000      0.0.0.0:*    users:(("python3",pid=11832,fd=7))  
+[6/9] Paper PROXY Protocol fuer testserver222 pruefen ...
+paper_proxy_before=false
+[INFO] proxy-protocol wird aktiviert.
+paper_write_http=204
 
-[5/9] LOCAL TCP CONNECT ...
-LOCAL_TCP_28000=PASS
+[7/9] Gateway neu laden ...
+WAKE_GATEWAY=ACTIVE
 
-[6/9] PUBLIC-IP TCP CONNECT FROM HOST ...
-bash: connect: Connection refused
-bash: line 1: /dev/tcp/5.61.167.129/28000: Connection refused
-PUBLIC_TCP_28000_FROM_HOST=FAIL
+[8/9] Minecraft-Server nur bei Bedarf neu starten ...
+SERVER_RESTART_REQUIRED=YES
+restart_http=200
+server_state=running
 
-[7/9] FIREWALL / NAT ...
+[9/9] Final Verify ...
+JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net,testserver222.free.mc-serverhost.net
+JAVA_PRIVATE_CLIENT_IP_OVERRIDE=5.61.167.129
 
-===== NFTABLES 28000 =====
-
-===== IPTABLES FILTER 28000 =====
-iptables=NOT_INSTALLED
-
-[8/9] ROUTING / ADDRESSES ...
---- ip addr ---
-lo               UNKNOWN        127.0.0.1/8 ::1/128 
-eth0@if379       UP             [PRIVATE_IP]/24 fe80::be24:11ff:fee4:1ccb/64 
-
---- routes ---
-default via [PRIVATE_IP] dev eth0 
-[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
-
---- public IP seen externally ---
-5.61.167.129
-
-[9/9] Minecraft protocol test via LOCAL gateway ...
-LOCAL_MC_STATUS=PASS
-status_bytes=143
+===== TESTSERVER222 PAPER CONFIG =====
+proxy-protocol: true
 
 ===== RECENT GATEWAY LOG =====
-Aug 21 23:10:10 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:10:10 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 21 23:10:10 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:10:10 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:10:10 ctrlpanel ctrlpanel-wake-api-wait[11662]: wake_api_ready=YES
-Aug 21 23:10:10 ctrlpanel python3[11664]: 2026-08-21 23:10:10,595 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 21 23:10:10 ctrlpanel python3[11664]: 2026-08-21 23:10:10,596 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 21 23:10:10 ctrlpanel python3[11664]: 2026-08-21 23:10:10,607 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 21 23:10:10 ctrlpanel ctrlpanel-wake-gateway-wait[11666]: java_listener=READY
-Aug 21 23:10:10 ctrlpanel ctrlpanel-wake-gateway-wait[11666]: bedrock_listeners=100/100
-Aug 21 23:10:10 ctrlpanel ctrlpanel-wake-gateway-wait[11666]: gateway_ready=YES
-Aug 21 23:10:10 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:12:58 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:12:58 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 21 23:12:58 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:12:58 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:12:58 ctrlpanel ctrlpanel-wake-api-wait[11830]: wake_api_ready=YES
-Aug 21 23:12:58 ctrlpanel python3[11832]: 2026-08-21 23:12:58,601 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 21 23:12:58 ctrlpanel python3[11832]: 2026-08-21 23:12:58,601 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 21 23:12:58 ctrlpanel python3[11832]: 2026-08-21 23:12:58,611 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 21 23:12:58 ctrlpanel ctrlpanel-wake-gateway-wait[11834]: java_listener=READY
-Aug 21 23:12:58 ctrlpanel ctrlpanel-wake-gateway-wait[11834]: bedrock_listeners=100/100
-Aug 21 23:12:58 ctrlpanel ctrlpanel-wake-gateway-wait[11834]: gateway_ready=YES
-Aug 21 23:12:58 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 23:19:49 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 23:19:50 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 23:19:50 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 23:19:50 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-api-wait[12386]: wake_api_ready=YES
+Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,370 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,371 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,382 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: java_listener=READY
+Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: bedrock_listeners=100/100
+Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: gateway_ready=YES
+Aug 21 23:19:50 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
 
 ============================================================
 FIX2_STATUS_COMPLETE
-package=REAL_PLAYER_IP_V12_EXTERNAL_PORT_DIAG
-server_power_changes=NONE
-local_tcp_28000=PASS
-public_tcp_28000_from_host=FAIL
-local_minecraft_gateway=PASS
-next=FIX_EXTERNAL_GETSOCKOPT
 result=SUCCESS
-end=2026-08-21T23:15:08+00:00
+package=REAL_PLAYER_IP_V14_TESTSERVER222
+domain=testserver222.free.mc-serverhost.net
+java_proxy_protocol_domain=ENABLED
+private_ip_override=5.61.167.129
+server_restart_required=1
+goal=PUBLIC_IP_INSTEAD_OF_PRIVATE_LAN_IP
+next=JOIN_TESTSERVER222_AND_VERIFY
+end=2026-08-21T23:19:56+00:00
 ============================================================
