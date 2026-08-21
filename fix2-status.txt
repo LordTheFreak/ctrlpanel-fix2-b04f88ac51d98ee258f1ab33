@@ -1,559 +1,59 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T23:44:32+00:00
+published_at=2026-08-21T23:44:43+00:00
 ============================================================
 
 ============================================================
- FIX2 V19
- TESTSERVER222 MIKROTIK NAT + HAIRPIN
+ FIX2 V20
+ TESTSERVER222 READ-ONLY REACHABILITY CHECK
 ============================================================
-start=2026-08-21T23:42:44+00:00
-SCRIPT_VERSION=V19_TESTSERVER222_NAT
+start=2026-08-21T23:44:41+00:00
+SCRIPT_VERSION=V20_TESTSERVER222_READONLY
 
-[INFO] xhoelserver wird NICHT veraendert.
-[INFO] Minecraft-Server wird NICHT neu gestartet.
+[INFO] Keine Aenderungen.
+[INFO] Kein Server-Neustart.
+[INFO] xhoelserver wird NICHT angefasst.
 
-[1/8] CtrlPanel Netzwerk bestimmen ...
-[INFO] Router:       [PRIVATE_IP]
-[INFO] CtrlPanel IP: [PRIVATE_IP]
-[INFO] LAN Netz:     [PRIVATE_IP]/24
-[INFO] Interface:    eth0
+[1/6] DNS ...
+5.61.167.129    STREAM testserver222.free.mc-serverhost.net
+5.61.167.129    DGRAM  
+5.61.167.129    RAW    
+--- SRV ---
+0 0 28000 testserver222.free.mc-serverhost.net.
 
-[2/8] Gateway kontrollieren ...
-[ OK ] Wake Gateway aktiv.
-[ OK ] TCP 28000 lauscht.
+[2/6] Gateway ...
+active
+LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=13964,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
-[3/8] Testserver222 Konfiguration kontrollieren ...
+[3/6] Lokal Port 28000 ...
+LOCAL_28000=PASS
+
+[4/6] Public/Hairpin Port 28000 ...
+PUBLIC_28000=FAIL
+
+[5/6] Minecraft Status ueber lokalen Gateway ...
+LOCAL_MC_STATUS=PASS
+status_bytes=143
+
+[6/6] Aktuelle Testserver-Konfiguration ...
 JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
+JAVA_PRIVATE_CLIENT_IP_OVERRIDE=5.61.167.129
 backend_port=27010
 identifier=dc4c2e9b
-state=running
+server_state=running
 
-[4/8] Public Port VORHER testen ...
-[WARN] Public TCP 28000 funktioniert noch NICHT.
-[INFO] MikroTik-Regeln werden jetzt eingerichtet.
+===== GATEWAY LOG =====
+Aug 21 23:44:42 ctrlpanel python3[13964]: 2026-08-21 23:44:42,005 INFO JAVA_PLAYER_IP socket_ip=127.0.0.1 forwarded_ip=5.61.167.129 mode=PRIVATE_TO_PUBLIC
 
-[5/8] MikroTik verbinden ...
-
-Falls kein SSH-Key eingerichtet ist,
-fragt SSH gleich nach deinem MikroTik-Passwort.
-
-MikroTik Benutzer [admin]: 
-[INFO] Teste admin@[PRIVATE_IP] ...
-Warning: Permanently added '[PRIVATE_IP]' (RSA) to the list of known hosts.
-[9999B[9999BZ  [6n[4l[20l[?7h[?5l[?25h[H[9999B[6n[H[9999BD[9999A[6n[H[9999C[6n[HěH[6n   [H[9999C[6n [6n [6n[6n[?47l[1;2r[H[6n
-
-[6n[9999B[6n[r[1;9999r
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2026-08-21 00:09:33 system,error,critical login failure for user admin from [PRIVATE_IP] via winbox
-FIX2_SSH_OK
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > rm -f /root/fix2.sh[19D[m[31mrm[m -f /root/fix2.sh
-bad command name rm (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > cat >/root/fix2.sh <<'EOF'[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mcat[m >/root/fix2.sh <<[37;41;1m'[mEOF'
-syntax error (line 1 column 22)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > #!/usr/bin/env bash[19D[37;44m#!/usr/bin/env bash[m
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > set -Eeuo pipefail[18D[m[35mset[m [37;41;1m-[mEeuo pipefail
-syntax error (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > cd /var/www/ctrlpanel[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mcd[m /var/www/ctrlpanel
-bad command name cd (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > if [ -f /usr/local/lib/fix2-remote.sh ]; then[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mif[m [m[33m[[m [m[31m-f[m /usr/local/lib/fix2-remote.sh [m[33m];[m [m[31mthen[m
-[9999B[Kdo:     source /usr/local/lib/fix2-remote.shdo:     [m[31msource[m /usr/local/lib/fix2-remote.sh
-Script Error: action cancelled
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     fix2_remote_start[17D[m[31mfix2[37;41;1m_[mremote_start
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > fi[2D[m[31mfi[m
-bad command name fi (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > DOMAIN="testserver222.free.mc-serverhost.net"[[m[36madmin[m@[m[32mRB5009UG[m] > [37;41;1mD[mOMAIN="testserver222.free.mc-serverhost.net"
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > PUBLIC_IP="5.61.167.129"[[m[36madmin[m@[m[32mRB5009UG[m] > [37;41;1mP[mUBLIC_IP="5.61.167.129"
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > PORT="28000"[12D[37;41;1mP[mORT="28000"
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "============================================================"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "============================================================"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo " FIX2 V20"[16D[m[31mecho[m " FIX2 V20"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo " TESTSERVER222 READ-ONLY REACHABILITY CHECK"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m " TESTSERVER222 READ-ONLY REACHABILITY CHECK"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "============================================================"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "============================================================"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "start=$(date -Is)"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "start=[m[33m$([m[31mdate[m [m[33m-[m[31mIs[m[33m)[37;41;1m"[m
-syntax error (line 1 column 24)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "SCRIPT_VERSION=V20_TESTSERVER222_READONLY"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "SCRIPT_VERSION=V20_TESTSERVER222_READONLY"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[INFO] Keine Aenderungen."[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "[INFO] Keine Aenderungen."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[INFO] Kein Server-Neustart."[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "[INFO] Kein Server-Neustart."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[INFO] xhoelserver wird NICHT angefasst."[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "[INFO] xhoelserver wird NICHT angefasst."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[1/6] DNS ..."[20D[m[31mecho[m "[1/6] DNS ..."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > getent ahostsv4 "$DOMAIN" || true[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mgetent[m ahostsv4 "[m[33m$[m[31mDOMAIN[37;41;1m"[m || true
-syntax error (line 1 column 25)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > if command -v dig >/dev/null 2>&1; then[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mif[m [37;41;1mc[mommand -v dig >/dev/null 2>&1; then
-syntax error (line 1 column 4)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "--- SRV ---"[18D[m[31mecho[m "--- SRV ---"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     dig +short SRV "_minecraft._tcp.${DOMAIN}" || true[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31mdig[m +short SRV "_minecraft._tcp.[m[33m$[37;41;1m{[mDOMAIN}" || true
-syntax error (line 1 column 38)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > fi[2D[m[31mfi[m
-bad command name fi (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[2/6] Gateway ..."[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "[2/6] Gateway ..."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > systemctl is-active ctrlpanel-wake-gateway.service || true[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31msystemctl[m is-active ctrlpanel-wake-gateway.service || true
-bad command name systemctl (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > ss -H -lntp | grep ':28000 ' || true[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mss[m -H -lntp | grep [37;41;1m'[m:28000 ' || true
-syntax error (line 1 column 20)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[3/6] Lokal Port 28000 ..."[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "[3/6] Lokal Port 28000 ..."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > set +e[6D[m[35mset[m [37;41;1m+[me
-syntax error (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > timeout 5 bash -c "</dev/tcp/127.0.0.1/${PORT}" 2>/dev/null[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mtimeout[m 5 bash -c "</dev/tcp/127.0.0.1/[m[33m$[37;41;1m{[mPORT}" 2>/dev/null
-syntax error (line 1 column 41)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > LOCAL_RC=$?[11D[37;41;1mL[mOCAL_RC=$?
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > set -e[6D[m[35mset[m [37;41;1m-[me
-syntax error (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > if [ "$LOCAL_RC" -eq 0 ]; then[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mif[m [m[33m[[m [37;41;1m"[m$LOCAL_RC" -eq 0 ]; then
-expected command name (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "LOCAL_28000=PASS"[23D[m[31mecho[m "LOCAL_28000=PASS"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > else[4D[m[31melse[m
-bad command name else (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "LOCAL_28000=FAIL"[23D[m[31mecho[m "LOCAL_28000=FAIL"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > fi[2D[m[31mfi[m
-bad command name fi (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[4/6] Public/Hairpin Port 28000 ..."[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "[4/6] Public/Hairpin Port 28000 ..."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > set +e[6D[m[35mset[m [37;41;1m+[me
-syntax error (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > timeout 7 bash -c "</dev/tcp/${PUBLIC_IP}/${PORT}" 2>/dev/null[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mtimeout[m 7 bash -c "</dev/tcp/[m[33m$[37;41;1m{[mPUBLIC_IP}/${PORT}" 2>/dev/null
-syntax error (line 1 column 31)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > PUBLIC_RC=$?[12D[37;41;1mP[mUBLIC_RC=$?
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > set -e[6D[m[35mset[m [37;41;1m-[me
-syntax error (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > if [ "$PUBLIC_RC" -eq 0 ]; then[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mif[m [m[33m[[m [37;41;1m"[m$PUBLIC_RC" -eq 0 ]; then
-expected command name (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "PUBLIC_28000=PASS"[24D[m[31mecho[m "PUBLIC_28000=PASS"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > else[4D[m[31melse[m
-bad command name else (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "PUBLIC_28000=FAIL"[24D[m[31mecho[m "PUBLIC_28000=FAIL"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > fi[2D[m[31mfi[m
-bad command name fi (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[5/6] Minecraft Status ueber lokalen Gateway ..."[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "[5/6] Minecraft Status ueber lokalen Gateway ..."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > set +e[6D[m[35mset[m [37;41;1m+[me
-syntax error (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > DOMAIN="$DOMAIN" python3 <<'PY'[[m[36madmin[m@[m[32mRB5009UG[m] > [37;41;1mD[mOMAIN="$DOMAIN" python3 <<'PY'
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > import os[9D[m[35mimport[m os
-Cannot open import file, file does not exist
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > import socket[13D[m[35mimport[m socket
-Cannot open import file, file does not exist
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > import struct[13D[m[35mimport[m struct
-Cannot open import file, file does not exist
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > import sys[10D[m[35mimport[m sys
-Cannot open import file, file does not exist
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > domain = os.environ["DOMAIN"][[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mdomain[m [37;41;1m=[m os.environ["DOMAIN"]
-syntax error (line 1 column 8)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > def vi(v):[10D[m[31mdef[m vi[37;41;1m([mv):
-syntax error (line 1 column 7)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     out = bytearray()[17D[m[31mout[m [37;41;1m=[m bytearray()
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     while True:[11D[m[35mwhile[m [37;41;1mT[mrue:
-syntax error (line 1 column 11)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         b = v & 0x7f[12D[m[31mb[m [37;41;1m=[m v & 0x7f
-syntax error (line 1 column 11)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         v >>= 7[7D[m[31mv[m >>[37;41;1m=[m 7
-syntax error (line 1 column 13)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         if v:[5D[m[35mif[m [37;41;1mv[m:
-syntax error (line 1 column 12)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >             b |= 0x80[9D[m[31mb[m |[37;41;1m=[m 0x80
-syntax error (line 1 column 16)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         out.append(b)[13D[m[31mout.append[37;41;1m([mb)
-syntax error (line 1 column 19)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         if not v:[9D[m[35mif[m [37;41;1mn[mot v:
-syntax error (line 1 column 12)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >             return bytes(out)[17D[m[35mreturn[m bytes[37;41;1m([mout)
-expected end of command (line 1 column 25)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > def text(v):[12D[m[31mdef[m text[37;41;1m([mv):
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     raw = v.encode()[16D[m[31mraw[m [37;41;1m=[m v.encode()
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     return vi(len(raw)) + raw[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[35mreturn[m vi[37;41;1m([mlen(raw)) + raw
-expected end of command (line 1 column 14)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > def read_vi(sock):[18D[m[31mdef[m read_vi[37;41;1m([msock):
-syntax error (line 1 column 12)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     value = 0[9D[m[31mvalue[m [37;41;1m=[m 0
-syntax error (line 1 column 11)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     shift = 0[9D[m[31mshift[m [37;41;1m=[m 0
-syntax error (line 1 column 11)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     for _ in range(5):[18D[m[35mfor[m [37;41;1m_[m in range(5):
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         b = sock.recv(1)[16D[m[31mb[m [37;41;1m=[m sock.recv(1)
-syntax error (line 1 column 11)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         if not b:[9D[m[35mif[m [37;41;1mn[mot b:
-syntax error (line 1 column 12)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >             raise EOFError()[16D[m[31mraise[m EOFError[37;41;1m([m)
-syntax error (line 1 column 27)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         n = b[0][8D[m[35mn[m [37;41;1m=[m b[0]
-expected end of command (line 1 column 11)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         value |= (n & 0x7f) << shift[28D[m[31mvalue[m |[37;41;1m=[m (n & 0x7f) << shift
-syntax error (line 1 column 16)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         if not n & 0x80:[16D[m[35mif[m [37;41;1mn[mot n & 0x80:
-syntax error (line 1 column 12)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >             return value[12D[m[35mreturn[m value
-value
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         shift += 7[10D[m[31mshift[m +[37;41;1m=[m 7
-syntax error (line 1 column 16)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     raise ValueError("VarInt")[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31mraise[m ValueError[37;41;1m([m"VarInt")
-syntax error (line 1 column 21)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > try:[4D[m[31mtry[37;41;1m:[m
-syntax error (line 1 column 4)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     s = socket.create_connection([[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31ms[m [37;41;1m=[m socket.create_connection(
-syntax error (line 1 column 7)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         ("127.0.0.1", 28000),[21D[m[33m("[m127.0.0.1[m[33m",[m 28000[m[33m)[37;41;1m,[m
-syntax error (line 1 column 29)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         timeout=5[9D[m[31mtimeout[37;41;1m=[m5
-syntax error (line 1 column 16)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     )[37;41;1m)[m
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     hs = ([6D[m[31mhs[m [37;41;1m=[m (
-syntax error (line 1 column 8)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         b"\x00"[7D[m[31mb[37;41;1m"[m\x00"
-syntax error (line 1 column 10)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         + vi(774)[9D[37;41;1m+[m vi(774)
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         + text(domain)[14D[37;41;1m+[m text(domain)
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         + struct.pack(">H", 28000)[26D[37;41;1m+[m struct.pack(">H", 28000)
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         + b"\x01"[9D[37;41;1m+[m b"\x01"
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     )[37;41;1m)[m
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     s.sendall([10D[m[31ms.sendall[37;41;1m([m
-syntax error (line 1 column 14)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         vi(len(hs))[11D[m[31mvi[37;41;1m([mlen(hs))
-syntax error (line 1 column 11)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         + hs[4D[37;41;1m+[m hs
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         + b"\x01\x00"[13D[37;41;1m+[m b"\x01\x00"
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     )[37;41;1m)[m
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     s.settimeout(5)[15D[m[31ms.settimeout[37;41;1m([m5)
-syntax error (line 1 column 17)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     read_vi(s)[10D[m[31mread[37;41;1m_[mvi(s)
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     pid = read_vi(s)[16D[m[31mpid[m [37;41;1m=[m read_vi(s)
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     if pid != 0:[12D[m[35mif[m [37;41;1mp[mid != 0:
-syntax error (line 1 column 8)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         raise RuntimeError([19D[m[31mraise[m RuntimeError[37;41;1m([m
-syntax error (line 1 column 27)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >             f"packet_id={pid}"[18D[m[31mf[37;41;1m"[mpacket_id={pid}"
-syntax error (line 1 column 14)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         )[37;41;1m)[m
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     size = read_vi(s)[17D[m[31msize[m [37;41;1m=[m read_vi(s)
-syntax error (line 1 column 10)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     data = b""[10D[m[31mdata[m [37;41;1m=[m b""
-syntax error (line 1 column 10)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     while len(data) < size:[23D[m[35mwhile[m [37;41;1ml[men(data) < size:
-syntax error (line 1 column 11)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         chunk = s.recv([15D[m[31mchunk[m [37;41;1m=[m s.recv(
-syntax error (line 1 column 15)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >             size - len(data)[16D[m[31msize[m - len[37;41;1m([mdata)
-syntax error (line 1 column 23)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         )[37;41;1m)[m
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         if not chunk:[13D[m[35mif[m [37;41;1mn[mot chunk:
-syntax error (line 1 column 12)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >             raise EOFError()[16D[m[31mraise[m EOFError[37;41;1m([m)
-syntax error (line 1 column 27)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         data += chunk[13D[m[31mdata[m +[37;41;1m=[m chunk
-syntax error (line 1 column 15)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     print("LOCAL_MC_STATUS=PASS")[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31mprint[37;41;1m([m"LOCAL_MC_STATUS=PASS")
-syntax error (line 1 column 10)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     print("status_bytes=" + str(len(data)))[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31mprint[37;41;1m([m"status_bytes=" + str(len(data)))
-syntax error (line 1 column 10)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > except Exception as e:[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mexcept[m Exception as e:
-bad command name except (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     print("LOCAL_MC_STATUS=FAIL")[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31mprint[37;41;1m([m"LOCAL_MC_STATUS=FAIL")
-syntax error (line 1 column 10)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     print("error=" + repr(e))[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31mprint[37;41;1m([m"error=" + repr(e))
-syntax error (line 1 column 10)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     sys.exit(1)[11D[m[31msys.exit[37;41;1m([m1)
-syntax error (line 1 column 13)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > PY[2D[37;41;1mP[mY
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > MC_RC=$?[8D[37;41;1mM[mC_RC=$?
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > set -e[6D[m[35mset[m [37;41;1m-[me
-syntax error (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "[6/6] Aktuelle Testserver-Konfiguration ..."[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "[6/6] Aktuelle Testserver-Konfiguration ..."
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > grep '^JAVA_PROXY_PROTOCOL_DOMAINS=' \[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mgrep[m [37;41;1m'[m^JAVA_PROXY_PROTOCOL_DOMAINS=' \
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     /etc/ctrlpanel/wake-gateway.env \[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[36m/[m[31metc[37;41;1m/[mctrlpanel/wake-gateway.env \
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     || true[7D[37;41;1m|[m| true
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > grep '^JAVA_PRIVATE_CLIENT_IP_OVERRIDE=' \[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mgrep[m [37;41;1m'[m^JAVA_PRIVATE_CLIENT_IP_OVERRIDE=' \
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     /etc/ctrlpanel/wake-gateway.env \[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[36m/[m[31metc[37;41;1m/[mctrlpanel/wake-gateway.env \
-syntax error (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     || true[7D[37;41;1m|[m| true
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > php artisan tinker --execute='[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mphp[m artisan tinker --execute[37;41;1m=[m'
-syntax error (line 1 column 29)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > $d = \App\Models\ServerDomain::query()[[m[36madmin[m@[m[32mRB5009UG[m] > [m[33m$[m[31md[m [37;41;1m=[m \App\Models\ServerDomain::query()
-syntax error (line 1 column 4)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     ->with("server")[16D[m[31m-[37;41;1m>[mwith("server")
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     ->where([8D[m[31m-[37;41;1m>[mwhere(
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         "fqdn",[7D[37;41;1m"[mfqdn",
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         "testserver222.free.mc-serverhost.net"[[m[36madmin[m@[m[32mRB5009UG[m] >         [37;41;1m"[mtestserver222.free.mc-serverhost.net"
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     )[37;41;1m)[m
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     ->firstOrFail();[16D[m[31m-[37;41;1m>[mfirstOrFail();
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > $p = new \App\Classes\PterodactylClient([[m[36madmin[m@[m[32mRB5009UG[m] > [m[33m$[m[31mp[m [37;41;1m=[m new \App\Classes\PterodactylClient(
-syntax error (line 1 column 4)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     app([4D[m[31mapp[37;41;1m([m
-syntax error (line 1 column 8)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         \App\Settings\PterodactylSettings::class[[m[36madmin[m@[m[32mRB5009UG[m] >         [37;41;1m\[mApp\Settings\PterodactylSettings::class
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     )[37;41;1m)[m
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > );[2D[37;41;1m)[m;
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > $r = $p->client->get([[m[36madmin[m@[m[32mRB5009UG[m] > [m[33m$[m[31mr[m [37;41;1m=[m $p->client->get(
-syntax error (line 1 column 4)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     "client/servers/"[17D[37;41;1m"[mclient/servers/"
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     .$d->server->identifier[23D[m[31m.[37;41;1m$[md->server->identifier
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     ."/resources"[13D[m[31m.[37;41;1m"[m/resources"
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > );[2D[37;41;1m)[m;
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "backend_port=".$d->port.PHP_EOL;[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "backend_port="[37;41;1m.[m$d->port.PHP_EOL;
-syntax error (line 1 column 21)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "identifier=".$d->server->identifier.PHP_EOL;[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "identifier="[37;41;1m.[m$d->server->identifier.PHP_EOL;
-syntax error (line 1 column 19)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "server_state="[20D[m[31mecho[m "server_state="
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     .$r->json([10D[m[31m.[37;41;1m$[mr->json(
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         "attributes.current_state",[27D[37;41;1m"[mattributes.current_state",
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >         "unknown"[9D[37;41;1m"[munknown"
-expected command name (line 1 column 9)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     )[37;41;1m)[m
-expected command name (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     .PHP_EOL;[9D[m[31m.[37;41;1mP[mHP_EOL;
-syntax error (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > '[37;41;1m'[m
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "===== GATEWAY LOG ====="[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "===== GATEWAY LOG ====="
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > journalctl \[12D[m[31mjournalctl[m[34;1m [m\
-[9999B[K\...     -u ctrlpanel-wake-gateway.service \\... [m[34;1m    [m-u ctrlpanel-wake-gateway.service[m[34;1m [m\
-[9999B[K\...     --since "-10 minutes" \\... [m[34;1m    [m--since "-10 minutes"[m[34;1m [m\
-[9999B[K\...     --no-pager \\... [m[34;1m    [m--no-pager[m[34;1m [m\
-[9999B[K\...     -n 150 \\... [m[34;1m    [m-n 150[m[34;1m [m\
-[9999B[K\...     || true\... [m[34;1m    [m|| true
-bad command name journalctl (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo[4D[m[31mecho[m
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "============================================================"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "============================================================"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "FIX2_STATUS_COMPLETE"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "FIX2_STATUS_COMPLETE"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "package=V20_TESTSERVER222_READONLY"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "package=V20_TESTSERVER222_READONLY"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "xhoelserver_modified=NO"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "xhoelserver_modified=NO"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "server_power_changes=NONE"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "server_power_changes=NONE"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > if [ "$LOCAL_RC" -eq 0 ]; then[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mif[m [m[33m[[m [37;41;1m"[m$LOCAL_RC" -eq 0 ]; then
-expected command name (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "local_28000=PASS"[23D[m[31mecho[m "local_28000=PASS"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > else[4D[m[31melse[m
-bad command name else (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "local_28000=FAIL"[23D[m[31mecho[m "local_28000=FAIL"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > fi[2D[m[31mfi[m
-bad command name fi (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > if [ "$PUBLIC_RC" -eq 0 ]; then[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mif[m [m[33m[[m [37;41;1m"[m$PUBLIC_RC" -eq 0 ]; then
-expected command name (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "public_28000=PASS"[24D[m[31mecho[m "public_28000=PASS"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > else[4D[m[31melse[m
-bad command name else (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "public_28000=FAIL"[24D[m[31mecho[m "public_28000=FAIL"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > fi[2D[m[31mfi[m
-bad command name fi (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > if [ "$MC_RC" -eq 0 ]; then[[m[36madmin[m@[m[32mRB5009UG[m] > [m[35mif[m [m[33m[[m [37;41;1m"[m$MC_RC" -eq 0 ]; then
-expected command name (line 1 column 6)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "local_mc_status=PASS"[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31mecho[m "local_mc_status=PASS"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > else[4D[m[31melse[m
-bad command name else (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] >     echo "local_mc_status=FAIL"[[m[36madmin[m@[m[32mRB5009UG[m] >     [m[31mecho[m "local_mc_status=FAIL"
-bad command name echo (line 1 column 5)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > fi[2D[m[31mfi[m
-bad command name fi (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "next=CHECK_V20_GITHUB"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "next=CHECK_V20_GITHUB"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "result=SUCCESS"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "result=SUCCESS"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "end=$(date -Is)"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "end=[m[33m$([m[31mdate[m [m[33m-[m[31mIs[m[33m)[37;41;1m"[m
-syntax error (line 1 column 22)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > echo "============================================================"[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mecho[m "============================================================"
-bad command name echo (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > EOF[3D[37;41;1mE[mOF
-expected command name (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > 
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > chmod 700 /root/fix2.sh[[m[36madmin[m@[m[32mRB5009UG[m] > [m[31mchmod[m 700 /root/fix2.sh
-bad command name chmod (line 1 column 1)
-[9999B[K[[m[36madmin[m@[m[32mRB5009UG[m] > /root/fix2.sh[13D[m[36m/[m[31mroot[37;41;1m/[mfix2.sh             e[m[31me[m q[m[35mq[mu[2D[m[31mqu[mi[3D[m[35mqui[mt[m[35mt[m
-interrupted
-7[m8Connection to [PRIVATE_IP] closed.
-[ OK ] MikroTik erreichbar.
-
-[6/8] Router Backup erstellen ...
+============================================================
+FIX2_STATUS_COMPLETE
+package=V20_TESTSERVER222_READONLY
+xhoelserver_modified=NO
+server_power_changes=NONE
+local_28000=PASS
+public_28000=FAIL
+local_mc_status=PASS
+next=CHECK_V20_GITHUB
+result=SUCCESS
+end=2026-08-21T23:44:43+00:00
+============================================================
