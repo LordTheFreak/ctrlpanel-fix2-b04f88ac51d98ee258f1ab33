@@ -1,40 +1,27 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T22:07:21+00:00
+published_at=2026-08-21T22:12:16+00:00
 ============================================================
 
 ============================================================
- REAL PLAYER IP FIX V3
- PAPER RAW FILE WRITE + END-TO-END TEST
+ REAL PLAYER IP FIX V4
+ FIXED END-TO-END TEST
 ============================================================
-start=2026-08-21T22:07:09+00:00
+start=2026-08-21T22:10:44+00:00
 
-[1/8] Safety ...
+[1/7] Safety ...
 SSH=OK
 NETWORK=OK
 
-[2/8] Gateway PROXY Support prüfen ...
+[2/7] Gateway Patch prüfen ...
 GATEWAY_PROXY_SUPPORT=OK
-DOMAIN_ALLOWLIST=OK
 
-[3/8] Paper proxy-protocol korrekt aktivieren ...
-READ_HTTP=200
-PAPER_PROXY_BEFORE=FALSE
+[3/7] Paper proxy-protocol = true setzen ...
 WRITE_HTTP=204
 PAPER_PROXY_PROTOCOL=TRUE
 
-[4/8] Xhoelserver neu starten ...
+[4/7] Server neu starten ...
 RESTART_HTTP=200
-Warte auf Minecraft ...
+Warte auf Backend ...
 
-[5/8] Gateway -> PROXY Header -> Paper testen ...
-  File "<stdin>", line 95
-    length =
-            ^
-SyntaxError: invalid syntax
-
-[6/8] Gateway-Test fehlgeschlagen.
-ROLLBACK proxy-protocol -> false
-ROLLBACK_WRITE_HTTP=204
-ROLLBACK_RESTART=SENT
-result=FAILED_SAFE_ROLLBACK
+[5/7] Echter Gateway -> Paper Status-Test ...
