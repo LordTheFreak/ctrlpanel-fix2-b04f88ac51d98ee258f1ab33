@@ -1,80 +1,145 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T23:19:56+00:00
+published_at=2026-08-21T23:25:13+00:00
 ============================================================
 
 ============================================================
- REAL PLAYER IP V14
- TESTSERVER222 PROXY + PUBLIC-IP OVERRIDE
+ REAL PLAYER IP V15
+ RESTORE TESTSERVER222 VISIBILITY
 ============================================================
-start=2026-08-21T23:19:46+00:00
-SCRIPT_VERSION=REAL_PLAYER_IP_V14_TESTSERVER222
+start=2026-08-21T23:24:15+00:00
+SCRIPT_VERSION=REAL_PLAYER_IP_V15_RESTORE_VISIBILITY
 
-gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v14-20260821-231946.bak
-env_backup=/etc/ctrlpanel/wake-gateway.env.v14-20260821-231946.bak
+env_backup=/etc/ctrlpanel/wake-gateway.env.v15-20260821-232415.bak
 
-[1/9] Domain / Backend bestimmen ...
+[1/8] Testserver bestimmen ...
 domain=testserver222.free.mc-serverhost.net
 backend_host=[PRIVATE_IP]
 backend_port=27010
 identifier=dc4c2e9b
 
-[2/9] Oeffentliche IPv4 bestimmen ...
-public_ip=5.61.167.129
+[2/8] testserver222 aus PROXY-Mapping entfernen ...
+ENV_FIX=OK
+JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net
+PRIVATE_IP_OVERRIDE=DISABLED
 
-[3/9] Domain in JAVA_PROXY_PROTOCOL_DOMAINS eintragen ...
-JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net,testserver222.free.mc-serverhost.net
-
-[4/9] Private Client-IP Override setzen ...
-JAVA_PRIVATE_CLIENT_IP_OVERRIDE=5.61.167.129
-
-[5/9] Gateway fuer logische Client-IP patchen ...
-GATEWAY_PATCH=OK
-GATEWAY_SYNTAX=OK
-
-[6/9] Paper PROXY Protocol fuer testserver222 pruefen ...
-paper_proxy_before=false
-[INFO] proxy-protocol wird aktiviert.
+[3/8] Paper PROXY Protocol deaktivieren ...
+paper_proxy_before=true
 paper_write_http=204
 
-[7/9] Gateway neu laden ...
+[4/8] Gateway neu laden ...
 WAKE_GATEWAY=ACTIVE
 
-[8/9] Minecraft-Server nur bei Bedarf neu starten ...
-SERVER_RESTART_REQUIRED=YES
+[5/8] Testserver bei Config-Aenderung neu starten ...
 restart_http=200
+Warte bis Server wirklich RUNNING und Port erreichbar ...
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
 server_state=running
+BACKEND_TCP=READY
 
-[9/9] Final Verify ...
-JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net,testserver222.free.mc-serverhost.net
-JAVA_PRIVATE_CLIENT_IP_OVERRIDE=5.61.167.129
+[6/8] Minecraft Status DIREKT ohne PROXY testen ...
+DIRECT_NORMAL_STATUS=PASS
+status_bytes=143
+version=Leaf 1.21.11
 
-===== TESTSERVER222 PAPER CONFIG =====
-proxy-protocol: true
+[7/8] DNS / SRV des betroffenen Servers pruefen ...
+--- A ---
+5.61.167.129    STREAM testserver222.free.mc-serverhost.net
+5.61.167.129    DGRAM  
+5.61.167.129    RAW    
 
-===== RECENT GATEWAY LOG =====
-Aug 21 23:19:49 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:19:50 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 21 23:19:50 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:19:50 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-api-wait[12386]: wake_api_ready=YES
-Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,370 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,371 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,382 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: java_listener=READY
-Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: bedrock_listeners=100/100
-Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: gateway_ready=YES
-Aug 21 23:19:50 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+--- SRV lokal ---
+0 0 28000 testserver222.free.mc-serverhost.net.
+
+--- SRV via 1.1.1.1 ---
+0 0 28000 testserver222.free.mc-serverhost.net.
+
+--- A via 1.1.1.1 ---
+5.61.167.129
+
+[8/8] Lokalen Gateway-Status fuer Domain testen ...
+GATEWAY_STATUS=PASS
+status_bytes=143
+
+===== FINAL PAPER CONFIG =====
+proxy-protocol: false
+
+===== RECENT MINECRAFT LOG =====
+[01:24:29] [ServerMain/INFO]: [bootstrap] Running Java 25 (OpenJDK 64-Bit Server VM 25.0.3+9-LTS; Eclipse Adoptium Temurin-25.0.3+9) on Linux 6.17.2-1-pve (amd64)
+[01:24:29] [ServerMain/INFO]: [bootstrap] Loading Leaf 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) for Minecraft 1.21.11
+[01:24:29] [ServerMain/INFO]: [LeafConfig] Loading config...
+[01:24:29] [ServerMain/INFO]: [LeafConfig] Using 1 threads for Async Pathfinding
+[01:24:29] [ServerMain/WARN]: [LeafConfig] You enabled faster random generator, it will offset location of slime chunk
+[01:24:29] [ServerMain/WARN]: [LeafConfig] If your server has slime farms or facilities need vanilla slime chunk,
+[01:24:29] [ServerMain/WARN]: [LeafConfig] set performance.faster-random-generator.use-legacy-random-for-slime-chunk to true to use LegacyRandomSource for slime chunk generation.
+[01:24:29] [ServerMain/WARN]: [LeafConfig] Set performance.faster-random-generator.warn-for-slime-chunk to false to disable this warning.
+[01:24:29] [ServerMain/INFO]: [LeafConfig] Using 2 threads for Async Entity Tracker
+[01:24:29] [ServerMain/INFO]: [LeafConfig] Using 8 threads for Parallel World Ticking
+[01:24:29] [ServerMain/WARN]: [LeafConfig] You have following experimental module(s) enabled: [MultithreadedTracker.enabled, SparklyPaperParallelWorldTicking.enabled], please proceed with caution!
+[01:24:29] [ServerMain/INFO]: [LeafConfig] Successfully loaded config in 524ms.
+[01:24:30] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
+[01:24:30] [ServerMain/INFO]: [PluginInitializerManager] Initialized 0 plugins
+[01:24:39] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[01:24:43] [ServerMain/INFO]: Loaded 1470 recipes
+[01:24:43] [ServerMain/INFO]: Loaded 1584 advancements
+[01:24:43] [ServerMain/INFO]: Resource reload finished after 1111 ms
+[01:24:43] [ServerMain/INFO]: RecipeManager took approximately 2 tasks/380 ms (1 tasks/380 ms preparing, 1 tasks/0 ms applying)
+[01:24:43] [ServerMain/INFO]: ServerFunctionLibrary took approximately 3 tasks/1 ms (2 tasks/1 ms preparing, 1 tasks/0 ms applying)
+[01:24:43] [ServerMain/INFO]: ServerAdvancementManager took approximately 2 tasks/718 ms (1 tasks/694 ms preparing, 1 tasks/24 ms applying)
+[01:24:43] [ServerMain/INFO]: Total blocking time: 24 ms
+[01:24:44] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[01:24:44] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 603.2ms
+[01:24:44] [Server thread/INFO]: Starting minecraft server version 1.21.11
+[01:24:44] [Server thread/INFO]: Loading properties
+[01:24:44] [Server thread/INFO]: This server is running Leaf version 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[01:24:44] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[01:24:45] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[01:24:45] [Server thread/INFO]: Using 4 threads for Netty based IO
+[01:24:47] [Server thread/INFO]: [MoonriseCommon] Paper is using 1 worker threads, 1 I/O threads
+[01:24:48] [Server thread/INFO]: Using 8 permits for parallel world ticking
+[01:24:48] [Server thread/INFO]: Default game type: SURVIVAL
+[01:24:48] [Server thread/INFO]: Generating keypair
+[01:24:48] [Server thread/INFO]: Starting Minecraft server on 0.0.0.0:27010
+[01:24:48] [Server thread/INFO]: Paper: Using libdeflate (Linux x86_64) compression from Velocity.
+[01:24:48] [Server thread/INFO]: Paper: Using OpenSSL 3.x.x (Linux x86_64) cipher from Velocity.
+[01:24:48] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[01:24:48] [Server thread/INFO]: Preparing level "world"
+[01:24:49] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+[01:24:49] [Server thread/INFO]: Preparing spawn area: 100%
+[01:24:49] [Server thread/INFO]: Prepared spawn area in 2 ms
+[01:24:49] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+[01:24:49] [Server thread/INFO]: Prepared spawn area in 0 ms
+[01:24:49] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_end'...
+[01:24:49] [Server thread/INFO]: Prepared spawn area in 0 ms
+[01:24:49] [Server thread/INFO]: Done preparing level "world" (1.242s)
+[01:24:50] [Server thread/INFO]: [spark] Starting background profiler...
+[01:24:50] [Server thread/INFO]: Running delayed init tasks
+[01:24:50] [Server thread/INFO]: Done (22.670s)! For help, type "help"
+
 
 ============================================================
 FIX2_STATUS_COMPLETE
-result=SUCCESS
-package=REAL_PLAYER_IP_V14_TESTSERVER222
+package=REAL_PLAYER_IP_V15_RESTORE_VISIBILITY
 domain=testserver222.free.mc-serverhost.net
-java_proxy_protocol_domain=ENABLED
-private_ip_override=5.61.167.129
-server_restart_required=1
-goal=PUBLIC_IP_INSTEAD_OF_PRIVATE_LAN_IP
-next=JOIN_TESTSERVER222_AND_VERIFY
-end=2026-08-21T23:19:56+00:00
+paper_proxy_protocol=FALSE
+private_ip_override=DISABLED
+testserver_proxy_mapping=DISABLED
+direct_normal_status=PASS
+gateway_status=PASS
+next=DETERMINE_REAL_DOMAIN_ROUTE_THEN_ENABLE_REAL_IP
+result=SUCCESS
+end=2026-08-21T23:25:12+00:00
 ============================================================
