@@ -1,115 +1,147 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T23:27:48+00:00
+published_at=2026-08-21T23:31:03+00:00
 ============================================================
 
 ============================================================
- REAL PLAYER IP V16
- SAFE TESTSERVER222 PROXY ENABLE
+ REAL PLAYER IP V17
+ REAL JOIN VERIFY
 ============================================================
-start=2026-08-21T23:27:06+00:00
-SCRIPT_VERSION=REAL_PLAYER_IP_V16_SAFE_ENABLE
+start=2026-08-21T23:29:29+00:00
+SCRIPT_VERSION=REAL_PLAYER_IP_V17_REAL_JOIN_VERIFY
 
-gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v16-20260821-232706.bak
-env_backup=/etc/ctrlpanel/wake-gateway.env.v16-20260821-232706.bak
-public_ip=5.61.167.129
-
-[1/9] Backend bestimmen ...
-backend_host=[PRIVATE_IP]
+[1/5] Aktueller Zustand ...
+WAKE_GATEWAY=ACTIVE
 backend_port=27010
 identifier=dc4c2e9b
+server_state=running
 
-[2/9] Gateway Mapping setzen ...
+[2/5] PROXY-Konfiguration ...
 JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net,testserver222.free.mc-serverhost.net
 JAVA_PRIVATE_CLIENT_IP_OVERRIDE=5.61.167.129
+proxy-protocol: true
 
-[3/9] Gateway IP-Override Code sicherstellen ...
-GATEWAY_PATCH=OK
-GATEWAY_SYNTAX=OK
+============================================================
+ JETZT IN MINECRAFT VERBINDEN:
+ testserver222.free.mc-serverhost.net
 
-[4/9] Paper PROXY Protocol aktivieren ...
-paper_write_http=204
-PAPER_PROXY_PROTOCOL=TRUE
+ Fix2 wartet jetzt bis zu 90 Sekunden.
+============================================================
+wait_for_player=2s
+wait_for_player=4s
+wait_for_player=6s
+wait_for_player=8s
+wait_for_player=10s
+wait_for_player=12s
+wait_for_player=14s
+wait_for_player=16s
+wait_for_player=18s
+wait_for_player=20s
+wait_for_player=22s
+wait_for_player=24s
+wait_for_player=26s
+wait_for_player=28s
+wait_for_player=30s
+wait_for_player=32s
+wait_for_player=34s
+wait_for_player=36s
+wait_for_player=38s
+wait_for_player=40s
+wait_for_player=42s
+wait_for_player=44s
+wait_for_player=46s
+wait_for_player=48s
+wait_for_player=50s
+wait_for_player=52s
+wait_for_player=54s
+wait_for_player=56s
+wait_for_player=58s
+wait_for_player=60s
+wait_for_player=62s
+wait_for_player=64s
+wait_for_player=66s
+wait_for_player=68s
+wait_for_player=70s
+wait_for_player=72s
+wait_for_player=74s
+wait_for_player=76s
+wait_for_player=78s
+wait_for_player=80s
+wait_for_player=82s
+wait_for_player=84s
+wait_for_player=86s
+wait_for_player=88s
+wait_for_player=90s
 
-[5/9] Gateway neu starten ...
-WAKE_GATEWAY=ACTIVE
+[3/5] Gateway-Log seit Start ...
+-- No entries --
 
-[6/9] Minecraft Server sauber neu starten ...
-restart_http=200
-[INFO] Warte auf echten Neustart ...
-server_state=running
-server_state=running
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=running
-SERVER_FULL_RESTART=PASS
+[4/5] Leaf latest.log ...
+[01:27:21] [ServerMain/INFO]: [bootstrap] Running Java 25 (OpenJDK 64-Bit Server VM 25.0.3+9-LTS; Eclipse Adoptium Temurin-25.0.3+9) on Linux 6.17.2-1-pve (amd64)
+[01:27:22] [ServerMain/INFO]: [bootstrap] Loading Leaf 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) for Minecraft 1.21.11
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Loading config...
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 1 threads for Async Pathfinding
+[01:27:22] [ServerMain/WARN]: [LeafConfig] You enabled faster random generator, it will offset location of slime chunk
+[01:27:22] [ServerMain/WARN]: [LeafConfig] If your server has slime farms or facilities need vanilla slime chunk,
+[01:27:22] [ServerMain/WARN]: [LeafConfig] set performance.faster-random-generator.use-legacy-random-for-slime-chunk to true to use LegacyRandomSource for slime chunk generation.
+[01:27:22] [ServerMain/WARN]: [LeafConfig] Set performance.faster-random-generator.warn-for-slime-chunk to false to disable this warning.
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 2 threads for Async Entity Tracker
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 8 threads for Parallel World Ticking
+[01:27:22] [ServerMain/WARN]: [LeafConfig] You have following experimental module(s) enabled: [MultithreadedTracker.enabled, SparklyPaperParallelWorldTicking.enabled], please proceed with caution!
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Successfully loaded config in 599ms.
+[01:27:23] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
+[01:27:23] [ServerMain/INFO]: [PluginInitializerManager] Initialized 0 plugins
+[01:27:32] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[01:27:36] [ServerMain/INFO]: Loaded 1470 recipes
+[01:27:36] [ServerMain/INFO]: Loaded 1584 advancements
+[01:27:36] [ServerMain/INFO]: Resource reload finished after 683 ms
+[01:27:36] [ServerMain/INFO]: RecipeManager took approximately 2 tasks/224 ms (1 tasks/224 ms preparing, 1 tasks/0 ms applying)
+[01:27:36] [ServerMain/INFO]: ServerFunctionLibrary took approximately 3 tasks/9 ms (2 tasks/0 ms preparing, 1 tasks/9 ms applying)
+[01:27:36] [ServerMain/INFO]: ServerAdvancementManager took approximately 2 tasks/438 ms (1 tasks/406 ms preparing, 1 tasks/32 ms applying)
+[01:27:36] [ServerMain/INFO]: Total blocking time: 41 ms
+[01:27:36] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[01:27:37] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 584.5ms
+[01:27:37] [Server thread/INFO]: Starting minecraft server version 1.21.11
+[01:27:37] [Server thread/INFO]: Loading properties
+[01:27:37] [Server thread/INFO]: This server is running Leaf version 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[01:27:37] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[01:27:38] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[01:27:38] [Server thread/INFO]: Using 4 threads for Netty based IO
+[01:27:39] [Server thread/INFO]: [MoonriseCommon] Paper is using 1 worker threads, 1 I/O threads
+[01:27:40] [Server thread/INFO]: Using 8 permits for parallel world ticking
+[01:27:40] [Server thread/INFO]: Default game type: SURVIVAL
+[01:27:40] [Server thread/INFO]: Generating keypair
+[01:27:40] [Server thread/INFO]: Starting Minecraft server on 0.0.0.0:27010
+[01:27:40] [Server thread/WARN]: Using HAProxy, please ensure the server port is adequately firewalled.
+[01:27:40] [Server thread/INFO]: Paper: Using libdeflate (Linux x86_64) compression from Velocity.
+[01:27:40] [Server thread/INFO]: Paper: Using OpenSSL 3.x.x (Linux x86_64) cipher from Velocity.
+[01:27:40] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[01:27:40] [Server thread/INFO]: Preparing level "world"
+[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+[01:27:41] [Server thread/INFO]: Preparing spawn area: 100%
+[01:27:41] [Server thread/INFO]: Prepared spawn area in 1 ms
+[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+[01:27:41] [Server thread/INFO]: Prepared spawn area in 0 ms
+[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_end'...
+[01:27:41] [Server thread/INFO]: Prepared spawn area in 0 ms
+[01:27:41] [Server thread/INFO]: Done preparing level "world" (1.268s)
+[01:27:42] [Server thread/INFO]: [spark] Starting background profiler...
+[01:27:42] [Server thread/INFO]: Running delayed init tasks
+[01:27:42] [Server thread/INFO]: Done (21.871s)! For help, type "help"
 
-[7/9] Paper direkt MIT PROXY Header testen ...
-DIRECT_PROXY_STATUS=PASS
-status_bytes=143
 
-[8/9] Gateway Serverlisten-Status testen ...
-GATEWAY_SERVERLIST_STATUS=PASS
-status_bytes=143
-
-[9/9] Final Verify ...
-paper_proxy_protocol=true
-
-===== RECENT GATEWAY LOG =====
-Aug 21 23:19:49 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:19:50 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 21 23:19:50 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:19:50 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-api-wait[12386]: wake_api_ready=YES
-Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,370 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,371 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 21 23:19:50 ctrlpanel python3[12388]: 2026-08-21 23:19:50,382 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: java_listener=READY
-Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: bedrock_listeners=100/100
-Aug 21 23:19:50 ctrlpanel ctrlpanel-wake-gateway-wait[12390]: gateway_ready=YES
-Aug 21 23:19:50 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:24:19 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:24:19 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 21 23:24:19 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:24:19 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:24:19 ctrlpanel ctrlpanel-wake-api-wait[12764]: wake_api_ready=YES
-Aug 21 23:24:19 ctrlpanel python3[12766]: 2026-08-21 23:24:19,408 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 21 23:24:19 ctrlpanel python3[12766]: 2026-08-21 23:24:19,409 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 21 23:24:19 ctrlpanel python3[12766]: 2026-08-21 23:24:19,420 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 21 23:24:19 ctrlpanel ctrlpanel-wake-gateway-wait[12768]: java_listener=READY
-Aug 21 23:24:19 ctrlpanel ctrlpanel-wake-gateway-wait[12768]: bedrock_listeners=100/100
-Aug 21 23:24:19 ctrlpanel ctrlpanel-wake-gateway-wait[12768]: gateway_ready=YES
-Aug 21 23:24:19 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:27:08 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:27:08 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 21 23:27:08 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:27:08 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 21 23:27:08 ctrlpanel ctrlpanel-wake-api-wait[13147]: wake_api_ready=YES
-Aug 21 23:27:09 ctrlpanel python3[13149]: 2026-08-21 23:27:09,227 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 21 23:27:09 ctrlpanel python3[13149]: 2026-08-21 23:27:09,228 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 21 23:27:09 ctrlpanel python3[13149]: 2026-08-21 23:27:09,239 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 21 23:27:09 ctrlpanel ctrlpanel-wake-gateway-wait[13151]: java_listener=READY
-Aug 21 23:27:09 ctrlpanel ctrlpanel-wake-gateway-wait[13151]: bedrock_listeners=100/100
-Aug 21 23:27:09 ctrlpanel ctrlpanel-wake-gateway-wait[13151]: gateway_ready=YES
-Aug 21 23:27:09 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 21 23:27:47 ctrlpanel python3[13149]: 2026-08-21 23:27:47,224 INFO JAVA_PLAYER_IP socket_ip=127.0.0.1 forwarded_ip=5.61.167.129 mode=PRIVATE_TO_PUBLIC
+[5/5] Final ...
+real_join_seen_by_gateway=NO
+server_power_changes=NONE
+gateway_changes=NONE
+paper_changes=NONE
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=REAL_PLAYER_IP_V16_SAFE_ENABLE
+package=REAL_PLAYER_IP_V17_REAL_JOIN_VERIFY
 domain=testserver222.free.mc-serverhost.net
-paper_proxy_protocol=TRUE
-gateway_serverlist_status=PASS
-direct_proxy_status=PASS
-private_client_forwarded_as=5.61.167.129
-server_full_restart=PASS
-rollback=NOT_REQUIRED
-next=REAL_PLAYER_JOIN_VERIFY
-end=2026-08-21T23:27:48+00:00
+real_join_seen=0
+next=CHECK_REAL_PLAYER_IP_FROM_GITHUB
+end=2026-08-21T23:31:03+00:00
 ============================================================
