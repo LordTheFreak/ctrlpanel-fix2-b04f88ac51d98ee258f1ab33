@@ -1,44 +1,55 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T19:59:25+00:00
+published_at=2026-08-21T20:01:45+00:00
 ============================================================
 
 ============================================================
- CtrlPanel FIX2 - Wake Stack Hardening
+ CtrlPanel FIX2 - Wake Stack Race-Free v3
 ============================================================
-start=2026-08-21T19:59:20+00:00
+start=2026-08-21T20:01:40+00:00
 
-[1/11] Bestehende Wake-Konfiguration sichern ...
-backup=/root/ctrlpanel-wake-backup-20260821-195920
-[ OK ] Backup erstellt.
+[1/12] Backup erstellen ...
+backup=/root/wake-stack-v3-backup-20260821-200140
+[ OK ] Backup fertig.
 
-[2/11] API-Wartefunktion installieren ...
-[ OK ] API-Wartefunktion installiert.
+[2/12] API-Wartefunktion verbessern ...
+[ OK ] API-Wait installiert.
 
-[3/11] systemd-Abhängigkeiten härten ...
-[ OK ] systemd-Abhängigkeiten gesetzt.
+[3/12] Gateway-Readiness-Wait installieren ...
+[ OK ] Gateway-Wait installiert.
 
-[4/11] Sicheren Stack-Neustart installieren ...
-[ OK ] Stack-Neustart installiert.
+[4/12] systemd race-free konfigurieren ...
+[ OK ] systemd wartet jetzt auf echte Gateway-Readiness.
 
-[5/11] Selbstheilung verbessern ...
-[ OK ] Health-Check V2 aktiv.
+[5/12] Sicheren Stack-Restart bauen ...
+[ OK ] Stack-Restart installiert.
 
-[6/11] Queue und Scheduler prüfen ...
-ctrlpanel-worker:ctrlpanel-worker_00   RUNNING   pid 77796, uptime 1:26:03
-ctrlpanel-worker:ctrlpanel-worker_01   RUNNING   pid 77807, uptime 1:26:02
+[6/12] Health-Check V3 installieren ...
+[ OK ] Health V3 aktiv.
 
-   INFO  No failed jobs found.  
+[7/12] Neuen Stack einmal vollständig starten ...
+stack_restart_begin=2026-08-21T20:01:40+00:00
+wake_api_ready=YES
+java_listener=READY
+bedrock_listeners=100/100
+gateway_ready=YES
+api_state=active
+gateway_state=active
+stack_restart_end=2026-08-21T20:01:43+00:00
+[ OK ] Stack vollständig bereit.
 
-[ OK ] Queue/Scheduler geprüft.
+[8/12] Restart-Szenarien testen ...
 
-[7/11] Wake-Zähler sichern ...
-wake_count_before=8
+----- TEST A: Gateway-only Restart -----
+java_listener=READY
+bedrock_listeners=100/100
+gateway_ready=YES
+gateway_restart_connection_refused=0
+[ OK ] Gateway-only Restart.
 
-[8/11] Drei kontrollierte Stack-Neustarts testen ...
-
------ Restart-Test 1/3 -----
-[wake-stack] restarting API ...
-CtrlPanel wake API ready: 127.0.0.1:8787
-[wake-stack] restarting gateway ...
-Java listener missing: [Errno 111] Connection refused
+----- TEST B: API-only Restart -----
+wake_api_ready=YES
+java_listener=READY
+bedrock_listeners=100/100
+gateway_ready=YES
+[FEHLER] Gateway nach API-Restart nicht aktiv.
