@@ -1,12 +1,1571 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T21:18:03+00:00
+published_at=2026-08-21T21:20:48+00:00
 ============================================================
 
 ============================================================
- CTRLPANEL V3.2 STATE PROBE
+ CTRLPANEL V3.3
+ HEALTH CLEANUP + EXACT UI CODE MAP
 ============================================================
-time=2026-08-21T21:17:57+00:00
+start=2026-08-21T21:20:22+00:00
+
+[1/10] Safety ...
+ssh=OK
+network=OK
+pve_untouched=YES
+console_untouched=YES
+
+[2/10] Failed Jobs vollständig sichern ...
+failed_before=4
+{"id":24,"uuid":"2462105a-f7ac-49d7-819c-5a9968c64422","failed_at":"2026-08-21 22:12:16","job":"App\\Jobs\\CheckIdleServerJob","exception":"PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php:53 Stack trace: #0 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php(53): PDOStatement->execute() #1 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php(827): Illuminate\\Database\\MySqlConnection->Illuminate\\Database\\{closure}() #2 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php(794): Illuminate\\Database\\Connection->runQueryCallback() #3 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php(42): Illuminate\\Database\\Connection->run() #4 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/MySqlProcessor.php(35): Illuminate\\Database\\MySqlConnection->insert() #5 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(4170): Illuminate\\Database\\Query\\Processors\\MySqlProcessor->processInsertGetId() #6 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2237): Illuminate\\Database\\Query\\Builder->insertGetId() #7 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1436): Illuminate\\Database\\Eloquent\\Builder->__call() #8 /var/www/ctrlpanel/v"}
+{"id":25,"uuid":"24fd6a62-62e3-4eb1-abc7-07bc3a0112e1","failed_at":"2026-08-21 22:15:11","job":"App\\Jobs\\CheckIdleServerJob","exception":"PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php:53 Stack trace: #0 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php(53): PDOStatement->execute() #1 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php(827): Illuminate\\Database\\MySqlConnection->Illuminate\\Database\\{closure}() #2 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php(794): Illuminate\\Database\\Connection->runQueryCallback() #3 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php(42): Illuminate\\Database\\Connection->run() #4 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/MySqlProcessor.php(35): Illuminate\\Database\\MySqlConnection->insert() #5 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(4170): Illuminate\\Database\\Query\\Processors\\MySqlProcessor->processInsertGetId() #6 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2237): Illuminate\\Database\\Query\\Builder->insertGetId() #7 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1436): Illuminate\\Database\\Eloquent\\Builder->__call() #8 /var/www/ctrlpanel/v"}
+{"id":26,"uuid":"e92d6385-22c9-4274-8c61-1a720dd56766","failed_at":"2026-08-21 22:18:04","job":"App\\Jobs\\CheckIdleServerJob","exception":"PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php:53 Stack trace: #0 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php(53): PDOStatement->execute() #1 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php(827): Illuminate\\Database\\MySqlConnection->Illuminate\\Database\\{closure}() #2 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php(794): Illuminate\\Database\\Connection->runQueryCallback() #3 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php(42): Illuminate\\Database\\Connection->run() #4 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/MySqlProcessor.php(35): Illuminate\\Database\\MySqlConnection->insert() #5 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(4170): Illuminate\\Database\\Query\\Processors\\MySqlProcessor->processInsertGetId() #6 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2237): Illuminate\\Database\\Query\\Builder->insertGetId() #7 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1436): Illuminate\\Database\\Eloquent\\Builder->__call() #8 /var/www/ctrlpanel/v"}
+{"id":27,"uuid":"245ed5f0-694f-4a4b-852d-a4b06ab1a4f2","failed_at":"2026-08-21 23:10:11","job":"App\\Jobs\\CollectServerHourlyStatsJob","exception":"PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'wKUwFHX74BxSqgmPGLnEB' for column `ctrlpanel_free`.`server_hourly_stats`.`server_id` at row 1 in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php:53 Stack trace: #0 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php(53): PDOStatement->execute() #1 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php(827): Illuminate\\Database\\MySqlConnection->Illuminate\\Database\\{closure}() #2 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php(794): Illuminate\\Database\\Connection->runQueryCallback() #3 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php(42): Illuminate\\Database\\Connection->run() #4 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/MySqlProcessor.php(35): Illuminate\\Database\\MySqlConnection->insert() #5 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(4170): Illuminate\\Database\\Query\\Processors\\MySqlProcessor->processInsertGetId() #6 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2237): Illuminate\\Database\\Query\\Builder->insertGetId() #7 /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1436): Illuminate\\Database\\Eloquent\\Builder->__call() #8 /var/www/ctrlpanel/vendor/larav"}
+
+[3/10] Aktuelle Collector-Version testen ...
+domains=9
+updated=9
+duplicate_slot=0
+fresh_player_samples=0
+domains=9
+fresh=0
+positive=0
+zero=0
+stale=9
+untrusted=0
+errors=0
+stats_collect_exit=0
+usage_collect_exit=0
+CURRENT_COLLECTORS=OK
+
+[4/10] Nur alten Schema-Stats-Fehler bereinigen ...
+deleted_old_stats_failure=245ed5f0-694f-4a4b-852d-a4b06ab1a4f2
+old_stats_failures_deleted=1
+
+[5/10] Aktuellen Idle-Dispatcher testen ...
+idle_dispatch=OK
+Warte 15 Sekunden ...
+
+--- Worker ---
+ctrlpanel-worker:ctrlpanel-worker_00   RUNNING   pid 3506, uptime 0:04:17
+ctrlpanel-worker:ctrlpanel-worker_01   RUNNING   pid 3507, uptime 0:04:17
+
+[6/10] Failed Jobs nach aktuellem Test ...
+failed_after=3
+{"id":24,"uuid":"2462105a-f7ac-49d7-819c-5a9968c64422","failed_at":"2026-08-21 22:12:16","job":"App\\Jobs\\CheckIdleServerJob","important_exception_lines":["PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php:53","#16 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(152): Illuminate\\Database\\Eloquent\\Model::__callStatic()","#20 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(100): Illuminate\\Support\\Facades\\Facade::__callStatic()","#22 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(87): Illuminate\\Cache\\Lock->block()","#23 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(190): App\\Services\\Usage\\ObservedPlayerUsageService->observe()","#24 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(63): App\\Jobs\\CheckIdleServerJob->check()","#26 /var/www/ctrlpanel/app/Services/Wake/ServerRuntimeLock.php(26): Illuminate\\Cache\\Lock->get()","#27 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(62): App\\Services\\Wake\\ServerRuntimeLock->get()","Next Illuminate\\Database\\QueryException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `observed_player_usage_sessions` (`server_id`, `server_domain_id`, `started_at`, `last_observed_at`, `peak_connected_players`, `peak_verified_players`, `source`, `confidence`, `updated_at`, `created_at`) values (VJOwZGj7C1tqD59KBvUZ-, 59, 2026-08-21 20:12:16, 2026-08-21 20:12:16, 1, 0, bedrock_raknet, observed, 2026-08-21 22:12:16, 2026-08-21 22:12:16)) in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php:838","#14 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(152): Illuminate\\Database\\Eloquent\\Model::__callStatic()","#18 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(100): Illuminate\\Support\\Facades\\Facade::__callStatic()","#20 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(87): Illuminate\\Cache\\Lock->block()"]}
+{"id":25,"uuid":"24fd6a62-62e3-4eb1-abc7-07bc3a0112e1","failed_at":"2026-08-21 22:15:11","job":"App\\Jobs\\CheckIdleServerJob","important_exception_lines":["PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php:53","#16 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(152): Illuminate\\Database\\Eloquent\\Model::__callStatic()","#20 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(100): Illuminate\\Support\\Facades\\Facade::__callStatic()","#22 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(87): Illuminate\\Cache\\Lock->block()","#23 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(190): App\\Services\\Usage\\ObservedPlayerUsageService->observe()","#24 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(63): App\\Jobs\\CheckIdleServerJob->check()","#26 /var/www/ctrlpanel/app/Services/Wake/ServerRuntimeLock.php(26): Illuminate\\Cache\\Lock->get()","#27 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(62): App\\Services\\Wake\\ServerRuntimeLock->get()","Next Illuminate\\Database\\QueryException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `observed_player_usage_sessions` (`server_id`, `server_domain_id`, `started_at`, `last_observed_at`, `peak_connected_players`, `peak_verified_players`, `source`, `confidence`, `updated_at`, `created_at`) values (VJOwZGj7C1tqD59KBvUZ-, 59, 2026-08-21 20:15:11, 2026-08-21 20:15:11, 1, 0, bedrock_raknet, observed, 2026-08-21 22:15:11, 2026-08-21 22:15:11)) in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php:838","#14 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(152): Illuminate\\Database\\Eloquent\\Model::__callStatic()","#18 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(100): Illuminate\\Support\\Facades\\Facade::__callStatic()","#20 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(87): Illuminate\\Cache\\Lock->block()"]}
+{"id":26,"uuid":"e92d6385-22c9-4274-8c61-1a720dd56766","failed_at":"2026-08-21 22:18:04","job":"App\\Jobs\\CheckIdleServerJob","important_exception_lines":["PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/MySqlConnection.php:53","#16 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(152): Illuminate\\Database\\Eloquent\\Model::__callStatic()","#20 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(100): Illuminate\\Support\\Facades\\Facade::__callStatic()","#22 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(87): Illuminate\\Cache\\Lock->block()","#23 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(190): App\\Services\\Usage\\ObservedPlayerUsageService->observe()","#24 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(63): App\\Jobs\\CheckIdleServerJob->check()","#26 /var/www/ctrlpanel/app/Services/Wake/ServerRuntimeLock.php(26): Illuminate\\Cache\\Lock->get()","#27 /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php(62): App\\Services\\Wake\\ServerRuntimeLock->get()","Next Illuminate\\Database\\QueryException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'VJOwZGj7C1tqD59KBvUZ-' for column `ctrlpanel_free`.`observed_player_usage_sessions`.`server_id` at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `observed_player_usage_sessions` (`server_id`, `server_domain_id`, `started_at`, `last_observed_at`, `peak_connected_players`, `peak_verified_players`, `source`, `confidence`, `updated_at`, `created_at`) values (VJOwZGj7C1tqD59KBvUZ-, 59, 2026-08-21 20:18:04, 2026-08-21 20:18:04, 1, 0, bedrock_raknet, observed, 2026-08-21 22:18:04, 2026-08-21 22:18:04)) in /var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Database/Connection.php:838","#14 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(152): Illuminate\\Database\\Eloquent\\Model::__callStatic()","#18 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(100): Illuminate\\Support\\Facades\\Facade::__callStatic()","#20 /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php(87): Illuminate\\Cache\\Lock->block()"]}
+
+[7/10] Analytics Live-Zustand ...
+observed_total=5
+observed_open=0
+hourly_total=9
+hourly_samples=36
+runtime_running_samples=0
+player_samples=0
+
+=== ANALYTICS REPORT ===
+[
+    {
+        "id": 14,
+        "domain": "schulsmp.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": 0,
+        "last_used": "2026-08-14T14:45:06+02:00",
+        "usage_30d": "0m",
+        "usage_total": "0m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    },
+    {
+        "id": 20,
+        "domain": "mine-attack-tukuf5.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": null,
+        "last_used": "2026-08-15T01:40:09+02:00",
+        "usage_30d": "0m",
+        "usage_total": "0m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    },
+    {
+        "id": 51,
+        "domain": "veltrixmc.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "offline",
+        "players": 0,
+        "last_used": "2026-08-21T11:10:43+02:00",
+        "usage_30d": "0m",
+        "usage_total": "0m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    },
+    {
+        "id": 58,
+        "domain": "cool.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": 0,
+        "last_used": "2026-08-21T05:01:39+02:00",
+        "usage_30d": "0m",
+        "usage_total": "0m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    },
+    {
+        "id": 59,
+        "domain": "crunchy.free.mc-serverhost.net",
+        "edition": "bedrock",
+        "runtime": "sleeping",
+        "players": 0,
+        "last_used": null,
+        "usage_30d": "0m",
+        "usage_total": "0m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    },
+    {
+        "id": 60,
+        "domain": "server-test.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "offline",
+        "players": 0,
+        "last_used": "2026-08-21T05:06:10+02:00",
+        "usage_30d": "2m",
+        "usage_total": "2m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    },
+    {
+        "id": 61,
+        "domain": "kaka.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": null,
+        "last_used": null,
+        "usage_30d": "0m",
+        "usage_total": "0m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    },
+    {
+        "id": 62,
+        "domain": "timgioh.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": null,
+        "last_used": "2026-08-20T02:00:19+02:00",
+        "usage_30d": "0m",
+        "usage_total": "0m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    },
+    {
+        "id": 64,
+        "domain": "test-lbcyyr.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": 0,
+        "last_used": null,
+        "usage_30d": "0m",
+        "usage_total": "0m",
+        "month_peak": 0,
+        "month_average": 0,
+        "month_player_minutes": 0,
+        "month_runtime_minutes": 0
+    }
+]
+
+=== DOCTOR ===
+{
+    "active_domains": 9,
+    "active_bedrock_domains": 1,
+    "bedrock_ports_free": 99,
+    "observed_sessions": 5,
+    "open_observed_sessions": 0,
+    "hourly_stats": 9,
+    "failed_jobs": 3,
+    "problems": [
+        "failed_jobs:3"
+    ]
+}
+
+[8/10] Exakte UI-Dateien ermitteln ...
+
+============================================================
+AREA=SETTINGS
+============================================================
+
+FILE=app/Services/ServerCreationService.php SCORE=77
+11: use App\Jobs\ReconcileServerCreationJob;
+12: use App\Services\CreditService;
+13: use App\Settings\GeneralSettings;
+14: use App\Settings\FreeHostingSettings;
+15: use App\Settings\PterodactylSettings;
+16: use App\Settings\ServerSettings;
+17: use App\Settings\UserSettings;
+18: use Illuminate\Support\Facades\Cache;
+19: use Illuminate\Support\Facades\DB;
+22: class ServerCreationService
+23: {
+24:     private PterodactylSettings $pterodactylSettings;
+25:     private UserSettings $userSettings;
+26:     private GeneralSettings $generalSettings;
+27:     private ServerSettings $serverSettings;
+28:     private PterodactylClient $pterodactylClient;
+29:     private CreditService $creditService;
+30:     private FreeHostingSettings $freeHostingSettings;
+31:     private PterodactylAllocationService $freeHostingAllocations;
+32: 
+33:     /**
+36:     public function __construct()
+37:     {
+38:         $this->pterodactylSettings = app(PterodactylSettings::class);
+39:         $this->userSettings = app(UserSettings::class);
+40:         $this->generalSettings = app(GeneralSettings::class);
+
+FILE=app/Http/Controllers/Admin/SettingsController.php SCORE=74
+6: use App\Helpers\ExtensionHelper;
+7: use App\Http\Controllers\Controller;
+8: use App\Services\SettingsService;
+9: use Illuminate\Contracts\Foundation\Application;
+10: use Illuminate\Contracts\View\Factory;
+16: use Illuminate\Support\Facades\Storage;
+17: use Qirolab\Theme\Theme;
+18: use Spatie\LaravelSettings\Settings;
+19: 
+20: class SettingsController extends Controller
+21: {
+22:     const ICON_PERMISSION = "admin.icons.edit";
+23: 
+24:     public function __construct(private readonly SettingsService $settingsService)
+25:     {
+26:     }
+27: 
+28:     /**
+29:      * Build the list of available settings classes from app and extensions.
+30:      */
+31:     private function getAvailableSettingsClasses(): array
+32:     {
+33:         $settingsClasses = [];
+34: 
+35:         $appSettings = scandir(app_path('Settings'));
+36:         $appSettings = array_diff($appSettings, ['.', '..']);
+37: 
+38:         foreach ($appSettings as $appSetting) {
+39:             $settingsClasses[] = 'App\\Settings\\' . str_replace('.php', '', $appSetting);
+40:         }
+41: 
+42:         return array_values(array_filter(
+43:             array_merge($settingsClasses, ExtensionHelper::getAllExtensionSettingsClasses()),
+44:             static fn (string $className): bool => class_exists($className) && is_subclass_of($className, Settings::class)
+45:         ));
+
+FILE=app/Http/Controllers/ServerController.php SCORE=73
+11: use App\Models\User;
+12: use App\Notifications\ServerCreationError;
+13: use App\Settings\DiscordSettings;
+14: use Carbon\Carbon;
+15: use App\Settings\UserSettings;
+16: use App\Settings\ServerSettings;
+17: use App\Services\ServerCreationService;
+18: use App\Services\ServerPlayerStatusService;
+20: use App\Services\CreditService;
+21: use App\Services\DiscordRewards\DiscordRewardSummaryService;
+22: use App\Settings\PterodactylSettings;
+23: use App\Classes\PterodactylClient;
+24: use App\Enums\BillingPriority;
+25: use App\Settings\GeneralSettings;
+26: use Exception;
+27: use Illuminate\Database\Eloquent\Builder;
+54: 
+55:     private PterodactylClient $pterodactyl;
+56:     private PterodactylSettings $pteroSettings;
+57:     private GeneralSettings $generalSettings;
+58:     private ServerSettings $serverSettings;
+59:     private UserSettings $userSettings;
+60:     private DiscordSettings $discordSettings;
+61:     private ServerCreationService $serverCreationService;
+62:     private LeafVersionService $leafVersionService;
+64: 
+65:     public function __construct(
+66:         PterodactylSettings $pteroSettings,
+67:         GeneralSettings $generalSettings,
+68:         ServerSettings $serverSettings,
+69:         UserSettings $userSettings,
+
+FILE=app/Jobs/CheckIdleServerJob.php SCORE=56
+10: use App\Services\Usage\ObservedPlayerUsageService;
+11: use App\Services\Wake\ServerRuntimeLock;
+12: use App\Settings\FreeHostingSettings;
+13: use App\Settings\PterodactylSettings;
+14: use Illuminate\Bus\Queueable;
+15: use Illuminate\Contracts\Queue\ShouldBeUnique;
+43: 
+44:     public function handle(
+45:         FreeHostingSettings $settings,
+46:         PterodactylSettings $pterodactylSettings,
+47:         MinecraftStatusProbe $probe,
+48:         BedrockStatusProbe $bedrockProbe,
+51:         ServerRuntimeLock $runtimeLock,
+52:     ): void {
+53:         if (!$settings->enabled || !$settings->auto_stop_enabled) {
+54:             return;
+55:         }
+60:         }
+61: 
+62:         $runtimeLock->get($serverId, function () use ($settings, $pterodactylSettings, $probe, $bedrockProbe, $usage, $observedUsage): void {
+63:             $this->check($settings, $pterodactylSettings, $probe, $bedrockProbe, $usage, $observedUsage);
+64:         });
+65:     }
+66: 
+67:     private function check(
+68:         FreeHostingSettings $settings,
+69:         PterodactylSettings $pterodactylSettings,
+70:         MinecraftStatusProbe $probe,
+71:         BedrockStatusProbe $bedrockProbe,
+81:             || !$domain->probe_host
+82:             || !$domain->port
+83:             || !$settings->appliesToProduct($server->product_id)
+84:         ) {
+85:             return;
+86:         }
+87: 
+88:         $pterodactyl = new PterodactylClient($pterodactylSettings);
+89:         $resources = $pterodactyl->client->get("client/servers/{$server->identifier}/resources");
+90:         if ($resources->failed()) {
+93: 
+94:         $state = strtolower((string) $resources->json('attributes.current_state', 'unknown'));
+95:         $domain->update(['last_power_check_at' => now()]);
+96:         if ($state !== 'running') {
+97:             $updates = [
+
+FILE=app/Services/Dns/DnsProvisioningService.php SCORE=44
+8: use App\Models\ServerDomain;
+9: use App\Models\Pterodactyl\Egg;
+10: use App\Settings\FreeHostingSettings;
+11: use App\Settings\PterodactylSettings;
+12: use Illuminate\Support\Facades\DB;
+13: use RuntimeException;
+18: 
+19:     public function __construct(
+20:         private readonly FreeHostingSettings $settings,
+21:         private readonly DnsProviderInterface $provider,
+22:         private readonly ServerDomainSlugger $slugger,
+23:         PterodactylSettings $pterodactylSettings,
+24:     ) {
+25:         $this->pterodactyl = new PterodactylClient($pterodactylSettings);
+26:     }
+27: 
+28:     public function eligible(Server $server): bool
+29:     {
+30:         return $this->settings->enabled
+31:             && $this->settings->auto_dns
+32:             && $this->settings->appliesToProduct($server->product_id);
+33:     }
+34: 
+43: 
+44:         $domain = DB::transaction(function () use ($server): ServerDomain {
+45:             $existing = ServerDomain::where('server_id', $server->id)->lockForUpdate()->first();
+46:             if ($existing) {
+47:                 return $existing;
+53:                 'server_id' => $server->id,
+54:                 'slug' => $slug,
+55:                 'fqdn' => $slug . '.' . strtolower($this->settings->base_domain),
+56:                 'status' => ServerDomain::STATUS_PENDING,
+57:             ]);
+58:         });
+59: 
+60:         $domain->update([
+61:             'status' => ServerDomain::STATUS_PENDING,
+62:             'attempts' => $domain->attempts + 1,
+67:             $allocation = $this->readDefaultAllocation($server);
+68:             $this->assertAllocationAllowed($allocation);
+69:             $server->update(['egg_id' => $allocation['egg_id']]);
+70:             $edition = $this->editionForEgg($allocation['egg_id']);
+71:             $gatewayPort = $this->gatewayPort($domain, $edition, $allocation['port']);
+
+FILE=app/Providers/SettingsServiceProvider.php SCORE=43
+3: namespace App\Providers;
+4: 
+5: use App\Settings\GeneralSettings;
+6: use App\Settings\MailSettings;
+7: use Illuminate\Support\Facades\Config;
+8: use Illuminate\Support\Facades\Log;
+9: use Illuminate\Support\Facades\Schema;
+10: use Illuminate\Support\ServiceProvider;
+11: use App\Settings\DiscordSettings;
+12: use Qirolab\Theme\Theme;
+13: use Exception;
+14: 
+15: class SettingsServiceProvider extends ServiceProvider
+16: {
+17:     protected $discordSettings;
+18:     protected $generalSettings;
+19: 
+20:     /**
+31:      * Bootstrap any application services.
+32:      *
+33:      * @param  DiscordSettings  $discordSettings
+34:      * @param  GeneralSettings  $generalSettings
+35:      * @return void
+36:      */
+37:     public function boot(DiscordSettings $discordSettings, GeneralSettings $generalSettings)
+38:     {
+39:         $this->discordSettings = $discordSettings;
+40:         $this->generalSettings = $generalSettings;
+41: 
+42:         if (config('app.key') == null) return;
+43:         if (!Schema::hasColumn('settings', 'payload')) return;
+44: 
+45:         try {
+
+FILE=app/Services/SettingsService.php SCORE=43
+3: namespace App\Services;
+4: 
+5: use App\Models\SettingsAuditLog;
+6: use Illuminate\Support\Facades\DB;
+7: use JsonException;
+8: use ReflectionNamedType;
+9: use ReflectionProperty;
+10: use Spatie\LaravelSettings\Settings;
+11: use Spatie\LaravelSettings\Support\SettingsCacheFactory;
+12: 
+13: class SettingsService
+14: {
+15:     public function get(Settings|string $settings, string $key, mixed $default = null): mixed
+16:     {
+17:         $instance = is_string($settings) ? app($settings) : $settings;
+18: 
+19:         return property_exists($instance, $key) ? $instance->{$key} : $default;
+20:     }
+21: 
+22:     public function getBoolean(Settings|string $settings, string $key, bool $default = false): bool
+23:     {
+24:         $value = $this->get($settings, $key, $default);
+25: 
+26:         return filter_var($value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE) ?? $default;
+27:     }
+28: 
+29:     public function getInteger(Settings|string $settings, string $key, ?int $default = null): ?int
+30:     {
+31:         $value = $this->get($settings, $key, $default);
+32: 
+33:         return $value === null || $value === '' ? $default : (int) $value;
+34:     }
+35: 
+36:     public function getJson(Settings|string $settings, string $key, mixed $default = null): mixed
+37:     {
+38:         $value = $this->get($settings, $key, $default);
+39:         if (is_array($value) || is_object($value) || $value === null) {
+40:             return $value ?? $default;
+
+FILE=app/Http/Controllers/Admin/ServerController.php SCORE=42
+6: use App\Models\Server;
+7: use App\Models\User;
+8: use App\Settings\DiscordSettings;
+9: use App\Settings\LocaleSettings;
+10: use App\Settings\PterodactylSettings;
+11: use App\Classes\PterodactylClient;
+12: use Exception;
+41:     private $pterodactyl;
+42: 
+43:     public function __construct(PterodactylSettings $ptero_settings)
+44:     {
+45:         $this->pterodactyl = new PterodactylClient($ptero_settings);
+46:     }
+47: 
+51:      * @return Application|Factory|View|Response
+52:      */
+53:     public function index(LocaleSettings $locale_settings)
+54:     {
+55:         $this->checkAnyPermission(self::ANY_PERMISSION);
+56: 
+57:         return view('admin.servers.index', [
+58:             'locale_datatables' => $locale_settings->datatables
+59:         ]);
+60:     }
+84: 
+85:     /**
+86:      * Update the specified resource in storage.
+87:      *
+88:      * @param  Request  $request
+89:      * @param  Server  $server
+90:      */
+91:     public function update(Request $request, Server $server, DiscordSettings $discord_settings)
+92:     {
+93:         $this->checkAnyPermission([
+107:             $user = User::findOrFail($request->get('user_id'));
+108: 
+109:             // try to update the owner on pterodactyl
+110:             try {
+111:                 $response = $this->pterodactyl->updateServerOwner($server, $user->pterodactyl_id);
+112:                 if ($response->getStatusCode() != 200) {
+113:                     return redirect()->back()->with('error', 'Failed to update server owner on pterodactyl');
+114:                 }
+115: 
+
+FILE=app/Services/DiscordRewards/DiscordRewardSyncService.php SCORE=41
+11: use App\Models\Server;
+12: use App\Models\ServerDiscordReward;
+13: use App\Settings\FreeHostingSettings;
+14: use App\Settings\PterodactylSettings;
+15: use Illuminate\Support\Collection;
+16: use Illuminate\Support\Facades\DB;
+20: {
+21:     public function __construct(
+22:         private readonly FreeHostingSettings $settings,
+23:         private readonly DiscordRewardCalculator $calculator,
+24:         private readonly DiscordPermanentDiskRewardCalculator $diskCalculator,
+25:         private readonly PterodactylSettings $pterodactylSettings,
+26:         private readonly DiscordRewardCredentials $credentials,
+27:     ) {
+28:     }
+29: 
+30:     /** @return array{profiles:int,servers:int,updated:int,failed:int} */
+31:     public function sync(): array
+32:     {
+33:         if (! $this->settings->enabled || ! $this->settings->discord_rewards_enabled) {
+34:             return ['profiles' => 0, 'servers' => 0, 'updated' => 0, 'failed' => 0];
+35:         }
+36: 
+42:                 '<',
+43:                 now()->subDays(max(
+44:                     $this->settings->discord_activity_window_days,
+45:                     $this->settings->discord_disk_invite_retention_days,
+46:                 ) + 7),
+47:             )
+58:         }
+59: 
+60:         $cutoff = now()->subDays($this->settings->discord_activity_window_days);
+61:         $activeDays = DB::table('discord_reward_activity_events')
+62:             ->selectRaw('discord_id, DATE(occurred_at) AS activity_date, COUNT(*) AS message_count')
+65:             ->where('occurred_at', '>=', $cutoff)
+66:             ->groupBy('discord_id', DB::raw('DATE(occurred_at)'))
+67:             ->havingRaw('COUNT(*) >= ?', [$this->settings->discord_minimum_messages_per_day])
+68:             ->get()
+69:             ->groupBy('discord_id')
+88:             ->whereNull('disk_qualified_at')
+89:             ->whereNull('left_at')
+90:             ->where('joined_at', '<=', now()->subDays($this->settings->discord_disk_invite_retention_days))
+91:             ->whereExists(function ($query): void {
+92:                 $query->selectRaw('1')
+
+FILE=app/Http/Controllers/Admin/UserController.php SCORE=40
+3: namespace App\Http\Controllers\Admin;
+4: 
+5: use App\Events\UserUpdateCreditsEvent;
+6: use App\Http\Controllers\Controller;
+7: use App\Models\User;
+8: use App\Notifications\DynamicNotification;
+9: use App\Settings\LocaleSettings;
+10: use App\Settings\PterodactylSettings;
+11: use App\Classes\PterodactylClient;
+12: use App\Helpers\CurrencyHelper;
+13: use App\Settings\GeneralSettings;
+14: use App\Actions\ProcessReferralAction;
+15: use Exception;
+55:     private $pterodactyl;
+56: 
+57:     public function __construct(PterodactylSettings $ptero_settings)
+58:     {
+59:         $this->pterodactyl = new PterodactylClient($ptero_settings);
+60:     }
+61: 
+66:      * @return Application|Factory|View|Response
+67:      */
+68:     public function index(LocaleSettings $locale_settings, GeneralSettings $general_settings)
+69:     {
+70:         $allConstants = (new \ReflectionClass(__CLASS__))->getConstants();
+74: 
+75:         return view('admin.users.index', [
+76:             'locale_datatables' => $locale_settings->datatables,
+77:             'credits_display_name' => $general_settings->credits_display_name
+78:         ]);
+79:     }
+85:      * @return Application|Factory|View|Response
+86:      */
+87:     public function show(User $user, LocaleSettings $locale_settings, GeneralSettings $general_settings)
+88:     {
+89:         $this->checkPermission(self::READ_PERMISSION);
+137:             'user' => $user,
+138:             'referrals' => $allReferrals,
+139:             'locale_datatables' => $locale_settings->datatables,
+140:             'credits_display_name' => $general_settings->credits_display_name
+141:         ]);
+142:     }
+
+FILE=routes/web.php SCORE=40
+11: use App\Http\Controllers\Admin\RoleController;
+12: use App\Http\Controllers\Admin\ServerController as AdminServerController;
+13: use App\Http\Controllers\Admin\SettingsController;
+14: use App\Http\Controllers\Admin\ShopProductController;
+15: use App\Http\Controllers\Admin\TicketCategoryController;
+20: use App\Http\Controllers\Admin\SupportChatController as AdminSupportChatController;
+21: use App\Http\Controllers\Admin\CouponController;
+22: use App\Http\Controllers\Admin\FreeHostingDnsController;
+23: use App\Http\Controllers\Auth\SocialiteController;
+24: use App\Http\Controllers\HomeController;
+64: 
+65: Route::get('/terms/{type}', [TermsController::class, 'index'])->name('terms');
+66: Route::post('/language', [LocaleController::class, 'update'])
+67:     ->middleware('throttle:30,1')
+68:     ->name('locale.update');
+69: Route::middleware(['guest', 'throttle:10,1'])
+70:     ->get('/auth/discord', [SocialiteController::class, 'loginRedirect'])
+98:     Route::patch('/servers/cancel/{server}', [ServerController::class, 'cancel'])->name('servers.cancel');
+99:     Route::post('/servers/validateDeploymentVariables', [ServerController::class, 'validateDeploymentVariables'])->name('servers.validateDeploymentVariables');
+100:     Route::patch('/servers/{server}/billing_priority', [ServerController::class, 'updateBillingPriority'])->name('servers.updateBillingPriority');
+101:     Route::patch('/servers/{server}/domain', [ServerDomainController::class, 'update'])
+102:         ->middleware('throttle:5,1')
+103:         ->name('servers.domain.update');
+104:     Route::get('/servers/{server}/player-status', [ServerController::class, 'playerStatus'])
+105:         ->middleware('throttle:120,1')
+145:     Route::delete('/servers/{server}/plugins/{plugin}', [ServerPluginController::class, 'uninstall'])->middleware('throttle:10,1')->name('servers.plugins.uninstall');
+146:     Route::delete('/servers/{server}', [ServerController::class, 'destroy'])->name('servers.destroy');
+147:     // Route::patch('/servers/{server}', [ServerController::class, 'update'])->name('servers.update');
+148:     Route::resource('servers', ServerController::class);
+149: 
+150:     try {
+151:         $serverSettings = app(App\Settings\ServerSettings::class);
+152:         if ($serverSettings->creation_enabled) {
+153:             Route::post('servers/{server}/upgrade', [ServerController::class, 'upgrade'])->name('servers.upgrade');
+154:         }
+155:     } catch (Exception $e) {
+156:         Log::error("ServerSettings not found, skipping server upgrade route");
+157:     }
+158: 
+170:     Route::resource('store', StoreController::class);
+171:     Route::get('preferences', [PreferencesController::class, 'index'])->name('preferences.index');
+172:     Route::post('preferences', [PreferencesController::class, 'update'])->name('preferences.update');
+173: 
+174:     //server create utility routes (product)
+
+FILE=app/Http/Controllers/Auth/RegisterController.php SCORE=38
+7: use App\Providers\RouteServiceProvider;
+8: use App\Traits\Referral;
+9: use App\Settings\PterodactylSettings;
+10: use App\Classes\PterodactylClient;
+11: use App\Helpers\CurrencyHelper;
+12: use App\Settings\GeneralSettings;
+13: use App\Settings\ReferralSettings;
+14: use App\Settings\UserSettings;
+15: use App\Settings\WebsiteSettings;
+16: use App\Actions\ProcessReferralAction;
+17: use Coderflex\LaravelTurnstile\Rules\TurnstileCheck;
+55:      */
+56:     public function __construct(
+57:         protected PterodactylSettings $pterodactylSettings,
+58:         protected CurrencyHelper $currencyHelper,
+59:         protected GeneralSettings $generalSettings,
+60:         protected WebsiteSettings $websiteSettings,
+61:         protected UserSettings $userSettings,
+62:         protected ReferralSettings $referralSettings,
+63:         protected PterodactylClient $pterodactylClient,
+64:         private ProcessReferralAction $processReferralAction,
+65:     ) {
+66:         $this->middleware('guest');
+67:         $this->pterodactylSettings = $pterodactylSettings;
+68:         $this->pterodactylClient = new PterodactylClient($pterodactylSettings);
+69:         $this->currencyHelper = $currencyHelper;
+70:         $this->generalSettings = $generalSettings;
+
+============================================================
+AREA=QUEUE
+============================================================
+
+FILE=app/Services/Wake/MinecraftWakeService.php SCORE=18
+101:                     ->first();
+102:                 if ($active) {
+103:                     $active->increment('waiting_players');
+104: 
+105:                     return ['session' => $active->fresh(), 'pterodactyl_state' => 'wake_in_progress'];
+111:                     $session = $this->newSession($domain, $endpoint, $edition, $requestIp);
+112:                     $session->update([
+113:                         'state' => $pterodactylState === 'running' ? WakeSession::STATE_READY : WakeSession::STATE_WAITING_FOR_BACKEND,
+114:                         'started_at' => now(),
+115:                         'ready_at' => $pterodactylState === 'running' ? now() : null,
+149:                 }
+150: 
+151:                 $queued = $response->status() === 202
+152:                     || (bool) $response->json('queued', false)
+153:                     || strtoupper((string) $response->json('state', '')) === WakeSession::STATE_QUEUED;
+154:                 $session->update([
+155:                     'state' => $queued ? WakeSession::STATE_QUEUED : WakeSession::STATE_WAITING_FOR_BACKEND,
+156:                     'started_at' => now(),
+157:                 ]);
+162:                 ]);
+163: 
+164:                 return ['session' => $session->fresh(), 'pterodactyl_state' => $queued ? 'queued' : 'starting'];
+165:             });
+166:         } catch (LockTimeoutException) {
+221:             'state' => WakeSession::STATE_REQUESTED,
+222:             'requested_at' => now(),
+223:             'waiting_players' => 1,
+224:             'correlation_id' => (string) Str::uuid(),
+225:             'request_ip_hash' => hash_hmac('sha256', $requestIp, (string) config('app.key')),
+
+FILE=app/Services/ServerPowerService.php SCORE=14
+54:             'state' => $state,
+55:             'can_start' => in_array($state, ['OFFLINE', 'SLEEPING', 'ERROR'], true),
+56:             'can_stop' => in_array($state, ['QUEUED', 'STARTING', 'RUNNING', 'RESTARTING'], true),
+57:             'can_restart' => $state === 'RUNNING',
+58:             'maintenance' => Cache::get('server-maintenance:' . $server->id),
+68:     }
+69: 
+70:     /** @return array{accepted:bool,queued:bool,action:string,signal:string,state:string} */
+71:     public function action(Server $server, string $action): array
+72:     {
+92: 
+93:                 if ($action === 'start' && ! $snapshot['can_start']) {
+94:                     if (in_array($state, ['QUEUED', 'STARTING', 'RUNNING'], true)) {
+95:                         return $this->noop($action, 'start', $state);
+96:                     }
+128:                 return [
+129:                     'accepted' => true,
+130:                     'queued' => $response->status() === 202,
+131:                     'action' => $action,
+132:                     'signal' => $signal,
+185:         return match (strtolower($upstream)) {
+186:             'running' => 'RUNNING',
+187:             'starting' => $domain?->runtime_state === ServerDomain::RUNTIME_STARTING ? 'STARTING' : 'QUEUED',
+188:             'stopping' => 'STOPPING',
+189:             'offline' => $domain?->isSleeping() ? 'SLEEPING' : 'OFFLINE',
+256:     }
+257: 
+258:     /** @return array{accepted:bool,queued:bool,action:string,signal:string,state:string} */
+259:     private function noop(string $action, string $signal, string $state): array
+260:     {
+261:         return [
+262:             'accepted' => false,
+263:             'queued' => false,
+264:             'action' => $action,
+265:             'signal' => $signal,
+
+FILE=app/Jobs/CheckIdleServerJob.php SCORE=11
+12: use App\Settings\FreeHostingSettings;
+13: use App\Settings\PterodactylSettings;
+14: use Illuminate\Bus\Queueable;
+15: use Illuminate\Contracts\Queue\ShouldBeUnique;
+16: use Illuminate\Contracts\Queue\ShouldQueue;
+17: use Illuminate\Foundation\Bus\Dispatchable;
+18: use Illuminate\Queue\InteractsWithQueue;
+19: use Illuminate\Queue\SerializesModels;
+20: use Illuminate\Support\Facades\Cache;
+21: 
+22: class CheckIdleServerJob implements ShouldQueue, ShouldBeUnique
+23: {
+24:     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+25: 
+26:     public int $tries = 3;
+29:     public function __construct(public readonly int $domainId)
+30:     {
+31:         $this->onQueue('default');
+32:     }
+33: 
+
+FILE=app/Jobs/CleanupServerDomainJob.php SCORE=11
+6: use App\Models\ServerDomain;
+7: use App\Settings\FreeHostingSettings;
+8: use Illuminate\Bus\Queueable;
+9: use Illuminate\Contracts\Queue\ShouldBeUnique;
+10: use Illuminate\Contracts\Queue\ShouldQueue;
+11: use Illuminate\Foundation\Bus\Dispatchable;
+12: use Illuminate\Queue\InteractsWithQueue;
+13: use Illuminate\Queue\SerializesModels;
+14: use Throwable;
+15: 
+16: class CleanupServerDomainJob implements ShouldQueue, ShouldBeUnique
+17: {
+18:     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+19: 
+20:     public int $tries = 8;
+23:     public function __construct(public readonly int $domainId)
+24:     {
+25:         $this->onQueue('default');
+26:     }
+27: 
+
+FILE=app/Jobs/ExportBackupToGoogleDriveJob.php SCORE=11
+7: use App\Services\Backups\GoogleDriveApiClient;
+8: use App\Services\Backups\LocalBackupProvider;
+9: use Illuminate\Bus\Queueable;
+10: use Illuminate\Contracts\Queue\ShouldBeUnique;
+11: use Illuminate\Contracts\Queue\ShouldQueue;
+12: use Illuminate\Foundation\Bus\Dispatchable;
+13: use Illuminate\Http\Client\Response;
+14: use Illuminate\Queue\InteractsWithQueue;
+15: use Illuminate\Queue\SerializesModels;
+16: use Illuminate\Support\Facades\Http;
+17: use Throwable;
+18: 
+19: class ExportBackupToGoogleDriveJob implements ShouldQueue, ShouldBeUnique
+20: {
+21:     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+22: 
+23:     public int $tries = 5;
+27:     public function __construct(public readonly int $exportId)
+28:     {
+29:         $this->onQueue('default');
+30:     }
+31: 
+
+FILE=app/Jobs/GenerateSupportChatReplyJob.php SCORE=11
+7: use App\Services\SupportChatAiSettings;
+8: use App\Services\SupportChatKnowledge;
+9: use Illuminate\Bus\Queueable;
+10: use Illuminate\Contracts\Queue\ShouldQueue;
+11: use Illuminate\Foundation\Bus\Dispatchable;
+12: use Illuminate\Queue\InteractsWithQueue;
+13: use Illuminate\Queue\SerializesModels;
+14: use Illuminate\Support\Facades\Http;
+15: use Illuminate\Support\Facades\Log;
+16: 
+17: class GenerateSupportChatReplyJob implements ShouldQueue
+18: {
+19:     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+20: 
+21:     public int $tries = 2;
+99:             }
+100: 
+101:             $humanAnsweredWhileWaiting = SupportMessage::where('conversation_id', $conversation->id)
+102:                 ->where('id', '>', $trigger->id)
+103:                 ->where('sender_type', 'admin')
+104:                 ->exists();
+105:             if ($humanAnsweredWhileWaiting) {
+106:                 return;
+107:             }
+
+FILE=app/Jobs/PostServerCreationJob.php SCORE=11
+6: use App\Models\Server;
+7: use App\Services\Dns\DnsProvisioningService;
+8: use Illuminate\Bus\Queueable;
+9: use Illuminate\Contracts\Queue\ShouldQueue;
+10: use Illuminate\Foundation\Bus\Dispatchable;
+11: use Illuminate\Queue\InteractsWithQueue;
+12: use Illuminate\Queue\SerializesModels;
+13: 
+14: class PostServerCreationJob implements ShouldQueue
+15: {
+16:     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+17: 
+18:     public string $serverId;
+21:     {
+22:         $this->serverId = $serverId;
+23:         $this->queue = 'default';
+24:     }
+25: 
+42:             }
+43:         } catch (\Throwable $exception) {
+44:             logger()->warning('Unable to queue free-hosting DNS provisioning', [
+45:                 'server_id' => $server->id,
+46:                 'exception_class' => $exception::class,
+
+FILE=app/Jobs/ProvisionServerDomainJob.php SCORE=11
+6: use App\Models\ServerDomain;
+7: use App\Services\Dns\DnsProvisioningService;
+8: use Illuminate\Bus\Queueable;
+9: use Illuminate\Contracts\Queue\ShouldBeUnique;
+10: use Illuminate\Contracts\Queue\ShouldQueue;
+11: use Illuminate\Foundation\Bus\Dispatchable;
+12: use Illuminate\Queue\InteractsWithQueue;
+13: use Illuminate\Queue\SerializesModels;
+14: use Throwable;
+15: 
+16: class ProvisionServerDomainJob implements ShouldQueue, ShouldBeUnique
+17: {
+18:     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+19: 
+20:     public int $tries = 8;
+23:     public function __construct(public readonly string $serverId)
+24:     {
+25:         $this->onQueue('default');
+26:     }
+27: 
+
+FILE=app/Models/WakeSession.php SCORE=11
+9: {
+10:     public const STATE_REQUESTED = 'REQUESTED';
+11:     public const STATE_QUEUED = 'QUEUED';
+12:     public const STATE_STARTING = 'STARTING';
+13:     public const STATE_WAITING_FOR_BACKEND = 'WAITING_FOR_BACKEND';
+14:     public const STATE_READY = 'READY';
+15:     public const STATE_COMPLETED = 'COMPLETED';
+19:     public const ACTIVE_STATES = [
+20:         self::STATE_REQUESTED,
+21:         self::STATE_QUEUED,
+22:         self::STATE_STARTING,
+23:         self::STATE_WAITING_FOR_BACKEND,
+24:         self::STATE_READY,
+25:     ];
+28:         'server_id', 'server_domain_id', 'endpoint', 'protocol', 'edition',
+29:         'state', 'requested_at', 'started_at', 'ready_at', 'completed_at',
+30:         'failed_at', 'waiting_players', 'correlation_id', 'request_ip_hash',
+31:         'failure_reason',
+32:     ];
+38:         'completed_at' => 'datetime',
+39:         'failed_at' => 'datetime',
+40:         'waiting_players' => 'integer',
+41:     ];
+42: 
+
+FILE=app/Console/Commands/NotifyServerSuspension.php SCORE=10
+52: 
+53:                     $serversChecked += $analysis['checked_servers'];
+54:                     $serversNotified += $this->queueWarningsForUser($user, $analysis['at_risk_entries']);
+55:                     $warningsCleared += $this->clearResolvedWarningsForUser($user, $analysis['at_risk_server_ids']);
+56:                 }
+143:      * @param  Collection<int, array{server: Server, suspension_date: Carbon}>  $atRiskEntries
+144:      */
+145:     private function queueWarningsForUser(User $user, Collection $atRiskEntries): int
+146:     {
+147:         $queuedCount = 0;
+148:         $now = Carbon::now();
+149: 
+159: 
+160:             $daysUntilSuspension = $now->diffInDays($suspensionDate, false);
+161:             $this->line("<fg=yellow>{$server->name}</> from user: <fg=blue>{$user->name}</> will be suspended in <fg=cyan>{$daysUntilSuspension}</> days. Queued warning...");
+162: 
+163:             if (!isset($this->usersToNotify[$user->id])) {
+169: 
+170:             $this->usersToNotify[$user->id]['servers']->push($entry);
+171:             $queuedCount++;
+172:         }
+173: 
+174:         return $queuedCount;
+175:     }
+176: 
+
+FILE=app/Http/Controllers/Admin/UsefulLinkController.php SCORE=10
+39:     {
+40:         $this->checkPermission(self::WRITE_PERMISSION);
+41:         $positions = UsefulLinkLocation::cases();
+42:         return view('admin.usefullinks.create')->with('positions', $positions);
+43:     }
+44: 
+66:             'link' => $request->link,
+67:             'description' => $request->description,
+68:             'position' => implode(",",$request->position),
+69:         ]);
+70: 
+93:         $this->checkPermission(self::WRITE_PERMISSION);
+94: 
+95:         $positions = UsefulLinkLocation::cases();
+96:         return view('admin.usefullinks.edit', [
+97:             'link' => $usefullink,
+98:             'positions' => $positions,
+99:         ]);
+100:     }
+123:             'link' => $request->link,
+124:             'description' => $request->description,
+125:             'position' => implode(",",$request->position),
+126:         ]);
+127: 
+
+FILE=app/Jobs/CleanupRetiredDnsRecordsJob.php SCORE=10
+5: use App\Contracts\DnsProviderInterface;
+6: use App\Models\ServerDomain;
+7: use Illuminate\Bus\Queueable;
+8: use Illuminate\Contracts\Queue\ShouldQueue;
+9: use Illuminate\Foundation\Bus\Dispatchable;
+10: use Illuminate\Queue\InteractsWithQueue;
+11: use Illuminate\Queue\SerializesModels;
+12: 
+13: class CleanupRetiredDnsRecordsJob implements ShouldQueue
+14: {
+15:     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+16: 
+17:     public int $tries = 8;
+19:     public function __construct(public readonly int $domainId)
+20:     {
+21:         $this->onQueue('default');
+22:     }
+23: 
+
+============================================================
+AREA=AUDIO
+============================================================
+
+============================================================
+AREA=PLUGINS_MODS
+============================================================
+
+FILE=app/Services/Plugins/PluginInstallationService.php SCORE=113
+1: <?php
+2: 
+3: namespace App\Services\Plugins;
+4: 
+5: use App\Classes\PterodactylClient;
+6: use App\Exceptions\PluginProviderException;
+7: use App\Models\Server;
+8: use App\Models\ServerPlugin;
+9: use App\Settings\PterodactylSettings;
+10: use Illuminate\Support\Facades\DB;
+11: use Illuminate\Support\Facades\Http;
+12: 
+13: class PluginInstallationService
+14: {
+15:     private const USER_AGENT = 'MC-ServerHost-FreePanel/1.0 (mc-serverhost.net)';
+17: 
+18:     public function __construct(
+19:         private readonly ModrinthPluginProvider $catalog,
+20:         PterodactylSettings $settings,
+21:     ) {
+27:     {
+28:         $version = $this->catalog->compatibleVersion($projectId, $profile);
+29:         $existing = ServerPlugin::query()
+30:             ->where('server_id', $server->id)
+31:             ->where('provider', 'modrinth')
+32:             ->where('project_id', $projectId)
+33:             ->first();
+34:         $currentFiles = $this->pluginFiles($server);
+35:         if (
+36:             $existing
+37:             && hash_equals((string) $existing->version_id, (string) $version['version_id'])
+38:             && in_array($existing->filename, $currentFiles, true)
+39:         ) {
+40:             return ['plugin' => $this->pluginPayload($existing, true), 'changed' => false];
+41:         }
+42:         if (
+43:             in_array((string) $version['filename'], $currentFiles, true)
+44:             && (!$existing || $existing->filename !== $version['filename'])
+45:         ) {
+46:             throw new PluginProviderException(409, __('A different plugin already uses this filename.'));
+47:         }
+48: 
+49:         $required = collect((array) $version['required_projects']);
+50:         if ($required->isNotEmpty()) {
+51:             $installedProjects = ServerPlugin::query()
+52:                 ->where('server_id', $server->id)
+53:                 ->where('provider', 'modrinth')
+
+FILE=routes/web.php SCORE=53
+34: use App\Http\Controllers\ServerDomainController;
+35: use App\Http\Controllers\ServerFileController;
+36: use App\Http\Controllers\ServerPluginController;
+37: use App\Http\Controllers\ServerPowerController;
+38: use App\Http\Controllers\StoreController;
+108:         ->middleware('throttle:120,1')
+109:         ->name('servers.usage-status');
+110:     Route::get('/servers/{server}/console', [ServerController::class, 'console'])
+111:         ->name('servers.console');
+112:     Route::get('/servers/{server}/console/websocket', [ServerController::class, 'consoleWebsocket'])
+113:         ->middleware('throttle:30,1')
+114:         ->name('servers.console.websocket');
+115:     Route::get('/servers/{server}/power', [ServerPowerController::class, 'show'])
+116:         ->middleware('throttle:120,1')
+119:         ->middleware('throttle:20,1')
+120:         ->name('servers.power.store');
+121:     Route::get('/servers/{server}/files', [ServerFileController::class, 'index'])->name('servers.files.index');
+122:     Route::get('/servers/{server}/files/list', [ServerFileController::class, 'listing'])->name('servers.files.list');
+123:     Route::get('/servers/{server}/files/contents', [ServerFileController::class, 'contents'])->name('servers.files.contents');
+124:     Route::post('/servers/{server}/files/write', [ServerFileController::class, 'write'])->middleware('throttle:60,1')->name('servers.files.write');
+125:     Route::post('/servers/{server}/files/folder', [ServerFileController::class, 'createFolder'])->middleware('throttle:30,1')->name('servers.files.folder');
+126:     Route::put('/servers/{server}/files/rename', [ServerFileController::class, 'rename'])->middleware('throttle:30,1')->name('servers.files.rename');
+127:     Route::post('/servers/{server}/files/copy', [ServerFileController::class, 'copy'])->middleware('throttle:30,1')->name('servers.files.copy');
+128:     Route::delete('/servers/{server}/files/delete', [ServerFileController::class, 'delete'])->middleware('throttle:30,1')->name('servers.files.delete');
+129:     Route::get('/servers/{server}/files/upload-url', [ServerFileController::class, 'uploadUrl'])->middleware('throttle:30,1')->name('servers.files.upload-url');
+
+FILE=app/Http/Controllers/ServerPluginController.php SCORE=46
+3: namespace App\Http\Controllers;
+4: 
+5: use App\Exceptions\PluginProviderException;
+6: use App\Models\Server;
+7: use App\Models\ServerPlugin;
+8: use App\Services\Plugins\MinecraftPluginProfileService;
+9: use App\Services\Plugins\ModrinthPluginProvider;
+10: use App\Services\Plugins\PluginInstallationService;
+11: use Illuminate\Http\JsonResponse;
+12: use Illuminate\Http\Request;
+16: use Illuminate\View\View;
+17: 
+18: class ServerPluginController extends Controller
+19: {
+20:     public function __construct(
+21:         private readonly MinecraftPluginProfileService $profiles,
+22:         private readonly ModrinthPluginProvider $catalog,
+23:         private readonly PluginInstallationService $installer,
+24:     ) {
+25:     }
+29:         $this->ownedServer($server);
+30: 
+31:         return view('servers.plugins', [
+32:             'server' => $server->loadMissing('freeDomain'),
+33:             'profile' => $this->profiles->forServer($server),
+34:         ]);
+35:     }
+42:             'offset' => ['nullable', 'integer', 'min:0', 'max:10000'],
+43:         ]);
+44:         $profile = $this->profiles->forServer($server);
+45:         if (!$profile['supported']) {
+46:             return response()->json(['message' => $profile['reason']], 422);
+
+FILE=app/Services/Plugins/ModrinthPluginProvider.php SCORE=25
+1: <?php
+2: 
+3: namespace App\Services\Plugins;
+4: 
+5: use App\Contracts\PluginCatalogProvider;
+6: use App\Exceptions\PluginProviderException;
+7: use Illuminate\Support\Facades\Cache;
+8: use Illuminate\Support\Facades\Http;
+9: 
+10: class ModrinthPluginProvider implements PluginCatalogProvider
+11: {
+12:     private const API = 'https://api.modrinth.com/v2/';
+22:         $gameVersion = (string) ($profile['game_version'] ?? '');
+23:         if ($gameVersion === '') {
+24:             throw new PluginProviderException(0);
+25:         }
+26:         $facets = json_encode([
+27:             ['all_project_types:plugin'],
+28:             ['categories:paper'],
+29:             ['versions:' . $gameVersion],
+30:         ], JSON_THROW_ON_ERROR);
+31:         $cacheKey = 'modrinth-plugin-search:' . hash('sha256', $query . '|' . $gameVersion . '|' . $offset);
+32: 
+33:         return Cache::remember($cacheKey, 60, function () use ($query, $offset, $facets, $gameVersion): array {
+41:                 ]);
+42:             } catch (\Throwable $exception) {
+43:                 throw new PluginProviderException(0, previous: $exception);
+44:             }
+45:             if ($response->failed()) {
+46:                 throw new PluginProviderException($response->status());
+47:             }
+48: 
+51:                 if (
+52:                     !$this->validId($projectId)
+53:                     || !in_array('plugin', (array) ($hit['all_project_types'] ?? []), true)
+54:                     || !in_array($gameVersion, (array) ($hit['versions'] ?? []), true)
+55:                 ) {
+63:                     'author' => mb_substr((string) ($hit['author'] ?? ''), 0, 80),
+64:                     'downloads' => max(0, (int) ($hit['downloads'] ?? 0)),
+65:                     'source_url' => 'https://modrinth.com/plugin/' . rawurlencode((string) ($hit['slug'] ?? $projectId)),
+66:                 ];
+67:             })->filter()->values()->all();
+77:     {
+78:         if (!$this->validId($projectId)) {
+79:             throw new PluginProviderException(400);
+80:         }
+81:         $gameVersion = (string) ($profile['game_version'] ?? '');
+
+FILE=app/Http/Controllers/ServerFileController.php SCORE=22
+35:         $this->ownedServer($server);
+36: 
+37:         return view('servers.files', [
+38:             'server' => $server->loadMissing('freeDomain'),
+39:             'pterodactyl_url' => $this->settings->panel_url,
+48:         try {
+49:             $response = $this->pterodactyl->client->get(
+50:                 "client/servers/{$server->identifier}/files/list",
+51:                 ['directory' => $directory],
+52:             );
+55:             }
+56: 
+57:             $files = collect($response->json('data', []))->take(5000)->map(function (array $entry): array {
+58:                 $attributes = (array) ($entry['attributes'] ?? []);
+59: 
+70:             })->filter(fn (array $entry): bool => $entry['name'] !== '')->values()->all();
+71: 
+72:             return response()->json(['directory' => $directory, 'files' => $files])
+73:                 ->header('Cache-Control', 'private, no-store, max-age=0');
+74:         } catch (\Throwable $exception) {
+85:             $this->assertEditableFile($server, $file);
+86:             $response = $this->pterodactyl->client->get(
+87:                 "client/servers/{$server->identifier}/files/contents",
+88:                 ['file' => $file],
+89:             );
+126:                 ->timeout(30)
+127:                 ->withBody($validated['content'], 'text/plain; charset=UTF-8')
+128:                 ->post("client/servers/{$server->identifier}/files/write?file=" . rawurlencode($file));
+129:             if ($response->failed()) {
+130:                 return $this->upstreamFailure($server, $response->status(), 'write');
+151:         try {
+152:             $response = $this->pterodactyl->client->post(
+153:                 "client/servers/{$server->identifier}/files/create-folder",
+154:                 ['root' => $root, 'name' => $name],
+155:             );
+179:         try {
+180:             $response = $this->pterodactyl->client->put(
+181:                 "client/servers/{$server->identifier}/files/rename",
+182:                 ['root' => $root, 'files' => [['from' => $from, 'to' => $to]]],
+183:             );
+184: 
+199:         try {
+200:             $response = $this->pterodactyl->client->post(
+201:                 "client/servers/{$server->identifier}/files/copy",
+202:                 ['location' => $file],
+203:             );
+216:         $validated = $request->validate([
+217:             'root' => ['required', 'string', 'max:4096'],
+218:             'files' => ['required', 'array', 'min:1', 'max:100'],
+219:             'files.*' => ['required', 'string', 'max:4096'],
+220:         ]);
+221:         $root = $this->path($validated['root'], true);
+
+FILE=app/Services/Plugins/MinecraftPluginProfileService.php SCORE=10
+1: <?php
+2: 
+3: namespace App\Services\Plugins;
+4: 
+5: use App\Classes\PterodactylClient;
+8: use Illuminate\Support\Facades\Cache;
+9: 
+10: class MinecraftPluginProfileService
+11: {
+12:     private PterodactylClient $pterodactyl;
+32:                 'loaders' => [],
+33:                 'reason' => $edition === 'bedrock'
+34:                     ? __('Bedrock servers use an addon workflow instead of Bukkit plugins.')
+35:                     : __('This server edition does not support the Java plugin catalog.'),
+36:             ];
+37:         }
+43:                 'game_version' => null,
+44:                 'loaders' => [],
+45:                 'reason' => __('This server software is not on the compatible plugin allow-list.'),
+46:             ];
+47:         }
+48: 
+49:         $version = Cache::remember('plugin-profile-version:' . $server->id, 300, function () use ($server): ?string {
+50:             $response = $this->pterodactyl->client->get(
+51:                 "client/servers/{$server->identifier}/startup",
+73:             'loaders' => ['paper', 'purpur', 'spigot', 'bukkit'],
+74:             'reason' => $version === null
+75:                 ? __('The Minecraft version could not be verified, so plugin installation is disabled.')
+76:                 : null,
+77:         ];
+
+FILE=app/Http/Controllers/Admin/InvoiceController.php SCORE=9
+25:         try {
+26:             $allInvoices = $this->rglob(storage_path('app/invoice/*'));
+27:             $invoiceFiles = Storage::disk('local')->files('invoice');
+28:             $zip->addFromString('1. Info.txt', __('Created at') . ' ' . now()->format('d.m.Y'));
+29: 
+37: 
+38:         } catch (Throwable $e) {
+39:             Log::error("Error while adding files to zip: " . $e->getMessage());
+40:             return response()->json(['message' => 'Failed to add files to zip'], 500);
+41:         }
+42: 
+58:         if (!file_exists($filePath)) {
+59:             Log::error("Invoice file not found: " . $filePath);
+60:             return redirect()->back()->withErrors(['message' => __('Invoice does not exist on filesystem!')]);
+61:         }
+62: 
+71:     public function rglob($pattern, $flags = 0)
+72:     {
+73:         $files = glob($pattern, $flags);
+74:         foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir) {
+75:             $files = array_merge($files, $this->rglob($dir.'/'.basename($pattern), $flags));
+76:         }
+77: 
+78:         return $files;
+79:     }
+80: }
+
+FILE=app/Http/Controllers/ServerController.php SCORE=9
+107:     }
+108: 
+109:     public function console(Server $server): \Illuminate\View\View
+110:     {
+111:         abort_unless((int) $server->user_id === (int) Auth::id(), 404);
+112: 
+113:         return view('servers.console', [
+114:             'server' => $server->loadMissing('freeDomain'),
+115:             'pterodactyl_url' => $this->pteroSettings->panel_url,
+117:     }
+118: 
+119:     public function consoleWebsocket(Server $server): JsonResponse
+120:     {
+121:         // The global Pterodactyl credential remains server-side. Only the
+128:                 ->get("client/servers/{$server->identifier}/websocket");
+129:             if ($tokenResponse->failed()) {
+130:                 Log::warning('Unable to create a server console websocket token', [
+131:                     'server_id' => $server->id,
+132:                     'status' => $tokenResponse->status(),
+133:                 ]);
+134: 
+135:                 return response()->json(['message' => __('Console is temporarily unavailable.')], 503);
+136:             }
+137: 
+160:                 || !str_ends_with($socketPath, '/ws')
+161:             ) {
+162:                 Log::warning('Pterodactyl returned an invalid console websocket endpoint', [
+163:                     'server_id' => $server->id,
+164:                     'socket_scheme' => $socketScheme,
+166:                 ]);
+167: 
+168:                 return response()->json(['message' => __('Console is temporarily unavailable.')], 502);
+169:             }
+170: 
+173:                 ->header('Pragma', 'no-cache');
+174:         } catch (\Throwable $exception) {
+175:             Log::warning('Server console websocket setup failed', [
+176:                 'server_id' => $server->id,
+177:                 'exception_class' => $exception::class,
+178:             ]);
+179: 
+180:             return response()->json(['message' => __('Console is temporarily unavailable.')], 503);
+181:         }
+182:     }
+
+FILE=app/Console/Commands/update.php SCORE=8
+1: <?php
+2: 
+3: namespace App\Console\Commands;
+4: 
+5: use Closure;
+6: use Illuminate\Console\Command;
+7: use Symfony\Component\Console\Helper\ProgressBar;
+8: use Symfony\Component\Process\Process;
+9: 
+11: {
+12:     /**
+13:      * The name and signature of the console command.
+14:      *
+15:      * @var string
+16:      */
+17:     protected $signature = 'update
+18:         {--user= : The user that PHP runs under. All files will be owned by this user.}
+19:         {--group= : The group that PHP runs under. All files will be owned by this group.}';
+20: 
+21:     /**
+22:      * The console command description.
+23:      *
+24:      * @var string
+37: 
+38:     /**
+39:      * Execute the console command.
+40:      *
+41:      * @return int
+
+FILE=app/Console/Kernel.php SCORE=7
+1: <?php
+2: 
+3: namespace App\Console;
+4: 
+5: use App\Jobs\SyncServerDomainsJob;
+15: use App\Jobs\CollectObservedPlayerUsageJob;
+16: use App\Jobs\SyncSupportKnowledgeJob;
+17: use Illuminate\Console\Scheduling\Schedule;
+18: use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+19: use Illuminate\Support\Facades\Storage;
+20: 
+21: class Kernel extends ConsoleKernel
+22: {
+23:     /**
+35:      * Define the application's command schedule.
+36:      *
+37:      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+38:      * @return void
+39:      */
+76:         $this->load(__DIR__ . '/Commands');
+77: 
+78:         require base_path('routes/console.php');
+79:     }
+80: }
+
+FILE=app/Services/DiscordRewards/DiscordRewardSyncService.php SCORE=7
+28:     }
+29: 
+30:     /** @return array{profiles:int,servers:int,updated:int,failed:int} */
+31:     public function sync(): array
+32:     {
+33:         if (! $this->settings->enabled || ! $this->settings->discord_rewards_enabled) {
+34:             return ['profiles' => 0, 'servers' => 0, 'updated' => 0, 'failed' => 0];
+35:         }
+36: 
+37:         $profiles = $this->refreshProfiles();
+38:         $servers = $this->applyToFreeServers();
+39:         DiscordRewardActivityEvent::query()
+48:             ->delete();
+49: 
+50:         return array_merge(['profiles' => $profiles], $servers);
+51:     }
+52: 
+53:     private function refreshProfiles(): int
+54:     {
+55:         $linkedIds = DiscordUser::query()->pluck('id')->map(static fn ($id): string => (string) $id)->values();
+
+FILE=app/Console/Commands/MakeUserCommand.php SCORE=6
+1: <?php
+2: 
+3: namespace App\Console\Commands;
+4: 
+5: use App\Classes\PterodactylClient;
+8: use App\Settings\UserSettings;
+9: use App\Traits\Referral;
+10: use Illuminate\Console\Command;
+11: use Illuminate\Support\Facades\Hash;
+12: use Illuminate\Support\Facades\Validator;
+19: 
+20:     /**
+21:      * The name and signature of the console command.
+22:      *
+23:      * @var string
+26: 
+27:     /**
+28:      * The console command description.
+29:      *
+30:      * @var string
+31:      */
+32:     protected $description = 'Create an admin account with the Artisan Console';
+33: 
+34:     /**
+44: 
+45:     /**
+46:      * Execute the console command.
+47:      *
+48:      * @return int
+
+============================================================
+AREA=RESOURCES
+============================================================
+
+FILE=app/Services/ServerPowerService.php SCORE=10
+45:         $attributes = (array) $response->json('attributes', []);
+46:         $state = $this->canonicalState(
+47:             (string) ($attributes['current_state'] ?? ''),
+48:             (bool) ($attributes['is_suspended'] ?? false),
+49:             $server->freeDomain,
+58:             'maintenance' => Cache::get('server-maintenance:' . $server->id),
+59:             'resources' => [
+60:                 'cpu_absolute' => max(0, (float) ($resources['cpu_absolute'] ?? 0)),
+61:                 'memory_bytes' => max(0, (int) ($resources['memory_bytes'] ?? 0)),
+62:                 'disk_bytes' => max(0, (int) ($resources['disk_bytes'] ?? 0)),
+63:                 'network_rx_bytes' => max(0, (int) ($resources['network_rx_bytes'] ?? 0)),
+64:                 'network_tx_bytes' => max(0, (int) ($resources['network_tx_bytes'] ?? 0)),
+278:             'maintenance' => null,
+279:             'resources' => [
+280:                 'cpu_absolute' => 0,
+281:                 'memory_bytes' => 0,
+282:                 'disk_bytes' => 0,
+283:                 'network_rx_bytes' => 0,
+284:                 'network_tx_bytes' => 0,
+
+FILE=app/Jobs/CheckIdleServerJob.php SCORE=2
+92:         }
+93: 
+94:         $state = strtolower((string) $resources->json('attributes.current_state', 'unknown'));
+95:         $domain->update(['last_power_check_at' => now()]);
+96:         if ($state !== 'running') {
+319:         // still held, closing the join-vs-idle-stop race.
+320:         $resources = $pterodactyl->client->get("client/servers/{$server->identifier}/resources");
+321:         if ($resources->failed() || strtolower((string) $resources->json('attributes.current_state', 'unknown')) !== 'running') {
+322:             return;
+323:         }
+
+FILE=app/Services/Wake/MinecraftWakeService.php SCORE=1
+234:         }
+235: 
+236:         return strtolower((string) $response->json('attributes.current_state', 'unknown'));
+237:     }
+238: }
+
+[9/10] Relevante Laravel-Routen ...
+
+=== SETTINGS ===
+  POST            admin/free-hosting/dns-health ....................................... admin.free-hosting.health › Admin\FreeHostingDnsController@health
+  GET|HEAD        admin/free-hosting/domains ............................................ admin.free-hosting.index › Admin\FreeHostingDnsController@index
+  POST            admin/free-hosting/domains/{domain}/retry ............................. admin.free-hosting.retry › Admin\FreeHostingDnsController@retry
+  GET|HEAD        admin/settings .................................................................. admin.settings.index › Admin\SettingsController@index
+  POST            admin/settings ................................................................ admin.settings.update › Admin\SettingsController@update
+  POST            admin/settings/icons ................................................ admin.settings.updateIcons › Admin\SettingsController@updateIcons
+  GET|HEAD        payment/FreePay/{shopProduct} ....................................................... payment.FreePay › Admin\PaymentController@FreePay
+
+=== SERVER UI ===
+  GET|HEAD        admin/servers ...................................................................... admin.servers.index › Admin\ServerController@index
+  POST            admin/servers ...................................................................... admin.servers.store › Admin\ServerController@store
+  PATCH           admin/servers/cancel/{server} .................................................... admin.servers.cancel › Admin\ServerController@cancel
+  GET|HEAD        admin/servers/create ............................................................. admin.servers.create › Admin\ServerController@create
+  GET|HEAD        admin/servers/datatable .................................................... admin.servers.datatable › Admin\ServerController@datatable
+  GET|HEAD        admin/servers/sync ............................................................ admin.servers.sync › Admin\ServerController@syncServers
+  POST            admin/servers/togglesuspend/{server} ............................. admin.servers.togglesuspend › Admin\ServerController@toggleSuspended
+  GET|HEAD        admin/servers/{server} ............................................................... admin.servers.show › Admin\ServerController@show
+  PUT|PATCH       admin/servers/{server} ........................................................... admin.servers.update › Admin\ServerController@update
+  DELETE          admin/servers/{server} ......................................................... admin.servers.destroy › Admin\ServerController@destroy
+  GET|HEAD        admin/servers/{server}/edit .......................................................... admin.servers.edit › Admin\ServerController@edit
+  POST            admin/ticket/status/{ticket_id} ...................................... admin.ticket.changeStatus › Admin\TicketsController@changeStatus
+  GET|HEAD        api/servers ............................................................................ api.servers.index › Api\ServerController@index
+  POST            api/servers ............................................................................ api.servers.store › Api\ServerController@store
+  GET|HEAD        api/servers/{server} ..................................................................... api.servers.show › Api\ServerController@show
+  PUT|PATCH       api/servers/{server} ................................................................. api.servers.update › Api\ServerController@update
+  DELETE          api/servers/{server} ............................................................... api.servers.destroy › Api\ServerController@destroy
+  PATCH           api/servers/{server}/build ................................................. api.servers.updateBuild › Api\ServerController@updateBuild
+  PATCH           api/servers/{server}/suspend ....................................................... api.servers.suspend › Api\ServerController@suspend
+  PATCH           api/servers/{server}/unsuspend ................................................. api.servers.unsuspend › Api\ServerController@unSuspend
+  GET|HEAD        profile ....................................................................................... profile.index › ProfileController@index
+  POST            profile ....................................................................................... profile.store › ProfileController@store
+  GET|HEAD        profile/create .............................................................................. profile.create › ProfileController@create
+  POST            profile/selfdestruct ...................................................... profile.selfDestroyUser › ProfileController@selfDestroyUser
+  GET|HEAD        profile/{profile} ............................................................................... profile.show › ProfileController@show
+  PUT|PATCH       profile/{profile} ........................................................................... profile.update › ProfileController@update
+  DELETE          profile/{profile} ......................................................................... profile.destroy › ProfileController@destroy
+  GET|HEAD        profile/{profile}/edit .......................................................................... profile.edit › ProfileController@edit
+  GET|HEAD        servers ........................................................................................ servers.index › ServerController@index
+  POST            servers ........................................................................................ servers.store › ServerController@store
+  PATCH           servers/cancel/{server} ...................................................................... servers.cancel › ServerController@cancel
+  GET|HEAD        servers/create ............................................................................... servers.create › ServerController@create
+  POST            servers/validateDeploymentVariables ................ servers.validateDeploymentVariables › ServerController@validateDeploymentVariables
+  DELETE          servers/{server} ........................................................................... servers.destroy › ServerController@destroy
+  GET|HEAD        servers/{server} ................................................................................. servers.show › ServerController@show
+  PUT|PATCH       servers/{server} ............................................................................. servers.update › ServerController@update
+  GET|HEAD        servers/{server}/backups ......................................................... servers.backups.index › ServerBackupController@index
+  POST            servers/{server}/backups ....................................................... servers.backups.create › ServerBackupController@create
+  GET|HEAD        servers/{server}/backups/drive/list .................................. servers.backups.drive.list › ServerBackupController@driveListing
+  DELETE          servers/{server}/backups/drive/{export} ............................. servers.backups.drive.delete › ServerBackupController@deleteDrive
+  GET|HEAD        servers/{server}/backups/list ................................................... servers.backups.list › ServerBackupController@listing
+  DELETE          servers/{server}/backups/{backup} .............................................. servers.backups.delete › ServerBackupController@delete
+  GET|HEAD        servers/{server}/backups/{backup}/download ................................. servers.backups.download › ServerBackupController@download
+  POST            servers/{server}/backups/{backup}/drive ........................... servers.backups.drive.export › ServerBackupController@exportToDrive
+  POST            servers/{server}/backups/{backup}/lock ....................................... servers.backups.lock › ServerBackupController@toggleLock
+  POST            servers/{server}/backups/{backup}/restore .................................... servers.backups.restore › ServerBackupController@restore
+  PATCH           servers/{server}/billing_priority .............................. servers.updateBillingPriority › ServerController@updateBillingPriority
+  GET|HEAD        servers/{server}/console ................................................................... servers.console › ServerController@console
+  GET|HEAD        servers/{server}/console/websocket ...................................... servers.console.websocket › ServerController@consoleWebsocket
+  PATCH           servers/{server}/domain ......................................................... servers.domain.update › ServerDomainController@update
+  GET|HEAD        servers/{server}/edit ............................................................................ servers.edit › ServerController@edit
+  GET|HEAD        servers/{server}/files ............................................................... servers.files.index › ServerFileController@index
+  GET|HEAD        servers/{server}/files/contents ................................................ servers.files.contents › ServerFileController@contents
+  POST            servers/{server}/files/copy ............................................................ servers.files.copy › ServerFileController@copy
+  DELETE          servers/{server}/files/delete ...................................................... servers.files.delete › ServerFileController@delete
+  GET|HEAD        servers/{server}/files/download ................................................ servers.files.download › ServerFileController@download
+  POST            servers/{server}/files/folder ................................................ servers.files.folder › ServerFileController@createFolder
+  GET|HEAD        servers/{server}/files/list ......................................................... servers.files.list › ServerFileController@listing
+  PUT             servers/{server}/files/rename ...................................................... servers.files.rename › ServerFileController@rename
+  GET|HEAD        servers/{server}/files/upload-url ........................................... servers.files.upload-url › ServerFileController@uploadUrl
+  POST            servers/{server}/files/write ......................................................... servers.files.write › ServerFileController@write
+  GET|HEAD        servers/{server}/player-status .................................................. servers.player-status › ServerController@playerStatus
+  GET|HEAD        servers/{server}/plugins ......................................................... servers.plugins.index › ServerPluginController@index
+  POST            servers/{server}/plugins/install ............................................. servers.plugins.install › ServerPluginController@install
+  GET|HEAD        servers/{server}/plugins/installed ....................................... servers.plugins.installed › ServerPluginController@installed
+  GET|HEAD        servers/{server}/plugins/search ................................................ servers.plugins.search › ServerPluginController@search
+  DELETE          servers/{server}/plugins/{plugin} ........................................ servers.plugins.uninstall › ServerPluginController@uninstall
+  GET|HEAD        servers/{server}/power ................................................................ servers.power.show › ServerPowerController@show
+  POST            servers/{server}/power .............................................................. servers.power.store › ServerPowerController@store
+  POST            servers/{server}/upgrade ................................................................... servers.upgrade › ServerController@upgrade
+  GET|HEAD        servers/{server}/usage-status ............................................................ servers.usage-status › ServerUsageController
+  POST            ticket/status/{ticket_id} ........................................................ ticket.changeStatus › TicketsController@changeStatus
+
+[10/10] Final Health ...
 
 === SERVICES ===
 ssh.service=active
@@ -15,98 +1574,28 @@ ctrlpanel-wake-gateway.service=active
 ctrlpanel-wake-health.timer=active
 ctrlpanel-scheduler.timer=active
 
-=== NETWORK SAFETY ===
-lo               UNKNOWN        127.0.0.1/8 ::1/128 
-eth0@if379       UP             [PRIVATE_IP]/24 fe80::be24:11ff:fee4:1ccb/64 
-default via [PRIVATE_IP] dev eth0 
-[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
-LISTEN 0      4096           *:22          *:*
+=== QUEUE ===
 
-=== DATABASE SCHEMA ===
-player_usage_sessions.server_id=varchar(191)
-observed_player_usage_sessions.server_id=varchar(191)
-server_hourly_stats.server_id=varchar(191)
-observed_table=YES
-hourly_table=YES
-
-=== FILES ===
-app/Models/ObservedPlayerUsageSession.php=YES
-No syntax errors detected in app/Models/ObservedPlayerUsageSession.php
-app/Models/ServerHourlyStat.php=YES
-No syntax errors detected in app/Models/ServerHourlyStat.php
-app/Services/Usage/ObservedUsageCollector.php=YES
-No syntax errors detected in app/Services/Usage/ObservedUsageCollector.php
-app/Services/Usage/ServerHourlyStatsCollector.php=YES
-No syntax errors detected in app/Services/Usage/ServerHourlyStatsCollector.php
-app/Services/Usage/ServerAnalyticsQueryService.php=YES
-No syntax errors detected in app/Services/Usage/ServerAnalyticsQueryService.php
-app/Console/Commands/FreeHostingUsageCollect.php=YES
-No syntax errors detected in app/Console/Commands/FreeHostingUsageCollect.php
-app/Console/Commands/FreeHostingStatsCollect.php=YES
-No syntax errors detected in app/Console/Commands/FreeHostingStatsCollect.php
-app/Console/Commands/FreeHostingAnalyticsReport.php=YES
-No syntax errors detected in app/Console/Commands/FreeHostingAnalyticsReport.php
-app/Console/Commands/FreeHostingDoctor.php=YES
-No syntax errors detected in app/Console/Commands/FreeHostingDoctor.php
-
-=== ARTISAN COMMANDS ===
-freehosting:analytics-prune         Delete old aggregated hourly statistics.
-freehosting:analytics-report        Show usage/player analytics for free servers.
-freehosting:doctor                  Run free-hosting integrity checks.
-freehosting:stats-collect           Collect five-minute server/player telemetry.
-freehosting:usage-collect           Collect current trusted Java/Bedrock player telemetry.
-freehosting:usage-report            Show observed player usage for all active free-hosting servers.
-
-=== DATABASE COUNTS ===
-observed_total=5
-observed_open=0
-hourly_total=9
-{"id":10,"server_id":"lbCYYrgP8z9N1Q-UOF_9-","server_domain_id":64,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-{"id":9,"server_id":"rO3qwl64u-AsL1XdvytBa","server_domain_id":62,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-{"id":8,"server_id":"HcaV_GfoWBFljif-3Q_Mm","server_domain_id":61,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-{"id":7,"server_id":"4b0DhVcFzQTNBDx2KdPsK","server_domain_id":60,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"offline","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-{"id":6,"server_id":"VJOwZGj7C1tqD59KBvUZ-","server_domain_id":59,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-{"id":5,"server_id":"0l3dlbLrm88BoNLj97RC8","server_domain_id":58,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-{"id":4,"server_id":"jyJwg1lntzMKrYPHVUHOB","server_domain_id":51,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"offline","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-{"id":3,"server_id":"tukUF5Zx13_xDa_zOU3OX","server_domain_id":20,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-{"id":2,"server_id":"wKUwFHX74BxSqgmPGLnEB","server_domain_id":14,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
-
-=== CURRENT DOMAINS ===
-{"id":14,"server_id":"wKUwFHX74BxSqgmPGLnEB","fqdn":"schulsmp.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":0,"verified":0,"last_check":"2026-08-21 21:14:04","last_used":"2026-08-14 14:45:06","provider":"java_status","health":"healthy"}
-{"id":20,"server_id":"tukUF5Zx13_xDa_zOU3OX","fqdn":"mine-attack-tukuf5.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":null,"verified":0,"last_check":"","last_used":"2026-08-15 01:40:09","provider":null,"health":"unknown"}
-{"id":51,"server_id":"jyJwg1lntzMKrYPHVUHOB","fqdn":"veltrixmc.free.mc-serverhost.net","edition":"java","runtime":"offline","players":0,"verified":0,"last_check":"2026-08-21 18:30:26","last_used":"2026-08-21 11:10:43","provider":"java_status","health":"healthy"}
-{"id":58,"server_id":"0l3dlbLrm88BoNLj97RC8","fqdn":"cool.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":0,"verified":0,"last_check":"2026-08-21 07:25:22","last_used":"2026-08-21 05:01:39","provider":"java_status","health":"healthy"}
-{"id":59,"server_id":"VJOwZGj7C1tqD59KBvUZ-","fqdn":"crunchy.free.mc-serverhost.net","edition":"bedrock","runtime":"sleeping","players":0,"verified":0,"last_check":"2026-08-21 22:26:03","last_used":"","provider":"bedrock_raknet","health":"healthy"}
-{"id":60,"server_id":"4b0DhVcFzQTNBDx2KdPsK","fqdn":"server-test.free.mc-serverhost.net","edition":"java","runtime":"offline","players":0,"verified":0,"last_check":"2026-08-21 05:16:13","last_used":"2026-08-21 05:06:10","provider":"java_gateway_traffic","health":"healthy"}
-{"id":61,"server_id":"HcaV_GfoWBFljif-3Q_Mm","fqdn":"kaka.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":null,"verified":0,"last_check":"","last_used":"","provider":null,"health":"unknown"}
-{"id":62,"server_id":"rO3qwl64u-AsL1XdvytBa","fqdn":"timgioh.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":null,"verified":0,"last_check":"","last_used":"2026-08-20 02:00:19","provider":null,"health":"unknown"}
-{"id":64,"server_id":"lbCYYrgP8z9N1Q-UOF_9-","fqdn":"test-lbcyyr.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":0,"verified":0,"last_check":"2026-08-21 10:05:20","last_used":"","provider":"java_status","health":"healthy"}
-
-=== SCHEDULER ===
-  */5  * * * *  App\Jobs\SyncServerDomainsJob ............................................................................... Next Due: 1 minute from now
-  */10 * * * *  php artisan freehosting:gateway-audit --repair .............................................................. Next Due: 1 minute from now
-  *    * * * *  App\Jobs\ScheduleIdleServerChecksJob ...................................................................... Next Due: 57 seconds from now
-  */5  * * * *  App\Jobs\CloseStalePlayerUsageSessionsJob ................................................................... Next Due: 1 minute from now
-  */5  * * * *  App\Jobs\CloseStaleObservedPlayerUsageSessionsJob ........................................................... Next Due: 1 minute from now
-  *    * * * *  App\Jobs\CollectObservedPlayerUsageJob .................................................................... Next Due: 57 seconds from now
-  */5  * * * *  App\Jobs\CollectServerHourlyStatsJob ........................................................................ Next Due: 1 minute from now
-  35   4 * * *  php artisan freehosting:analytics-prune --days=400 ........................................................... Next Due: 5 hours from now
-
-=== WORKERS ===
-ctrlpanel-worker:ctrlpanel-worker_00   RUNNING   pid 3506, uptime 0:01:38
-ctrlpanel-worker:ctrlpanel-worker_01   RUNNING   pid 3507, uptime 0:01:38
-
-=== FAILED JOBS ===
-
-  2026-08-21 23:10:11 245ed5f0-694f-4a4b-852d-a4b06ab1a4f2 ...................................... redis@default App\Jobs\CollectServerHourlyStatsJob  
   2026-08-21 22:18:04 e92d6385-22c9-4274-8c61-1a720dd56766 ............................................... redis@default App\Jobs\CheckIdleServerJob  
   2026-08-21 22:15:11 24fd6a62-62e3-4eb1-abc7-07bc3a0112e1 ............................................... redis@default App\Jobs\CheckIdleServerJob  
   2026-08-21 22:12:16 2462105a-f7ac-49d7-819c-5a9968c64422 ............................................... redis@default App\Jobs\CheckIdleServerJob  
 
 
+=== SCHEDULER ===
+  */5  * * * *  App\Jobs\SyncServerDomainsJob .............................................................................. Next Due: 4 minutes from now
+  */10 * * * *  php artisan freehosting:gateway-audit --repair ............................................................. Next Due: 9 minutes from now
+  *    * * * *  App\Jobs\ScheduleIdleServerChecksJob ...................................................................... Next Due: 11 seconds from now
+  */5  * * * *  App\Jobs\CloseStalePlayerUsageSessionsJob .................................................................. Next Due: 4 minutes from now
+  */5  * * * *  App\Jobs\CloseStaleObservedPlayerUsageSessionsJob .......................................................... Next Due: 4 minutes from now
+  *    * * * *  App\Jobs\CollectObservedPlayerUsageJob .................................................................... Next Due: 11 seconds from now
+  */5  * * * *  App\Jobs\CollectServerHourlyStatsJob ....................................................................... Next Due: 4 minutes from now
+  35   4 * * *  php artisan freehosting:analytics-prune --days=400 ........................................................... Next Due: 5 hours from now
+FINAL_SSH=OK
+FINAL_NETWORK=OK
+
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=CTRLPANEL_V3_2_STATE_PROBE
-end=2026-08-21T21:18:03+00:00
+package=CTRLPANEL_V3_3_HEALTH_UI_MAP
+end=2026-08-21T21:20:48+00:00
 ============================================================
