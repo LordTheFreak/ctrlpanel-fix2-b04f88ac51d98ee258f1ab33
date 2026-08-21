@@ -1,118 +1,36 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T21:07:44+00:00
+published_at=2026-08-21T21:13:28+00:00
 ============================================================
 
 ============================================================
- CTRLPANEL MEGA V2 SAFE
- Usage + Analytics + Doctor + UI Deep Audit
+ CTRLPANEL V3 SCHEMA REPAIR + ANALYTICS
+ STRING SERVER IDs + USAGE + UI DEEP AUDIT
 ============================================================
-start=2026-08-21T21:07:39+00:00
+start=2026-08-21T21:13:26+00:00
 
-[1/22] Sicherheitsprüfung ...
---- SSH ---
-active
-LISTEN 0      4096               *:22               *:*    users:(("sshd",pid=2001,fd=3),("systemd",pid=1,fd=71))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+[1/24] Sicherheitsprüfung ...
+ssh_service=active
+ssh_listener=OK
+network_route=OK
+[INFO] SSH/Netzwerk/PVE werden NICHT verändert.
 
---- NETWORK ---
-lo               UNKNOWN        127.0.0.1/8 ::1/128 
-eth0@if379       UP             [PRIVATE_IP]/24 fe80::be24:11ff:fee4:1ccb/64 
-default via [PRIVATE_IP] dev eth0 
-[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
-[ OK ] SSH und Netzwerk funktionieren.
-[INFO] Dieses Paket verändert SSH/Netzwerk/PVE NICHT.
+[2/24] Backup erstellen ...
+backup=/root/ctrlpanel-v3-schema-repair-20260821-211326
 
-[2/22] Projektdateien sichern ...
-backup=/root/ctrlpanel-mega-v2-safe-20260821-210739
-[ OK ] Backup erstellt.
+[3/24] Tatsächlichen server_id Typ bestimmen ...
+servers={"COLUMN_TYPE":"varchar(64)","IS_NULLABLE":"NO","CHARACTER_SET_NAME":"utf8mb4","COLLATION_NAME":"utf8mb4_unicode_ci"}
+player_usage_sessions={"COLUMN_TYPE":"varchar(191)","IS_NULLABLE":"NO","CHARACTER_SET_NAME":"utf8mb4","COLLATION_NAME":"utf8mb4_unicode_ci"}
+wake_sessions={"COLUMN_TYPE":"varchar(191)","IS_NULLABLE":"NO","CHARACTER_SET_NAME":"utf8mb4","COLLATION_NAME":"utf8mb4_unicode_ci"}
+observed_player_usage_sessions={"COLUMN_TYPE":"bigint(20) unsigned","IS_NULLABLE":"NO","CHARACTER_SET_NAME":null,"COLLATION_NAME":null}
+server_hourly_stats={"COLUMN_TYPE":"bigint(20) unsigned","IS_NULLABLE":"NO","CHARACTER_SET_NAME":null,"COLLATION_NAME":null}
 
-[3/22] Bestehende Usage-Daten prüfen ...
-player_usage_sessions=YES
-observed_player_usage_sessions=YES
-server_domains=YES
-observed_count=0
-observed_open=0
+[4/24] Dauerhafte Schema-Fix-Migration schreiben ...
+PHP Warning:  The use statement with non-compound name 'RuntimeException' has no effect in /var/www/ctrlpanel/database/migrations/2026_08_21_231500_fix_freehosting_string_server_ids.php on line 6
+No syntax errors detected in /var/www/ctrlpanel/database/migrations/2026_08_21_231500_fix_freehosting_string_server_ids.php
 
-[4/22] Hourly Analytics Migration erstellen ...
-No syntax errors detected in /var/www/ctrlpanel/database/migrations/2026_08_21_230000_create_server_hourly_stats.php
-[ OK ] Migration erstellt.
-
-[5/22] Analytics Model installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Models/ServerHourlyStat.php
-[ OK ] Model installiert.
-
-[6/22] Unabhängigen Usage Collector installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ObservedUsageCollector.php
-[ OK ] Usage Collector installiert.
-
-[7/22] Usage Job und CLI installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Jobs/CollectObservedPlayerUsageJob.php
-No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingUsageCollect.php
-[ OK ] Usage Job installiert.
-
-[8/22] Player-/Runtime-History Collector installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ServerHourlyStatsCollector.php
-[ OK ] History Collector installiert.
-
-[9/22] History Job + CLI installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Jobs/CollectServerHourlyStatsJob.php
-No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingStatsCollect.php
-[ OK ] History Job installiert.
-
-[10/22] Analytics Query Service installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ServerAnalyticsQueryService.php
-[ OK ] Analytics Service installiert.
-
-[11/22] Analytics Report installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingAnalyticsReport.php
-[ OK ] Analytics Report installiert.
-
-[12/22] Free Hosting Doctor installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingDoctor.php
-[ OK ] Doctor installiert.
-
-[13/22] Analytics Retention installieren ...
-No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingAnalyticsPrune.php
-[ OK ] Retention installiert.
-
-[14/22] Scheduler erweitern ...
-scheduler_patch=OK
-No syntax errors detected in /var/www/ctrlpanel/app/Console/Kernel.php
-[ OK ] Scheduler erweitert.
-
-[15/22] Migration ausführen ...
-
-   INFO  Nothing to migrate.  
-
-[ OK ] Migration fertig.
-
-[16/22] Bestehende verifizierte Sessions übernehmen ...
-   Illuminate\Database\QueryException  SQLSTATE[01000]: Warning: 1265 Data truncated for column 'server_id' at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `observed_player_usage_sessions` (`server_id`, `server_domain_id`, `started_at`, `last_observed_at`, `ended_at`, `duration_seconds`, `peak_connected_players`, `peak_verified_players`, `source`, `confidence`, `close_reason`, `updated_at`, `created_at`) values (0l3dlbLrm88BoNLj97RC8, 58, 2026-08-21 05:01:39, 2026-08-21 05:01:39, 2026-08-21 05:01:39, 0, 1, 1, legacy_verified, verified, historical_import, 2026-08-21 23:07:42, 2026-08-21 23:07:42)).
-[ OK ] Historie importiert.
-
-[17/22] Live-Daten jetzt erfassen ...
---- Usage ---
-domains=9
-fresh=0
-positive=0
-zero=0
-stale=9
-untrusted=0
-errors=0
-
---- Hourly ---
-
-In Connection.php line 838:
-                                                                                                                                                          
-  SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'wKUwFHX74BxSqgmPGLnEB' for column `ctrlpanel_free`.`server_hourly_stats`.`ser  
-  ver_id` at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `server_hourly_stats` (`server_doma  
-  in_id`, `hour_start`, `server_id`, `updated_at`, `created_at`) values (14, 2026-08-21 21:00:00, wKUwFHX74BxSqgmPGLnEB, 2026-08-21 23:07:44, 2026-08-21  
-   23:07:44))                                                                                                                                             
-                                                                                                                                                          
-
-In MySqlConnection.php line 53:
-                                                                                                                                                          
-  SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'wKUwFHX74BxSqgmPGLnEB' for column `ctrlpanel_free`.`server_hourly_stats`.`ser  
-  ver_id` at row 1                                                                                                                                        
-                                                                                                                                                          
+In 2026_08_21_231500_fix_freehosting_string_server_ids.php line 6:
+                                                                             
+  The use statement with non-compound name 'RuntimeException' has no effect  
+                                                                             
 
