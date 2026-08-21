@@ -1,13 +1,13 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T22:21:51+00:00
+published_at=2026-08-21T22:25:19+00:00
 ============================================================
 
 ============================================================
  REAL PLAYER IP DIAGNOSTIC V5
  PROXY PROTOCOL / LEAF SOCKET PROBE
 ============================================================
-start=2026-08-21T22:21:48+00:00
+start=2026-08-21T22:25:15+00:00
 
 [1/6] Safety ...
 SSH=OK
@@ -137,7 +137,7 @@ FILE=logs/latest.log.gz HTTP=500
 [5/6] Gateway Service Logs ...
 
 [6/6] Gateway Netzwerkdaten feststellen ...
-GATEWAY_TEST_LOCAL=('127.0.0.1', 51678)
+GATEWAY_TEST_LOCAL=('127.0.0.1', 56706)
 GATEWAY_TEST_PEER=('127.0.0.1', 28000)
 
 --- listener ---
@@ -157,5 +157,5 @@ FIX2_STATUS_COMPLETE
 result=SUCCESS
 package=REAL_PLAYER_IP_DIAGNOSTIC_V5
 changes_made=NO
-end=2026-08-21T22:21:51+00:00
+end=2026-08-21T22:25:19+00:00
 ============================================================
