@@ -1,364 +1,94 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T21:25:35+00:00
+published_at=2026-08-21T21:33:24+00:00
 ============================================================
 
 ============================================================
- CTRLPANEL V3.4 ADMIN DATATABLE ERROR PROBE
+ CTRLPANEL V3.5 ADMIN DATATABLE FIX
 ============================================================
-time=2026-08-21T21:25:28+00:00
+start=2026-08-21T21:33:20+00:00
 
-[1/8] SAFETY
-ssh=active
-wake_api=active
-wake_gateway=active
-scheduler=active
+[1/8] Safety ...
+ssh=OK
+network=OK
+pve_untouched=YES
+console_untouched=YES
 
-[2/8] ROUTE
-  GET|HEAD        admin/servers/datatable .................................................... admin.servers.datatable › Admin\ServerController@datatable
+[2/8] Controller sichern ...
+backup=/root/ServerController.php.datatable-20260821-213320.bak
 
-[3/8] DATATABLE METHOD - EXACT SOURCE
-file=/var/www/ctrlpanel/app/Http/Controllers/Admin/ServerController.php
-start=283
-end=417
-   275	        return redirect()->back()->with('success', __('Servers synced successfully' . (($renameCount) ? (',\n' . __('renamed') . ' ' . $renameCount . ' ' . __('servers')) : '') . ((count($filteredArray)) ? (',\n' . __('deleted') . ' ' . $deleteCount . '/' . count($filteredArray) . ' ' . __('old servers')) : ''))) . '.';
-   276	    }
-   277	
-   278	    /**
-   279	     * @return JsonResponse|mixed
-   280	     *
-   281	     * @throws Exception
-   282	     */
-   283	    public function dataTable(Request $request)
-   284	    {
-   285	        $this->checkAnyPermission(self::ANY_PERMISSION);
-   286	
-   287	        $query = Server::with(['user', 'product'])
-   288	            ->leftJoin('server_domains', 'server_domains.server_id', '=', 'servers.id');
-   289	
-   290	
-   291	        if ($request->has('product')) {
-   292	            $query->where('product_id', '=', $request->input('product'));
-   293	        }
-   294	        if ($request->has('user')) {
-   295	            $query->where('user_id', '=', $request->input('user'));
-   296	        }
-   297	        if ($request->filled('runtime_state')) {
-   298	            $query->where('server_domains.runtime_state', $request->string('runtime_state'));
-   299	        }
-   300	        if ($request->input('detection') === 'problems') {
-   301	            $query->where(function ($builder): void {
-   302	                $builder->whereNull('server_domains.provider_health')
-   303	                    ->orWhereNotIn('server_domains.provider_health', ['healthy', 'healthy_unverified']);
-   304	            });
-   305	        }
-   306	
-   307	        $timezone = (string) config('app.timezone', 'UTC');
-   308	        $now = CarbonImmutable::now($timezone);
-   309	        $query->select([
-   310	            'servers.*',
-   311	            'server_domains.runtime_state',
-   312	            'server_domains.last_player_count',
-   313	            'server_domains.verified_player_count',
-   314	            'server_domains.provider_health',
-   315	            'server_domains.last_player_activity_at',
-   316	            'server_domains.last_used_at',
-   317	        ]);
-   318	        $this->addUsageWindow($query, 'usage_today_seconds', $now->startOfDay()->utc(), $now->utc());
-   319	        $this->addUsageWindow($query, 'usage_7d_seconds', $now->subDays(6)->startOfDay()->utc(), $now->utc());
-   320	        $this->addUsageWindow($query, 'usage_30d_seconds', $now->subDays(29)->startOfDay()->utc(), $now->utc());
-   321	
-   322	
-   323	        return datatables($query)
-   324	            ->addColumn('user', function (Server $server) {
-   325	                if ($server->user) {
-   326	                    return '<a href="' . route('admin.users.show', $server->user->id) . '">' . e($server->user->name) . '</a>';
-   327	                }
-   328	
-   329	                return __('Unknown user');
-   330	            })
-   331	            ->addColumn('resources', function (Server $server) {
-   332	                return $server->product ? e($server->product->name) : '';
-   333	            })
-   334	            ->addColumn('runtime', function (Server $server) {
-   335	                $state = (string) ($server->runtime_state ?: 'unmanaged');
-   336	                $color = match ($state) {
-   337	                    'running' => 'success',
-   338	                    'starting', 'stopping' => 'warning',
-   339	                    'sleeping' => 'info',
-   340	                    'error' => 'danger',
-   341	                    default => 'secondary',
-   342	                };
-   343	
-   344	                return '<span class="badge badge-' . $color . '">' . e(strtoupper($state)) . '</span>';
-   345	            })
-   346	            ->addColumn('players', function (Server $server) {
-   347	                if ($server->last_player_count === null) {
-   348	                    return '<span class="text-muted">—</span>';
-   349	                }
-   350	                $connected = max(0, (int) $server->last_player_count);
-   351	                $verified = max(0, (int) $server->verified_player_count);
-   352	                $health = e((string) ($server->provider_health ?: 'unknown'));
-   353	
-   354	                return '<span class="badge badge-primary">' . $connected . ' ' . __('connected') . '</span> '
-   355	                    . '<span class="badge badge-success">' . $verified . ' ' . __('active') . '</span>'
-   356	                    . '<small class="d-block text-muted">' . $health . '</small>';
-   357	            })
-   358	            ->addColumn('last_used', function (Server $server) {
-   359	                $lastUsed = $server->last_used_at
-   360	                    ?: $server->last_player_activity_at;
-   361	
-   362	                return $lastUsed
-   363	                    ? CarbonImmutable::parse($lastUsed)->diffForHumans()
-   364	                    : '<span class="text-muted">' . __('Never') . '</span>';
-   365	            })
-   366	            ->addColumn('usage_today', fn (Server $server) => app(\App\Services\Usage\PlayerUsageQueryService::class)->formatDuration((int) $server->usage_today_seconds))
-   367	            ->addColumn('usage_7d', fn (Server $server) => app(\App\Services\Usage\PlayerUsageQueryService::class)->formatDuration((int) $server->usage_7d_seconds))
-   368	            ->addColumn('usage_30d', fn (Server $server) => app(\App\Services\Usage\PlayerUsageQueryService::class)->formatDuration((int) $server->usage_30d_seconds))
-   369	            ->addColumn('actions', function (Server $server) {
-   370	                $suspendColor = $server->isSuspended() ? 'btn-success' : 'btn-warning';
-   371	                $suspendIcon = $server->isSuspended() ? 'fa-play-circle' : 'fa-pause-circle';
-   372	                $suspendText = $server->isSuspended() ? __('Unsuspend') : __('Suspend');
-   373	
-   374	                return '
-   375	                         <a data-content="' . __('Edit') . '" data-toggle="popover" data-trigger="hover" data-placement="top"  href="' . route('admin.servers.edit', $server->id) . '" class="btn btn-sm btn-info mr-1"><i class="fas fa-pen"></i></a>
-   376	                        <form class="d-inline" method="post" action="' . route('admin.servers.togglesuspend', $server->id) . '">
-   377	                            ' . csrf_field() . '
-   378	                        <button type="button"
-   379	                            class="btn btn-sm '.$suspendColor.' text-white mr-1 suspend-btn"
-   380	                            data-server-id="'. $server->id .'"
-   381	                            data-action="'.route("admin.servers.togglesuspend", $server->id) .'"
-   382	                            data-content="'.$suspendText .'"
-   383	                            data-toggle="popover"
-   384	                            data-trigger="hover"
-   385	                            data-placement="top">
-   386	                            <i class="far '.$suspendIcon .'"></i>
-   387	                        </button>
-   388	                       </form>
-   389	
-   390	                       <form class="d-inline" onsubmit="return submitResult();" method="post" action="' . route('admin.servers.destroy', $server->id) . '">
-   391	                            ' . csrf_field() . '
-   392	                            ' . method_field('DELETE') . '
-   393	                           <button data-content="' . __('Delete') . '" data-toggle="popover" data-trigger="hover" data-placement="top" class="btn btn-sm btn-danger mr-1"><i class="fas fa-trash"></i></button>
-   394	                       </form>
-   395	
-   396	                ';
-   397	            })
-   398	            ->addColumn('status', function (Server $server) {
-   399	                $labelColor = $server->suspended ? 'text-danger' : 'text-success';
-   400	
-   401	                return '<i class="fas ' . $labelColor . ' fa-circle mr-2"></i>';
-   402	            })
-   403	            ->editColumn('created_at', function (Server $server) {
-   404	                return $server->created_at ? $server->created_at->diffForHumans() : '';
-   405	            })
-   406	            ->editColumn('suspended', function (Server $server) {
-   407	                return $server->suspended ? $server->suspended->diffForHumans() : '';
-   408	            })
-   409	            ->editColumn('name', function (Server $server, PterodactylSettings $ptero_settings) {
-   410	            $url = e(rtrim($ptero_settings->panel_url, '/'));
-   411	            $pteroId = (int) $server->pterodactyl_id;
-   412	
-   413	            return '<a class="text-info" target="_blank" href="' . $url . '/admin/servers/view/' . $pteroId . '">' . e($server->name) . '</a>';
-   414	            })
-   415	            ->rawColumns(['user', 'actions', 'status', 'name', 'runtime', 'players', 'last_used'])
-   416	            ->make();
-   417	    }
-   418	
-   419	    private function addUsageWindow($query, string $alias, CarbonImmutable $start, CarbonImmutable $end): void
-   420	    {
-   421	        $query->selectSub(function ($subquery) use ($start, $end): void {
-   422	            $subquery->from('observed_player_usage_sessions')
-   423	                ->selectRaw(
-   424	                    'COALESCE(SUM(GREATEST(0, TIMESTAMPDIFF(SECOND, GREATEST(started_at, ?), LEAST(COALESCE(ended_at, last_observed_at), ?)))), 0)',
-   425	                    [$start->toDateTimeString(), $end->toDateTimeString()]
-
-[4/8] ADMIN SERVERS VIEW / DATATABLE JS
-
-[5/8] DATABASE COLUMNS
-
-TABLE=servers
-id varchar(64) nullable=NO
-name varchar(191) nullable=NO
-description text nullable=YES
-suspended datetime nullable=YES
-suspension_warning_sent_at datetime nullable=YES
-identifier varchar(191) nullable=YES
-status varchar(191) nullable=NO
-billing_priority tinyint(4) nullable=YES
-pterodactyl_id int(11) nullable=YES
-user_id bigint(20) unsigned nullable=NO
-product_id varchar(32) nullable=NO
-egg_id bigint(20) unsigned nullable=YES
-created_at timestamp nullable=YES
-updated_at timestamp nullable=YES
-last_billed datetime nullable=YES
-canceled datetime nullable=YES
-
-TABLE=server_domains
-id bigint(20) unsigned nullable=NO
-server_id varchar(191) nullable=NO
-slug varchar(63) nullable=NO
-fqdn varchar(191) nullable=NO
-node_id bigint(20) unsigned nullable=YES
-allocation_id bigint(20) unsigned nullable=YES
-port int(10) unsigned nullable=YES
-edition varchar(16) nullable=NO
-gateway_port smallint(5) unsigned nullable=YES
-last_status_protocol int(10) unsigned nullable=YES
-last_status_version varchar(64) nullable=YES
-last_status_max_players int(10) unsigned nullable=YES
-last_status_motd varchar(255) nullable=YES
-target varchar(191) nullable=YES
-public_address varchar(191) nullable=YES
-probe_host varchar(191) nullable=YES
-address_record_id varchar(191) nullable=YES
-srv_record_id varchar(191) nullable=YES
-previous_address_record_id varchar(191) nullable=YES
-previous_srv_record_id varchar(191) nullable=YES
-status varchar(32) nullable=NO
-runtime_state varchar(32) nullable=NO
-attempts int(10) unsigned nullable=NO
-last_error text nullable=YES
-last_synced_at timestamp nullable=YES
-rename_available_at timestamp nullable=YES
-idle_since_at timestamp nullable=YES
-idle_deadline_at timestamp nullable=YES
-last_player_seen_at timestamp nullable=YES
-last_player_activity_at timestamp nullable=YES
-active_player_session_started_at timestamp nullable=YES
-last_player_session_duration_seconds bigint(20) unsigned nullable=NO
-total_player_usage_seconds bigint(20) unsigned nullable=NO
-last_player_count int(10) unsigned nullable=YES
-verified_player_count int(10) unsigned nullable=NO
-zero_sample_count int(10) unsigned nullable=NO
-last_player_check_at timestamp nullable=YES
-player_provider varchar(64) nullable=YES
-provider_health varchar(32) nullable=NO
-last_verified_player_activity_at timestamp nullable=YES
-unverified_players_since_at timestamp nullable=YES
-last_power_check_at timestamp nullable=YES
-auto_stopped_at timestamp nullable=YES
-sleep_started_at timestamp nullable=YES
-last_wake_at timestamp nullable=YES
-wake_count bigint(20) unsigned nullable=NO
-created_at timestamp nullable=YES
-updated_at timestamp nullable=YES
-last_used_at timestamp nullable=YES
-active_observed_session_started_at timestamp nullable=YES
-last_observed_session_duration_seconds bigint(20) unsigned nullable=NO
-total_observed_usage_seconds bigint(20) unsigned nullable=NO
-last_observed_connected_players int(10) unsigned nullable=NO
-last_observed_source varchar(64) nullable=YES
-
-TABLE=player_usage_sessions
-id bigint(20) unsigned nullable=NO
-server_id varchar(191) nullable=NO
-server_domain_id bigint(20) unsigned nullable=NO
-started_at timestamp nullable=NO
-last_observed_at timestamp nullable=NO
-ended_at timestamp nullable=YES
-duration_seconds bigint(20) unsigned nullable=NO
-peak_verified_players int(10) unsigned nullable=NO
-source varchar(64) nullable=NO
-close_reason varchar(64) nullable=YES
-created_at timestamp nullable=YES
-updated_at timestamp nullable=YES
-
-TABLE=observed_player_usage_sessions
-id bigint(20) unsigned nullable=NO
-server_id varchar(191) nullable=NO
-server_domain_id bigint(20) unsigned nullable=NO
-started_at timestamp nullable=NO
-last_observed_at timestamp nullable=NO
-ended_at timestamp nullable=YES
-duration_seconds bigint(20) unsigned nullable=NO
-peak_connected_players int(10) unsigned nullable=NO
-peak_verified_players int(10) unsigned nullable=NO
-source varchar(64) nullable=NO
-confidence varchar(32) nullable=NO
-close_reason varchar(64) nullable=YES
-created_at timestamp nullable=YES
-updated_at timestamp nullable=YES
-
-TABLE=server_hourly_stats
-id bigint(20) unsigned nullable=NO
-server_id varchar(191) nullable=NO
-server_domain_id bigint(20) unsigned nullable=NO
-hour_start timestamp nullable=NO
-sample_count int(10) unsigned nullable=NO
-runtime_running_samples int(10) unsigned nullable=NO
-player_sample_count int(10) unsigned nullable=NO
-player_present_samples int(10) unsigned nullable=NO
-sum_connected_players bigint(20) unsigned nullable=NO
-max_connected_players int(10) unsigned nullable=NO
-max_verified_players int(10) unsigned nullable=NO
-last_runtime_state varchar(32) nullable=YES
-last_provider varchar(64) nullable=YES
-last_provider_health varchar(64) nullable=YES
-last_sample_at timestamp nullable=YES
-last_sample_slot timestamp nullable=YES
-created_at timestamp nullable=YES
-updated_at timestamp nullable=YES
-
-[6/8] QUALIFIED COLUMN REFERENCES
-servers=delete,destroy,edit,id,index,read,suspend,togglesuspend,write
-server_domains=last_player_activity_at,last_player_count,last_used_at,provider_health,runtime_state,server_id,verified_player_count
-player_usage_sessions=server_id
-observed_player_usage_sessions=NONE
-server_hourly_stats=NONE
-
-[7/8] CURRENT LARAVEL ERROR
---- newest ERROR/SQL/DataTables context ---
-
---- final 160 laravel log lines ---
-[2026-08-09 06:44:52] production.INFO: CallHome: request sent  
-[2026-08-09 06:44:52] production.ERROR: ServerSettings not found, skipping server upgrade route  
-
-[8/8] PHP / APP HEALTH
+[3/8] Datatable-Code reparieren ...
+carbon_immutable_import=ALREADY_PRESENT
+add_usage_window=REPLACED
 No syntax errors detected in app/Http/Controllers/Admin/ServerController.php
 
-  Environment ......................................................................................................................................  
-  Application Name .............................................................................................................. MC-ServerHost Free  
-  Laravel Version .......................................................................................................................... 12.65.0  
-  PHP Version ............................................................................................................................... 8.3.33  
-  Composer Version ........................................................................................................................... 2.8.8  
-  Environment ........................................................................................................................... production  
-  Debug Mode ................................................................................................................................... OFF  
-  URL ....................................................................................................................... free.mc-serverhost.net  
-  Maintenance Mode ............................................................................................................................. OFF  
-  Timezone ........................................................................................................................... Europe/Berlin  
-  Locale ........................................................................................................................................ en  
+[4/8] Exakte Datatable-DB-Abfrage testen ...
+query_rows=9
+{"id":"0l3dlbLrm88BoNLj97RC8","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
+{"id":"4b0DhVcFzQTNBDx2KdPsK","today":121,"seven_days":121,"thirty_days":121,"runtime":"offline"}
+{"id":"HcaV_GfoWBFljif-3Q_Mm","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
+{"id":"jyJwg1lntzMKrYPHVUHOB","today":0,"seven_days":0,"thirty_days":0,"runtime":"offline"}
+{"id":"lbCYYrgP8z9N1Q-UOF_9-","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
+{"id":"rO3qwl64u-AsL1XdvytBa","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
+{"id":"tukUF5Zx13_xDa_zOU3OX","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
+{"id":"VJOwZGj7C1tqD59KBvUZ-","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
+{"id":"wKUwFHX74BxSqgmPGLnEB","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
+DATATABLE_CORE_QUERY=OK
+controller_query_test=OK
 
-  Cache ............................................................................................................................................  
-  Config ................................................................................................................................ NOT CACHED  
-  Events ................................................................................................................................ NOT CACHED  
-  Routes ................................................................................................................................ NOT CACHED  
-  Views ..................................................................................................................................... CACHED  
+[5/8] Alte Schema-Fehler aus failed_jobs entfernen ...
+removed=2462105a-f7ac-49d7-819c-5a9968c64422 App\Jobs\CheckIdleServerJob
+removed=24fd6a62-62e3-4eb1-abc7-07bc3a0112e1 App\Jobs\CheckIdleServerJob
+removed=e92d6385-22c9-4274-8c61-1a720dd56766 App\Jobs\CheckIdleServerJob
+old_schema_failures_removed=3
+failed_jobs_remaining=0
 
-  Drivers ..........................................................................................................................................  
-  Broadcasting ................................................................................................................................ null  
-  Cache ...................................................................................................................................... redis  
-  Database ................................................................................................................................... mysql  
-  Logs ....................................................................................................................................... daily  
-  Mail ........................................................................................................................................ smtp  
-  Queue ...................................................................................................................................... redis  
-  Session .................................................................................................................................... redis  
+[6/8] Laravel Cache leeren ...
 
-  Storage ..........................................................................................................................................  
-  public/storage ............................................................................................................................ LINKED  
+   INFO  Clearing cached bootstrap files.  
 
-  Spatie Permissions ...............................................................................................................................  
-  Features Enabled ............................................................................................................ Wildcard-Permissions  
-  Version ................................................................................................................................... 6.25.0  
+  config ............................................................................................................................... 2.00ms DONE
+  cache ................................................................................................................................ 2.74ms DONE
+  compiled ............................................................................................................................. 1.07ms DONE
+  events ............................................................................................................................... 0.54ms DONE
+  routes ............................................................................................................................... 0.51ms DONE
+  views ............................................................................................................................... 10.54ms DONE
+  laravel-settings ..................................................................................................................... 0.29ms DONE
+
+cache=OK
+
+[7/8] Controller/Routes prüfen ...
+No syntax errors detected in app/Http/Controllers/Admin/ServerController.php
+  GET|HEAD        admin/servers/datatable .................................................... admin.servers.datatable › Admin\ServerController@datatable
+
+--- Carbon Import ---
+22:use Carbon\CarbonImmutable;
+308:        $now = CarbonImmutable::now($timezone);
+363:                    ? CarbonImmutable::parse($lastUsed)->diffForHumans()
+422:        CarbonImmutable $start,
+423:        CarbonImmutable $end
+
+--- Usage Function ---
+419:    private function addUsageWindow(
+
+--- Failed Jobs ---
+
+   INFO  No failed jobs found.  
 
 
-failed_jobs=3
+[8/8] Final Safety ...
+ssh.service=active
+ctrlpanel-wake-api.service=active
+ctrlpanel-wake-gateway.service=active
+ctrlpanel-wake-health.timer=active
+ctrlpanel-scheduler.timer=active
+FINAL_SSH=OK
+FINAL_NETWORK=OK
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=CTRLPANEL_V3_4_ADMIN_DATATABLE_PROBE
-changes_made=NO
-end=2026-08-21T21:25:35+00:00
+package=CTRLPANEL_V3_5_ADMIN_DATATABLE_FIX
+datatable_query=OK
+end=2026-08-21T21:33:24+00:00
 ============================================================
