@@ -1,83 +1,40 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T22:01:43+00:00
+published_at=2026-08-21T22:07:21+00:00
 ============================================================
 
 ============================================================
- CTRLPANEL REAL PLAYER IP FIX V2
- Leaf/Paper HAProxy PROXY Protocol
+ REAL PLAYER IP FIX V3
+ PAPER RAW FILE WRITE + END-TO-END TEST
 ============================================================
-start=2026-08-21T22:00:22+00:00
+start=2026-08-21T22:07:09+00:00
 
-[1/10] Safety ...
+[1/8] Safety ...
 SSH=OK
 NETWORK=OK
-PVE_UNTOUCHED=YES
-CONSOLE_UNTOUCHED=YES
 
-[2/10] Xhoelserver ermitteln ...
-identifier=8c8f846d
-backend_port=27009
-egg_id=1
+[2/8] Gateway PROXY Support prüfen ...
+GATEWAY_PROXY_SUPPORT=OK
+DOMAIN_ALLOWLIST=OK
 
-[3/10] Gateway sichern ...
-gateway_backup=/root/gateway.py.real-ip-20260821-220022.bak
-env_backup=/root/wake-gateway.env.real-ip-20260821-220022.bak
+[3/8] Paper proxy-protocol korrekt aktivieren ...
+READ_HTTP=200
+PAPER_PROXY_BEFORE=FALSE
+WRITE_HTTP=204
+PAPER_PROXY_PROTOCOL=TRUE
 
-[4/10] Paper PROXY Protocol einschalten ...
-   RuntimeException  paper-global.yml konnte nicht gespeichert werden. HTTP 400.
+[4/8] Xhoelserver neu starten ...
+RESTART_HTTP=200
+Warte auf Minecraft ...
 
-[5/10] Xhoelserver kontrolliert stoppen ...
-STOP_HTTP=200
-Warte auf offline ...
-state=running
-state=running
-state=running
-state=running
-state=offline
+[5/8] Gateway -> PROXY Header -> Paper testen ...
+  File "<stdin>", line 95
+    length =
+            ^
+SyntaxError: invalid syntax
 
-[6/10] Wake-Gateway um echte Client-IP erweitern ...
-gateway_proxy_calls=3
-gateway_python_compile=OK
-
-[7/10] Nur Leaf/Paper Xhoelserver freigeben ...
-JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net
-
-[8/10] Wake-Gateway neu starten ...
-java_listener=READY
-bedrock_listeners=100/100
-gateway_ready=YES
-WAKE_GATEWAY=ACTIVE
-
-[9/10] Xhoelserver starten ...
-START_HTTP=200
-Warte auf running ...
-state=offline
-state=offline
-state=offline
-state=offline
-state=offline
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=starting
-state=running
-
-[10/10] Konfiguration verifizieren ...
-PAPER_PROXY_PROTOCOL=FAILED
-
-In BreakException.php line 49:
-                  
-  Exit:  Goodbye  
-                  
-
+[6/8] Gateway-Test fehlgeschlagen.
+ROLLBACK proxy-protocol -> false
+ROLLBACK_WRITE_HTTP=204
+ROLLBACK_RESTART=SENT
+result=FAILED_SAFE_ROLLBACK
