@@ -1,32 +1,157 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T22:46:01+00:00
+published_at=2026-08-21T22:58:18+00:00
 ============================================================
 
 ============================================================
- REAL PLAYER IP V6 RESET CHECK
+ REAL PLAYER IP FIX V7
+ PAPER + JAVA WAKE GATEWAY
 ============================================================
-time=2026-08-21T22:45:59+00:00
-SCRIPT_VERSION=REAL_PLAYER_IP_V6_RESET
+start=2026-08-21T22:57:09+00:00
+SCRIPT_VERSION=REAL_PLAYER_IP_FIX_V7
 
-=== CURRENT PAPER CONFIG ===
-proxy-protocol: false
+[1/8] Safety / Dienste pruefen ...
+SSH=OK
+NETWORK=OK
+WAKE_API=OK
+WAKE_GATEWAY=OK
+GATEWAY_PYTHON=OK
+
+[2/8] Testserver bestimmen ...
+domain=xhoelserver.free.mc-serverhost.net
+backend_host=[PRIVATE_IP]
 backend_port=27009
 identifier=8c8f846d
 
-=== GATEWAY ===
+[3/8] Aktuelle Paper-Einstellung lesen ...
+original_proxy_protocol=false
+
+[4/8] Paper PROXY Protocol aktivieren ...
+PAPER_WRITE_HTTP=204
+PAPER_PROXY_PROTOCOL=TRUE
+state_before_restart=offline
+POWER_HTTP=200
+Warte auf RUNNING ...
+server_state=offline
+server_state=offline
+server_state=offline
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=running
+current_proxy_protocol=true
+PAPER_PROXY_ENABLE=OK
+
+[5/8] PROXY v1 direkt gegen Leaf testen ...
+PROXY_HEADER=PROXY TCP4 198.51.100.123 [PRIVATE_IP] 45678 27009
+DIRECT_PROXY_STATUS=PASS
+STATUS_BYTES=143
+DIRECT_LEAF_PROXY=PASS
+
+[6/8] Gateway-Konfiguration pruefen ...
 19:JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net
 357:def build_java_proxy_line(
+WAKE_GATEWAY_RESTART=OK
 
-=== HEALTH ===
-SSH=OK
-WAKE_API=OK
-WAKE_GATEWAY=OK
+[7/8] Gateway -> Leaf PROXY-Test ...
+GATEWAY_PROXY_STATUS=PASS
+GATEWAY_STATUS_BYTES=143
+GATEWAY_PROXY_STATUS=PASS
+
+[8/8] Final Verify ...
+final_proxy_protocol=true
+
+----- RECENT GATEWAY LOG -----
+Aug 21 20:32:05 ctrlpanel ctrlpanel-wake-gateway-wait[436]: bedrock_listeners=100/100
+Aug 21 20:32:05 ctrlpanel ctrlpanel-wake-gateway-wait[436]: gateway_ready=YES
+Aug 21 20:32:05 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:46:27 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:46:27 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:46:27 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+-- Boot 160e4ec039b645a8983e6fcab3967e03 --
+Aug 21 20:46:34 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:46:34 ctrlpanel ctrlpanel-wake-api-wait[348]: wake_api_ready=YES
+Aug 21 20:46:35 ctrlpanel python3[433]: 2026-08-21 20:46:35,335 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:46:35 ctrlpanel python3[433]: 2026-08-21 20:46:35,335 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:46:35 ctrlpanel python3[433]: 2026-08-21 20:46:35,345 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:46:35 ctrlpanel ctrlpanel-wake-gateway-wait[436]: java_listener=READY
+Aug 21 20:46:35 ctrlpanel ctrlpanel-wake-gateway-wait[436]: bedrock_listeners=100/100
+Aug 21 20:46:35 ctrlpanel ctrlpanel-wake-gateway-wait[436]: gateway_ready=YES
+Aug 21 20:46:35 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:49:27 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:49:27 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:49:27 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+-- Boot e767bb8730254bd3966743b4fc822375 --
+Aug 21 20:49:33 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:49:33 ctrlpanel ctrlpanel-wake-api-wait[352]: wake_api_ready=YES
+Aug 21 20:49:34 ctrlpanel python3[449]: 2026-08-21 20:49:34,484 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:49:34 ctrlpanel python3[449]: 2026-08-21 20:49:34,485 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:49:34 ctrlpanel python3[449]: 2026-08-21 20:49:34,496 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:49:34 ctrlpanel ctrlpanel-wake-gateway-wait[457]: java_listener=READY
+Aug 21 20:49:34 ctrlpanel ctrlpanel-wake-gateway-wait[457]: bedrock_listeners=100/100
+Aug 21 20:49:34 ctrlpanel ctrlpanel-wake-gateway-wait[457]: gateway_ready=YES
+Aug 21 20:49:34 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+-- Boot 75074be6bd2e45c1b5c4ee0ed4d958eb --
+Aug 21 20:50:18 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:50:18 ctrlpanel ctrlpanel-wake-api-wait[356]: wake_api_ready=YES
+Aug 21 20:50:19 ctrlpanel python3[433]: 2026-08-21 20:50:19,271 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:50:19 ctrlpanel python3[433]: 2026-08-21 20:50:19,271 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:50:19 ctrlpanel python3[433]: 2026-08-21 20:50:19,282 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:50:19 ctrlpanel ctrlpanel-wake-gateway-wait[435]: java_listener=READY
+Aug 21 20:50:19 ctrlpanel ctrlpanel-wake-gateway-wait[435]: bedrock_listeners=100/100
+Aug 21 20:50:19 ctrlpanel ctrlpanel-wake-gateway-wait[435]: gateway_ready=YES
+Aug 21 20:50:19 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 22:00:39 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 22:00:39 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 22:00:39 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 22:00:39 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 22:00:39 ctrlpanel ctrlpanel-wake-api-wait[6890]: wake_api_ready=YES
+Aug 21 22:00:39 ctrlpanel python3[6892]: 2026-08-21 22:00:39,949 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 22:00:39 ctrlpanel python3[6892]: 2026-08-21 22:00:39,950 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 22:00:39 ctrlpanel python3[6892]: 2026-08-21 22:00:39,960 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 22:00:40 ctrlpanel ctrlpanel-wake-gateway-wait[6894]: java_listener=READY
+Aug 21 22:00:40 ctrlpanel ctrlpanel-wake-gateway-wait[6894]: bedrock_listeners=100/100
+Aug 21 22:00:40 ctrlpanel ctrlpanel-wake-gateway-wait[6894]: gateway_ready=YES
+Aug 21 22:00:40 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 22:58:13 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 22:58:13 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 22:58:13 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 22:58:13 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 22:58:13 ctrlpanel ctrlpanel-wake-api-wait[10787]: wake_api_ready=YES
+Aug 21 22:58:13 ctrlpanel python3[10789]: 2026-08-21 22:58:13,808 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 22:58:13 ctrlpanel python3[10789]: 2026-08-21 22:58:13,809 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 22:58:13 ctrlpanel python3[10789]: 2026-08-21 22:58:13,819 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 22:58:13 ctrlpanel ctrlpanel-wake-gateway-wait[10791]: java_listener=READY
+Aug 21 22:58:13 ctrlpanel ctrlpanel-wake-gateway-wait[10791]: bedrock_listeners=100/100
+Aug 21 22:58:13 ctrlpanel ctrlpanel-wake-gateway-wait[10791]: gateway_ready=YES
+Aug 21 22:58:13 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+
+FINAL_SSH=OK
+FINAL_NETWORK=OK
+FINAL_PAPER_PROXY_PROTOCOL=TRUE
+DIRECT_LEAF_PROXY=PASS
+GATEWAY_PROXY_STATUS=PASS
+JAVA_REAL_PLAYER_IP_FORWARDING=ACTIVE
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=REAL_PLAYER_IP_V6_RESET_CHECK
-changes_made=NO
-end=2026-08-21T22:46:01+00:00
+package=REAL_PLAYER_IP_FIX_V7
+paper_proxy_protocol=TRUE
+direct_leaf_proxy_test=PASS
+gateway_proxy_test=PASS
+java_real_player_ip_forwarding=ACTIVE
+next=EXTERNAL_PLAYER_IP_VERIFY
+end=2026-08-21T22:58:18+00:00
 ============================================================
