@@ -1,12 +1,12 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T21:42:41+00:00
+published_at=2026-08-21T21:46:34+00:00
 ============================================================
 
 ============================================================
  CTRLPANEL V3.5 ADMIN DATATABLE FIX
 ============================================================
-start=2026-08-21T21:42:36+00:00
+start=2026-08-21T21:46:30+00:00
 
 [1/8] Safety ...
 ssh=OK
@@ -15,7 +15,7 @@ pve_untouched=YES
 console_untouched=YES
 
 [2/8] Controller sichern ...
-backup=/root/ServerController.php.datatable-20260821-214236.bak
+backup=/root/ServerController.php.datatable-20260821-214630.bak
 
 [3/8] Datatable-Code reparieren ...
 carbon_immutable_import=ALREADY_PRESENT
@@ -23,12 +23,13 @@ add_usage_window=REPLACED
 No syntax errors detected in app/Http/Controllers/Admin/ServerController.php
 
 [4/8] Exakte Datatable-DB-Abfrage testen ...
-query_rows=9
+query_rows=10
 {"id":"0l3dlbLrm88BoNLj97RC8","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
 {"id":"4b0DhVcFzQTNBDx2KdPsK","today":121,"seven_days":121,"thirty_days":121,"runtime":"offline"}
 {"id":"HcaV_GfoWBFljif-3Q_Mm","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
 {"id":"jyJwg1lntzMKrYPHVUHOB","today":0,"seven_days":0,"thirty_days":0,"runtime":"offline"}
 {"id":"lbCYYrgP8z9N1Q-UOF_9-","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
+{"id":"r1-MzgzK_6O8t36QOBCJd","today":0,"seven_days":0,"thirty_days":0,"runtime":"offline"}
 {"id":"rO3qwl64u-AsL1XdvytBa","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
 {"id":"tukUF5Zx13_xDa_zOU3OX","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
 {"id":"VJOwZGj7C1tqD59KBvUZ-","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
@@ -44,13 +45,13 @@ failed_jobs_remaining=0
 
    INFO  Clearing cached bootstrap files.  
 
-  config ............................................................................................................................... 2.19ms DONE
-  cache ................................................................................................................................ 3.99ms DONE
-  compiled ............................................................................................................................. 1.10ms DONE
-  events ............................................................................................................................... 0.58ms DONE
-  routes ............................................................................................................................... 0.53ms DONE
-  views ............................................................................................................................... 10.18ms DONE
-  laravel-settings ..................................................................................................................... 0.29ms DONE
+  config ............................................................................................................................... 1.92ms DONE
+  cache ................................................................................................................................ 6.07ms DONE
+  compiled ............................................................................................................................. 1.08ms DONE
+  events ............................................................................................................................... 0.57ms DONE
+  routes ............................................................................................................................... 0.54ms DONE
+  views ............................................................................................................................... 11.22ms DONE
+  laravel-settings ..................................................................................................................... 0.32ms DONE
 
 cache=OK
 
@@ -87,5 +88,5 @@ FIX2_STATUS_COMPLETE
 result=SUCCESS
 package=CTRLPANEL_V3_5_ADMIN_DATATABLE_FIX
 datatable_query=OK
-end=2026-08-21T21:42:41+00:00
+end=2026-08-21T21:46:34+00:00
 ============================================================
