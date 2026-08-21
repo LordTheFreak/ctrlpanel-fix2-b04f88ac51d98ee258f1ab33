@@ -1,51 +1,120 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T20:48:48+00:00
+published_at=2026-08-21T21:05:55+00:00
 ============================================================
 
 ============================================================
-LXC_RECOVERY_STATUS
+ CTRLPANEL MEGA V2 SAFE
+ Usage + Analytics + Doctor + UI Deep Audit
 ============================================================
-timestamp=2026-08-21T20:48:48+00:00
+start=2026-08-21T21:05:50+00:00
 
-=== NETWORK ===
+[1/22] Sicherheitsprüfung ...
+--- SSH ---
+active
+LISTEN 0      4096               *:22               *:*    users:(("sshd",pid=2001,fd=3),("systemd",pid=1,fd=71))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+--- NETWORK ---
 lo               UNKNOWN        127.0.0.1/8 ::1/128 
-eth0@if377       UP             [PRIVATE_IP]/24 fe80::be24:11ff:fee4:1ccb/64 
+eth0@if379       UP             [PRIVATE_IP]/24 fe80::be24:11ff:fee4:1ccb/64 
 default via [PRIVATE_IP] dev eth0 
 [PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
+[ OK ] SSH und Netzwerk funktionieren.
+[INFO] Dieses Paket verändert SSH/Netzwerk/PVE NICHT.
 
-=== SSH ===
-● ssh.service - OpenBSD Secure Shell server
-     Loaded: loaded (/usr/lib/systemd/system/ssh.service; enabled; preset: enabled)
-     Active: active (running) since Fri 2026-08-21 20:48:40 UTC; 8s ago
- Invocation: aebc60733bda4bbcbc5ad5c273bc9e69
-TriggeredBy: ● ssh.socket
-       Docs: man:sshd(8)
-             man:sshd_config(5)
-    Process: 865 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
-   Main PID: 868 (sshd)
-      Tasks: 1 (limit: 309150)
-     Memory: 2.4M (peak: 4.7M)
-        CPU: 61ms
-     CGroup: /system.slice/ssh.service
-             └─868 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+[2/22] Projektdateien sichern ...
+backup=/root/ctrlpanel-mega-v2-safe-20260821-210550
+[ OK ] Backup erstellt.
 
-Aug 21 20:48:39 ctrlpanel systemd[1]: Starting ssh.service - OpenBSD Secure Shell server...
-Aug 21 20:48:40 ctrlpanel sshd[868]: Server listening on :: port 22.
-Aug 21 20:48:40 ctrlpanel systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
-Aug 21 20:48:45 ctrlpanel sshd-session[881]: Connection closed by [PRIVATE_IP] port 55604
-LISTEN 0      4096               *:22               *:*    users:(("sshd",pid=868,fd=3),("systemd",pid=1,fd=70))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+[3/22] Bestehende Usage-Daten prüfen ...
+player_usage_sessions=YES
+observed_player_usage_sessions=YES
+server_domains=YES
+observed_count=0
+observed_open=0
 
-=== FAILED SERVICES ===
-  UNIT LOAD ACTIVE SUB DESCRIPTION
+[4/22] Hourly Analytics Migration erstellen ...
+No syntax errors detected in /var/www/ctrlpanel/database/migrations/2026_08_21_230000_create_server_hourly_stats.php
+[ OK ] Migration erstellt.
 
-0 loaded units listed.
+[5/22] Analytics Model installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Models/ServerHourlyStat.php
+[ OK ] Model installiert.
 
-=== WAKE SERVICES ===
-ctrlpanel-wake-api.service=active
-ctrlpanel-wake-gateway.service=active
-ctrlpanel-wake-health.timer=active
-ctrlpanel-scheduler.timer=active
+[6/22] Unabhängigen Usage Collector installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ObservedUsageCollector.php
+[ OK ] Usage Collector installiert.
 
-FIX2_STATUS_COMPLETE
-result=LXC_RECOVERY_COMPLETE
+[7/22] Usage Job und CLI installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Jobs/CollectObservedPlayerUsageJob.php
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingUsageCollect.php
+[ OK ] Usage Job installiert.
+
+[8/22] Player-/Runtime-History Collector installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ServerHourlyStatsCollector.php
+[ OK ] History Collector installiert.
+
+[9/22] History Job + CLI installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Jobs/CollectServerHourlyStatsJob.php
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingStatsCollect.php
+[ OK ] History Job installiert.
+
+[10/22] Analytics Query Service installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ServerAnalyticsQueryService.php
+[ OK ] Analytics Service installiert.
+
+[11/22] Analytics Report installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingAnalyticsReport.php
+[ OK ] Analytics Report installiert.
+
+[12/22] Free Hosting Doctor installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingDoctor.php
+[ OK ] Doctor installiert.
+
+[13/22] Analytics Retention installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingAnalyticsPrune.php
+[ OK ] Retention installiert.
+
+[14/22] Scheduler erweitern ...
+scheduler_patch=OK
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Kernel.php
+[ OK ] Scheduler erweitert.
+
+[15/22] Migration ausführen ...
+
+   INFO  Running migrations.  
+
+  2026_08_21_230000_create_server_hourly_stats ........................................................................................ 34.37ms DONE
+
+[ OK ] Migration fertig.
+
+[16/22] Bestehende verifizierte Sessions übernehmen ...
+   Illuminate\Database\QueryException  SQLSTATE[01000]: Warning: 1265 Data truncated for column 'server_id' at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `observed_player_usage_sessions` (`server_id`, `server_domain_id`, `started_at`, `last_observed_at`, `ended_at`, `duration_seconds`, `peak_connected_players`, `peak_verified_players`, `source`, `confidence`, `close_reason`, `updated_at`, `created_at`) values (0l3dlbLrm88BoNLj97RC8, 58, 2026-08-21 05:01:39, 2026-08-21 05:01:39, 2026-08-21 05:01:39, 0, 1, 1, legacy_verified, verified, historical_import, 2026-08-21 23:05:53, 2026-08-21 23:05:53)).
+[ OK ] Historie importiert.
+
+[17/22] Live-Daten jetzt erfassen ...
+--- Usage ---
+domains=9
+fresh=0
+positive=0
+zero=0
+stale=9
+untrusted=0
+errors=0
+
+--- Hourly ---
+
+In Connection.php line 838:
+                                                                                                                                                          
+  SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'wKUwFHX74BxSqgmPGLnEB' for column `ctrlpanel_free`.`server_hourly_stats`.`ser  
+  ver_id` at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `server_hourly_stats` (`server_doma  
+  in_id`, `hour_start`, `server_id`, `updated_at`, `created_at`) values (14, 2026-08-21 21:00:00, wKUwFHX74BxSqgmPGLnEB, 2026-08-21 23:05:55, 2026-08-21  
+   23:05:55))                                                                                                                                             
+                                                                                                                                                          
+
+In MySqlConnection.php line 53:
+                                                                                                                                                          
+  SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'wKUwFHX74BxSqgmPGLnEB' for column `ctrlpanel_free`.`server_hourly_stats`.`ser  
+  ver_id` at row 1                                                                                                                                        
+                                                                                                                                                          
+
