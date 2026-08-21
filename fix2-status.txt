@@ -1,147 +1,84 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T23:31:03+00:00
+published_at=2026-08-21T23:34:24+00:00
 ============================================================
 
 ============================================================
- REAL PLAYER IP V17
- REAL JOIN VERIFY
+ FIX2 V18
+ RESTORE OLD TEST SERVER
 ============================================================
-start=2026-08-21T23:29:29+00:00
-SCRIPT_VERSION=REAL_PLAYER_IP_V17_REAL_JOIN_VERIFY
+start=2026-08-21T23:33:29+00:00
+SCRIPT_VERSION=V18_RESTORE_XHOELSERVER
 
-[1/5] Aktueller Zustand ...
-WAKE_GATEWAY=ACTIVE
-backend_port=27010
-identifier=dc4c2e9b
-server_state=running
+[INFO] ENV Backup: /etc/ctrlpanel/wake-gateway.env.v18-20260821-233329.bak
 
-[2/5] PROXY-Konfiguration ...
-JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net,testserver222.free.mc-serverhost.net
+[1/7] Alte und neue Domain bestimmen ...
+xhoelserver.free.mc-serverhost.net|port=27009|identifier=8c8f846d
+testserver222.free.mc-serverhost.net|port=27010|identifier=dc4c2e9b
+
+[2/7] NUR xhoelserver aus PROXY-Domainliste entfernen ...
+OLD_DOMAIN_REMOVED=YES
+
+Aktuelle PROXY-Domainliste:
+JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
+
+WICHTIG: testserver222 muss erhalten bleiben.
+[ OK ] testserver222 ist weiterhin im Test-Mapping.
+[ OK ] xhoelserver ist nicht mehr im PROXY-Mapping.
+
+[3/7] Paper-Einstellung von xhoelserver pruefen ...
+xhoel_proxy_before=true
+
+[4/7] xhoelserver wieder auf proxy-protocol: false setzen ...
+paper_write_http=204
+[ OK ] proxy-protocol=false geschrieben.
+
+[5/7] Wake Gateway neu laden ...
+[ OK ] Gateway Python Syntax.
+[ OK ] Wake Gateway aktiv.
+
+[6/7] xhoelserver nur falls notwendig neu starten ...
+[INFO] Config wurde geaendert.
+[INFO] Ein einmaliger Neustart von xhoelserver ist notwendig.
+restart_http=200
+[INFO] Warte auf RUNNING ...
+xhoel_state=offline
+xhoel_state=offline
+xhoel_state=offline
+xhoel_state=offline
+xhoel_state=offline
+xhoel_state=offline
+xhoel_state=offline
+xhoel_state=starting
+xhoel_state=starting
+xhoel_state=starting
+xhoel_state=starting
+xhoel_state=starting
+xhoel_state=starting
+xhoel_state=starting
+xhoel_state=running
+
+[7/7] Final Verify ...
+xhoel_proxy_final=false
+xhoel_state_final=running
+xhoel_backend_port=27009
+
+===== ENV FINAL =====
+JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
 JAVA_PRIVATE_CLIENT_IP_OVERRIDE=5.61.167.129
-proxy-protocol: true
 
-============================================================
- JETZT IN MINECRAFT VERBINDEN:
- testserver222.free.mc-serverhost.net
-
- Fix2 wartet jetzt bis zu 90 Sekunden.
-============================================================
-wait_for_player=2s
-wait_for_player=4s
-wait_for_player=6s
-wait_for_player=8s
-wait_for_player=10s
-wait_for_player=12s
-wait_for_player=14s
-wait_for_player=16s
-wait_for_player=18s
-wait_for_player=20s
-wait_for_player=22s
-wait_for_player=24s
-wait_for_player=26s
-wait_for_player=28s
-wait_for_player=30s
-wait_for_player=32s
-wait_for_player=34s
-wait_for_player=36s
-wait_for_player=38s
-wait_for_player=40s
-wait_for_player=42s
-wait_for_player=44s
-wait_for_player=46s
-wait_for_player=48s
-wait_for_player=50s
-wait_for_player=52s
-wait_for_player=54s
-wait_for_player=56s
-wait_for_player=58s
-wait_for_player=60s
-wait_for_player=62s
-wait_for_player=64s
-wait_for_player=66s
-wait_for_player=68s
-wait_for_player=70s
-wait_for_player=72s
-wait_for_player=74s
-wait_for_player=76s
-wait_for_player=78s
-wait_for_player=80s
-wait_for_player=82s
-wait_for_player=84s
-wait_for_player=86s
-wait_for_player=88s
-wait_for_player=90s
-
-[3/5] Gateway-Log seit Start ...
--- No entries --
-
-[4/5] Leaf latest.log ...
-[01:27:21] [ServerMain/INFO]: [bootstrap] Running Java 25 (OpenJDK 64-Bit Server VM 25.0.3+9-LTS; Eclipse Adoptium Temurin-25.0.3+9) on Linux 6.17.2-1-pve (amd64)
-[01:27:22] [ServerMain/INFO]: [bootstrap] Loading Leaf 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) for Minecraft 1.21.11
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Loading config...
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 1 threads for Async Pathfinding
-[01:27:22] [ServerMain/WARN]: [LeafConfig] You enabled faster random generator, it will offset location of slime chunk
-[01:27:22] [ServerMain/WARN]: [LeafConfig] If your server has slime farms or facilities need vanilla slime chunk,
-[01:27:22] [ServerMain/WARN]: [LeafConfig] set performance.faster-random-generator.use-legacy-random-for-slime-chunk to true to use LegacyRandomSource for slime chunk generation.
-[01:27:22] [ServerMain/WARN]: [LeafConfig] Set performance.faster-random-generator.warn-for-slime-chunk to false to disable this warning.
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 2 threads for Async Entity Tracker
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 8 threads for Parallel World Ticking
-[01:27:22] [ServerMain/WARN]: [LeafConfig] You have following experimental module(s) enabled: [MultithreadedTracker.enabled, SparklyPaperParallelWorldTicking.enabled], please proceed with caution!
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Successfully loaded config in 599ms.
-[01:27:23] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
-[01:27:23] [ServerMain/INFO]: [PluginInitializerManager] Initialized 0 plugins
-[01:27:32] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
-[01:27:36] [ServerMain/INFO]: Loaded 1470 recipes
-[01:27:36] [ServerMain/INFO]: Loaded 1584 advancements
-[01:27:36] [ServerMain/INFO]: Resource reload finished after 683 ms
-[01:27:36] [ServerMain/INFO]: RecipeManager took approximately 2 tasks/224 ms (1 tasks/224 ms preparing, 1 tasks/0 ms applying)
-[01:27:36] [ServerMain/INFO]: ServerFunctionLibrary took approximately 3 tasks/9 ms (2 tasks/0 ms preparing, 1 tasks/9 ms applying)
-[01:27:36] [ServerMain/INFO]: ServerAdvancementManager took approximately 2 tasks/438 ms (1 tasks/406 ms preparing, 1 tasks/32 ms applying)
-[01:27:36] [ServerMain/INFO]: Total blocking time: 41 ms
-[01:27:36] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
-[01:27:37] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 584.5ms
-[01:27:37] [Server thread/INFO]: Starting minecraft server version 1.21.11
-[01:27:37] [Server thread/INFO]: Loading properties
-[01:27:37] [Server thread/INFO]: This server is running Leaf version 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
-[01:27:37] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
-[01:27:38] [Server thread/INFO]: Server Ping Player Sample Count: 12
-[01:27:38] [Server thread/INFO]: Using 4 threads for Netty based IO
-[01:27:39] [Server thread/INFO]: [MoonriseCommon] Paper is using 1 worker threads, 1 I/O threads
-[01:27:40] [Server thread/INFO]: Using 8 permits for parallel world ticking
-[01:27:40] [Server thread/INFO]: Default game type: SURVIVAL
-[01:27:40] [Server thread/INFO]: Generating keypair
-[01:27:40] [Server thread/INFO]: Starting Minecraft server on 0.0.0.0:27010
-[01:27:40] [Server thread/WARN]: Using HAProxy, please ensure the server port is adequately firewalled.
-[01:27:40] [Server thread/INFO]: Paper: Using libdeflate (Linux x86_64) compression from Velocity.
-[01:27:40] [Server thread/INFO]: Paper: Using OpenSSL 3.x.x (Linux x86_64) cipher from Velocity.
-[01:27:40] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[01:27:40] [Server thread/INFO]: Preparing level "world"
-[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
-[01:27:41] [Server thread/INFO]: Preparing spawn area: 100%
-[01:27:41] [Server thread/INFO]: Prepared spawn area in 1 ms
-[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
-[01:27:41] [Server thread/INFO]: Prepared spawn area in 0 ms
-[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_end'...
-[01:27:41] [Server thread/INFO]: Prepared spawn area in 0 ms
-[01:27:41] [Server thread/INFO]: Done preparing level "world" (1.268s)
-[01:27:42] [Server thread/INFO]: [spark] Starting background profiler...
-[01:27:42] [Server thread/INFO]: Running delayed init tasks
-[01:27:42] [Server thread/INFO]: Done (21.871s)! For help, type "help"
-
-
-[5/5] Final ...
-real_join_seen_by_gateway=NO
-server_power_changes=NONE
-gateway_changes=NONE
-paper_changes=NONE
+===== GATEWAY STATUS =====
+active
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=REAL_PLAYER_IP_V17_REAL_JOIN_VERIFY
-domain=testserver222.free.mc-serverhost.net
-real_join_seen=0
-next=CHECK_REAL_PLAYER_IP_FROM_GITHUB
-end=2026-08-21T23:31:03+00:00
+package=V18_RESTORE_XHOELSERVER
+xhoelserver_mode=NORMAL_NO_PROXY_PROTOCOL
+xhoelserver_proxy_protocol=FALSE
+xhoelserver_removed_from_proxy_mapping=YES
+testserver222_modified=NO
+future_testing_domain=testserver222.free.mc-serverhost.net
+next=WORK_ONLY_ON_TESTSERVER222
+end=2026-08-21T23:34:24+00:00
 ============================================================
