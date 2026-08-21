@@ -1,37 +1,112 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T21:14:38+00:00
+published_at=2026-08-21T21:18:03+00:00
 ============================================================
 
 ============================================================
- CTRLPANEL V3.1 MIGRATION HOTFIX
+ CTRLPANEL V3.2 STATE PROBE
 ============================================================
-[1/5] Migration sichern ...
-[2/5] RuntimeException-Warning reparieren ...
-runtime_exception_fix=OK
-No syntax errors detected in database/migrations/2026_08_21_231500_fix_freehosting_string_server_ids.php
+time=2026-08-21T21:17:57+00:00
 
-[3/5] Migration ausführen ...
+=== SERVICES ===
+ssh.service=active
+ctrlpanel-wake-api.service=active
+ctrlpanel-wake-gateway.service=active
+ctrlpanel-wake-health.timer=active
+ctrlpanel-scheduler.timer=active
 
-   INFO  Running migrations.  
+=== NETWORK SAFETY ===
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0@if379       UP             [PRIVATE_IP]/24 fe80::be24:11ff:fee4:1ccb/64 
+default via [PRIVATE_IP] dev eth0 
+[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
+LISTEN 0      4096           *:22          *:*
 
-  2026_08_21_231500_fix_freehosting_string_server_ids ................................................................................. 36.32ms DONE
+=== DATABASE SCHEMA ===
+player_usage_sessions.server_id=varchar(191)
+observed_player_usage_sessions.server_id=varchar(191)
+server_hourly_stats.server_id=varchar(191)
+observed_table=YES
+hourly_table=YES
 
+=== FILES ===
+app/Models/ObservedPlayerUsageSession.php=YES
+No syntax errors detected in app/Models/ObservedPlayerUsageSession.php
+app/Models/ServerHourlyStat.php=YES
+No syntax errors detected in app/Models/ServerHourlyStat.php
+app/Services/Usage/ObservedUsageCollector.php=YES
+No syntax errors detected in app/Services/Usage/ObservedUsageCollector.php
+app/Services/Usage/ServerHourlyStatsCollector.php=YES
+No syntax errors detected in app/Services/Usage/ServerHourlyStatsCollector.php
+app/Services/Usage/ServerAnalyticsQueryService.php=YES
+No syntax errors detected in app/Services/Usage/ServerAnalyticsQueryService.php
+app/Console/Commands/FreeHostingUsageCollect.php=YES
+No syntax errors detected in app/Console/Commands/FreeHostingUsageCollect.php
+app/Console/Commands/FreeHostingStatsCollect.php=YES
+No syntax errors detected in app/Console/Commands/FreeHostingStatsCollect.php
+app/Console/Commands/FreeHostingAnalyticsReport.php=YES
+No syntax errors detected in app/Console/Commands/FreeHostingAnalyticsReport.php
+app/Console/Commands/FreeHostingDoctor.php=YES
+No syntax errors detected in app/Console/Commands/FreeHostingDoctor.php
 
-[4/5] server_id Typen prüfen ...
-player_usage_sessions=varchar(191) charset=utf8mb4 collation=utf8mb4_unicode_ci
-observed_player_usage_sessions=varchar(191) charset=utf8mb4 collation=utf8mb4_unicode_ci
-server_hourly_stats=varchar(191) charset=utf8mb4 collation=utf8mb4_unicode_ci
-SERVER_ID_SCHEMA_MATCH=YES
+=== ARTISAN COMMANDS ===
+freehosting:analytics-prune         Delete old aggregated hourly statistics.
+freehosting:analytics-report        Show usage/player analytics for free servers.
+freehosting:doctor                  Run free-hosting integrity checks.
+freehosting:stats-collect           Collect five-minute server/player telemetry.
+freehosting:usage-collect           Collect current trusted Java/Bedrock player telemetry.
+freehosting:usage-report            Show observed player usage for all active free-hosting servers.
 
-[5/5] Echter String-ID Schreibtest ...
-written=FIX2-32b93e6adc6f2a8d
-read=FIX2-32b93e6adc6f2a8d
-STRING_ID_WRITE_TEST=YES
+=== DATABASE COUNTS ===
+observed_total=5
+observed_open=0
+hourly_total=9
+{"id":10,"server_id":"lbCYYrgP8z9N1Q-UOF_9-","server_domain_id":64,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+{"id":9,"server_id":"rO3qwl64u-AsL1XdvytBa","server_domain_id":62,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+{"id":8,"server_id":"HcaV_GfoWBFljif-3Q_Mm","server_domain_id":61,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+{"id":7,"server_id":"4b0DhVcFzQTNBDx2KdPsK","server_domain_id":60,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"offline","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+{"id":6,"server_id":"VJOwZGj7C1tqD59KBvUZ-","server_domain_id":59,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+{"id":5,"server_id":"0l3dlbLrm88BoNLj97RC8","server_domain_id":58,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+{"id":4,"server_id":"jyJwg1lntzMKrYPHVUHOB","server_domain_id":51,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"offline","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+{"id":3,"server_id":"tukUF5Zx13_xDa_zOU3OX","server_domain_id":20,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+{"id":2,"server_id":"wKUwFHX74BxSqgmPGLnEB","server_domain_id":14,"hour_start":"2026-08-21 21:00:00","sample_count":2,"runtime_running_samples":0,"player_sample_count":0,"player_present_samples":0,"sum_connected_players":0,"max_connected_players":0,"max_verified_players":0,"last_runtime_state":"sleeping","last_provider":null,"last_provider_health":null,"last_sample_at":"2026-08-21 21:16:00","last_sample_slot":"2026-08-21 21:15:00","created_at":"2026-08-21 23:15:02","updated_at":"2026-08-21 23:16:48"}
+
+=== CURRENT DOMAINS ===
+{"id":14,"server_id":"wKUwFHX74BxSqgmPGLnEB","fqdn":"schulsmp.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":0,"verified":0,"last_check":"2026-08-21 21:14:04","last_used":"2026-08-14 14:45:06","provider":"java_status","health":"healthy"}
+{"id":20,"server_id":"tukUF5Zx13_xDa_zOU3OX","fqdn":"mine-attack-tukuf5.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":null,"verified":0,"last_check":"","last_used":"2026-08-15 01:40:09","provider":null,"health":"unknown"}
+{"id":51,"server_id":"jyJwg1lntzMKrYPHVUHOB","fqdn":"veltrixmc.free.mc-serverhost.net","edition":"java","runtime":"offline","players":0,"verified":0,"last_check":"2026-08-21 18:30:26","last_used":"2026-08-21 11:10:43","provider":"java_status","health":"healthy"}
+{"id":58,"server_id":"0l3dlbLrm88BoNLj97RC8","fqdn":"cool.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":0,"verified":0,"last_check":"2026-08-21 07:25:22","last_used":"2026-08-21 05:01:39","provider":"java_status","health":"healthy"}
+{"id":59,"server_id":"VJOwZGj7C1tqD59KBvUZ-","fqdn":"crunchy.free.mc-serverhost.net","edition":"bedrock","runtime":"sleeping","players":0,"verified":0,"last_check":"2026-08-21 22:26:03","last_used":"","provider":"bedrock_raknet","health":"healthy"}
+{"id":60,"server_id":"4b0DhVcFzQTNBDx2KdPsK","fqdn":"server-test.free.mc-serverhost.net","edition":"java","runtime":"offline","players":0,"verified":0,"last_check":"2026-08-21 05:16:13","last_used":"2026-08-21 05:06:10","provider":"java_gateway_traffic","health":"healthy"}
+{"id":61,"server_id":"HcaV_GfoWBFljif-3Q_Mm","fqdn":"kaka.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":null,"verified":0,"last_check":"","last_used":"","provider":null,"health":"unknown"}
+{"id":62,"server_id":"rO3qwl64u-AsL1XdvytBa","fqdn":"timgioh.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":null,"verified":0,"last_check":"","last_used":"2026-08-20 02:00:19","provider":null,"health":"unknown"}
+{"id":64,"server_id":"lbCYYrgP8z9N1Q-UOF_9-","fqdn":"test-lbcyyr.free.mc-serverhost.net","edition":"java","runtime":"sleeping","players":0,"verified":0,"last_check":"2026-08-21 10:05:20","last_used":"","provider":"java_status","health":"healthy"}
+
+=== SCHEDULER ===
+  */5  * * * *  App\Jobs\SyncServerDomainsJob ............................................................................... Next Due: 1 minute from now
+  */10 * * * *  php artisan freehosting:gateway-audit --repair .............................................................. Next Due: 1 minute from now
+  *    * * * *  App\Jobs\ScheduleIdleServerChecksJob ...................................................................... Next Due: 57 seconds from now
+  */5  * * * *  App\Jobs\CloseStalePlayerUsageSessionsJob ................................................................... Next Due: 1 minute from now
+  */5  * * * *  App\Jobs\CloseStaleObservedPlayerUsageSessionsJob ........................................................... Next Due: 1 minute from now
+  *    * * * *  App\Jobs\CollectObservedPlayerUsageJob .................................................................... Next Due: 57 seconds from now
+  */5  * * * *  App\Jobs\CollectServerHourlyStatsJob ........................................................................ Next Due: 1 minute from now
+  35   4 * * *  php artisan freehosting:analytics-prune --days=400 ........................................................... Next Due: 5 hours from now
+
+=== WORKERS ===
+ctrlpanel-worker:ctrlpanel-worker_00   RUNNING   pid 3506, uptime 0:01:38
+ctrlpanel-worker:ctrlpanel-worker_01   RUNNING   pid 3507, uptime 0:01:38
+
+=== FAILED JOBS ===
+
+  2026-08-21 23:10:11 245ed5f0-694f-4a4b-852d-a4b06ab1a4f2 ...................................... redis@default App\Jobs\CollectServerHourlyStatsJob  
+  2026-08-21 22:18:04 e92d6385-22c9-4274-8c61-1a720dd56766 ............................................... redis@default App\Jobs\CheckIdleServerJob  
+  2026-08-21 22:15:11 24fd6a62-62e3-4eb1-abc7-07bc3a0112e1 ............................................... redis@default App\Jobs\CheckIdleServerJob  
+  2026-08-21 22:12:16 2462105a-f7ac-49d7-819c-5a9968c64422 ............................................... redis@default App\Jobs\CheckIdleServerJob  
+
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=CTRLPANEL_V3_1_MIGRATION_HOTFIX
-schema_fixed=YES
+package=CTRLPANEL_V3_2_STATE_PROBE
+end=2026-08-21T21:18:03+00:00
 ============================================================
