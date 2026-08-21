@@ -1,37 +1,218 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T19:48:41+00:00
+published_at=2026-08-21T19:49:58+00:00
 ============================================================
 
 ============================================================
- CtrlPanel FIX2 - GitHub Remote Logging
+ CtrlPanel FIX2 - Vollständiger Systemstatus
 ============================================================
 
-[1/7] GitHub-Zugang prüfen ...
+timestamp=2026-08-21T19:49:52+00:00
 
-Es wird einmalig ein GitHub Personal Access Token benötigt.
-Der Token bleibt ausschließlich auf diesem Server.
+=== 1. SERVICES ===
+wake_api=active
+wake_gateway=active
+scheduler=active
 
-Classic PAT: mindestens Scope 'public_repo'
+=== 2. PORTS ===
+--- TCP ---
+LISTEN 0      4096       127.0.0.1:8787       0.0.0.0:*    users:(("php8.3",pid=80202,fd=8))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+LISTEN 0      512          0.0.0.0:28000      0.0.0.0:*    users:(("python3",pid=80224,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
-GitHub PAT: 
-[ OK ] GitHub verbunden als: LordTheFreak
+--- UDP ---
+UNCONN 0      0            0.0.0.0:28000      0.0.0.0:*    users:(("python3",pid=80224,fd=7))
 
-[2/7] Diagnose-Repository vorbereiten ...
-[ OK ] Repository: LordTheFreak/ctrlpanel-fix2-b04f88ac51d98ee258f1ab33
-[ OK ] Branch: main
+=== 3. WAKE SETTINGS ===
+enabled=true
+auto_stop_enabled=true
+idle_shutdown_minutes=20
+required_zero_samples=3
+player_activity_timeout_minutes=10
+unverified_player_grace_minutes=240
+java_wake_enabled=true
+java_wake_port=28000
+bedrock_enabled=true
 
-[3/7] FIX2 GitHub-Publisher installieren ...
-[ OK ] Publisher installiert.
+=== 4. FREE SERVERS ===
+{"id":14,"fqdn":"schulsmp.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27001,"runtime":"sleeping","players":0,"verified_players":0,"provider":"java_status","provider_health":"healthy","wake_count":2,"last_wake":"2026-08-21 20:53:18","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-21 21:14:05","last_player_activity":"","total_usage_seconds":0}
+{"id":20,"fqdn":"mine-attack-tukuf5.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27000,"runtime":"sleeping","players":null,"verified_players":0,"provider":null,"provider_health":"unknown","wake_count":0,"last_wake":"","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-15 02:05:09","last_player_activity":"","total_usage_seconds":0}
+{"id":51,"fqdn":"veltrixmc.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27003,"runtime":"offline","players":0,"verified_players":0,"provider":"java_status","provider_health":"healthy","wake_count":2,"last_wake":"2026-08-21 16:24:32","idle_since":"","idle_deadline":"","auto_stopped":"","last_player_activity":"2026-08-21 11:10:43","total_usage_seconds":0}
+{"id":58,"fqdn":"cool.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27004,"runtime":"sleeping","players":0,"verified_players":0,"provider":"java_status","provider_health":"healthy","wake_count":1,"last_wake":"2026-08-21 07:00:19","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-21 07:25:22","last_player_activity":"2026-08-21 05:01:39","total_usage_seconds":0}
+{"id":59,"fqdn":"crunchy.free.mc-serverhost.net","edition":"bedrock","gateway_port":28000,"backend_port":27005,"runtime":"running","players":1,"verified_players":0,"provider":"bedrock_raknet","provider_health":"healthy_unverified","wake_count":0,"last_wake":"","idle_since":"","idle_deadline":"","auto_stopped":"","last_player_activity":"","total_usage_seconds":0}
+{"id":60,"fqdn":"server-test.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27002,"runtime":"offline","players":0,"verified_players":0,"provider":"java_gateway_traffic","provider_health":"healthy","wake_count":2,"last_wake":"2026-08-21 07:02:07","idle_since":"","idle_deadline":"","auto_stopped":"","last_player_activity":"2026-08-21 05:06:10","total_usage_seconds":121}
+{"id":61,"fqdn":"kaka.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27006,"runtime":"sleeping","players":null,"verified_players":0,"provider":null,"provider_health":"unknown","wake_count":0,"last_wake":"","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-20 01:45:18","last_player_activity":"","total_usage_seconds":0}
+{"id":62,"fqdn":"timgioh.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27007,"runtime":"sleeping","players":null,"verified_players":0,"provider":null,"provider_health":"unknown","wake_count":0,"last_wake":"","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-20 02:25:18","last_player_activity":"","total_usage_seconds":0}
+{"id":64,"fqdn":"test-lbcyyr.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27008,"runtime":"sleeping","players":0,"verified_players":0,"provider":"java_status","provider_health":"healthy","wake_count":1,"last_wake":"2026-08-21 06:54:16","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-21 10:05:20","last_player_activity":"","total_usage_seconds":0}
 
-[4/7] Automatische FIX2-Ausgabe installieren ...
-[ OK ] Remote-Library installiert.
+=== 5. RUNTIME PROFILES / EGGS ===
+{"id":1,"name":"LeafMC (Paper Plugins Support)","wake_support":true,"idle_shutdown_support":true,"player_detection_provider":"java_status","gateway_type":"JAVA_WAKE"}
+{"id":2,"name":"Sponge (SpongeVanilla)","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":3,"name":"Bungeecord","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":4,"name":"Forge Minecraft","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":5,"name":"Vanilla Minecraft","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":6,"name":"Custom Source Engine Game","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":7,"name":"Ark: Survival Evolved","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":8,"name":"Insurgency","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":9,"name":"Counter-Strike: Global Offensive","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":10,"name":"Garrys Mod","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":11,"name":"Team Fortress 2","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":12,"name":"Teamspeak3 Server","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":13,"name":"Mumble Server","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":14,"name":"Rust","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":15,"name":"Purpur","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":16,"name":"Velocity","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":17,"name":"Hytale","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":19,"name":"Vanilla Bedrock","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":20,"name":"Sinusbot","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":21,"name":"Lavalink","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":22,"name":"node.js generic","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":23,"name":"Teamspeak6 Server","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":24,"name":"Star Rupture","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":25,"name":"Forge Enhanced","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":26,"name":"Forge - Atropis Stable","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":27,"name":"Forge - Atropis Stable v2","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
+{"id":28,"name":"Bedrock Server with Plugins Support","wake_support":true,"idle_shutdown_support":true,"player_detection_provider":"bedrock_raknet","gateway_type":"BEDROCK_WAKE"}
+{"id":29,"name":"LeafMC - Plugin Support","wake_support":false,"idle_shutdown_support":false,"player_detection_provider":null,"gateway_type":null}
 
-[5/7] CtrlPanel-Status sammeln ...
-[ OK ] Status gesammelt.
+=== 6. WAKE SESSIONS ===
+{"id":9,"domain_id":14,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 20:53:17","started_at":"2026-08-21 20:53:18","ready_at":"2026-08-21 20:53:48","completed_at":"2026-08-21 20:53:48","failed_at":"","failure_reason":null}
+{"id":8,"domain_id":51,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 16:24:31","started_at":"2026-08-21 16:24:32","ready_at":"2026-08-21 16:24:52","completed_at":"2026-08-21 16:24:52","failed_at":"","failure_reason":null}
+{"id":7,"domain_id":51,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 13:09:07","started_at":"2026-08-21 13:09:08","ready_at":"2026-08-21 13:09:28","completed_at":"2026-08-21 13:09:28","failed_at":"","failure_reason":null}
+{"id":5,"domain_id":60,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 07:02:07","started_at":"2026-08-21 07:02:07","ready_at":"2026-08-21 07:02:31","completed_at":"2026-08-21 07:02:31","failed_at":"","failure_reason":null}
+{"id":4,"domain_id":58,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 07:00:19","started_at":"2026-08-21 07:00:19","ready_at":"2026-08-21 07:00:49","completed_at":"2026-08-21 07:00:49","failed_at":"","failure_reason":null}
+{"id":3,"domain_id":60,"state":"TIMEOUT","waiting_players":1,"requested_at":"2026-08-21 06:56:46","started_at":"2026-08-21 06:56:47","ready_at":"","completed_at":"","failed_at":"2026-08-21 06:57:33","failure_reason":"Backend did not become reachable before the client wait deadline."}
+{"id":2,"domain_id":64,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 06:54:16","started_at":"2026-08-21 06:54:16","ready_at":"2026-08-21 06:54:44","completed_at":"2026-08-21 06:54:44","failed_at":"","failure_reason":null}
+{"id":1,"domain_id":14,"state":"COMPLETED","waiting_players":2,"requested_at":"2026-08-21 01:19:43","started_at":"2026-08-21 01:19:43","ready_at":"2026-08-21 01:20:13","completed_at":"2026-08-21 01:20:13","failed_at":"","failure_reason":null}
 
-[6/7] Diagnose zu GitHub übertragen ...
-[ OK ] Upload abgeschlossen.
+=== 7. GATEWAY ENVIRONMENT (SAFE) ===
+WAKE_API_BASE=http://127.0.0.1:8787/api/wake-gateway
+JAVA_ENABLED=1
+JAVA_BIND=0.0.0.0
+JAVA_PORT=28000
+BEDROCK_ENABLED=1
+BEDROCK_BIND=0.0.0.0
+MAX_WAKE_WAIT=45
+WAKE_POLL_INTERVAL=0.75
 
-[7/7] GitHub RAW-Datei überprüfen ...
-[ OK ] GitHub Remote-Diagnose erfolgreich gelesen.
+=== 8. GATEWAY CODE INFO ===
+parse_login_start=YES
+handle_java=YES
+BedrockSession=YES
+resolve_port=NO
+send_pong=YES
+open_backend=YES
+
+=== 9. LARAVEL WAKE ROUTES ===
+  GET|HEAD        api/fix2-log/{token} ............................................................................. api.api.fix2-log › routes/api.php:76
+  POST            api/wake-gateway/activity ................................................................... api. › Api\WakeGatewayController@activity
+  POST            api/wake-gateway/complete ................................................................... api. › Api\WakeGatewayController@complete
+  POST            api/wake-gateway/health ....................................................................... api. › Api\WakeGatewayController@health
+  POST            api/wake-gateway/resolve ..................................................................... api. › Api\WakeGatewayController@resolve
+  POST            api/wake-gateway/resolve-port ............................................................ api. › Api\WakeGatewayController@resolvePort
+  POST            api/wake-gateway/wake ........................................................................... api. › Api\WakeGatewayController@wake
+
+=== 10. SCHEDULER ===
+  */5 * * * *  App\Jobs\SyncServerDomainsJob ................................................................................ Next Due: 1 second from now
+  *   * * * *  App\Jobs\ScheduleIdleServerChecksJob ......................................................................... Next Due: 1 second from now
+  */5 * * * *  App\Jobs\CloseStalePlayerUsageSessionsJob .................................................................... Next Due: 1 second from now
+
+=== 11. FAILED QUEUE JOBS ===
+
+   INFO  No failed jobs found.  
+
+
+=== 12. LETZTE GATEWAY LOGS ===
+Aug 21 19:26:21 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 19:26:21 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 19:26:21 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:26:21 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:26:21 ctrlpanel python3[80193]: Traceback (most recent call last):
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 1319, in do_open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     h.request(req.get_method(), req.selector, req.data, headers,
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:               encode_chunked=req.has_header('Transfer-encoding'))
+Aug 21 19:26:21 ctrlpanel python3[80193]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1367, in request
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self._send_request(method, url, body, headers, encode_chunked)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1413, in _send_request
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self.endheaders(body, encode_chunked=encode_chunked)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1362, in endheaders
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self._send_output(message_body, encode_chunked=encode_chunked)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1122, in _send_output
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self.send(msg)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1066, in send
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self.connect()
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1032, in connect
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self.sock = self._create_connection(
+Aug 21 19:26:21 ctrlpanel python3[80193]:                 ~~~~~~~~~~~~~~~~~~~~~~~^
+Aug 21 19:26:21 ctrlpanel python3[80193]:         (self.host,self.port), self.timeout, self.source_address)
+Aug 21 19:26:21 ctrlpanel python3[80193]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/socket.py", line 864, in create_connection
+Aug 21 19:26:21 ctrlpanel python3[80193]:     raise exceptions[0]
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/socket.py", line 849, in create_connection
+Aug 21 19:26:21 ctrlpanel python3[80193]:     sock.connect(sa)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]: ConnectionRefusedError: [Errno 111] Connection refused
+Aug 21 19:26:21 ctrlpanel python3[80193]: During handling of the above exception, another exception occurred:
+Aug 21 19:26:21 ctrlpanel python3[80193]: Traceback (most recent call last):
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 1092, in <module>
+Aug 21 19:26:21 ctrlpanel python3[80193]:     asyncio.run(main())
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return runner.run(main)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return self._loop.run_until_complete(task)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return future.result()
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~~~~^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 1048, in main
+Aug 21 19:26:21 ctrlpanel python3[80193]:     health = await api.health()
+Aug 21 19:26:21 ctrlpanel python3[80193]:              ^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 154, in health
+Aug 21 19:26:21 ctrlpanel python3[80193]:     status, data = await self.request("health", {}, timeout=5)
+Aug 21 19:26:21 ctrlpanel python3[80193]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 95, in request
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return await asyncio.to_thread(self._request_sync, endpoint, payload, timeout)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/asyncio/threads.py", line 25, in to_thread
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return await loop.run_in_executor(None, func_call)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+Aug 21 19:26:21 ctrlpanel python3[80193]:     result = self.fn(*self.args, **self.kwargs)
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 83, in _request_sync
+Aug 21 19:26:21 ctrlpanel python3[80193]:     with urllib.request.urlopen(req, timeout=timeout, context=SSL_CONTEXT) as response:
+Aug 21 19:26:21 ctrlpanel python3[80193]:          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 189, in urlopen
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return opener.open(url, data, timeout)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 489, in open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     response = self._open(req, data)
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 506, in _open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     result = self._call_chain(self.handle_open, protocol, protocol +
+Aug 21 19:26:21 ctrlpanel python3[80193]:                               '_open', req)
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 466, in _call_chain
+Aug 21 19:26:21 ctrlpanel python3[80193]:     result = func(*args)
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 1348, in http_open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return self.do_open(http.client.HTTPConnection, req)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 1322, in do_open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     raise URLError(err)
+Aug 21 19:26:21 ctrlpanel python3[80193]: urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+Aug 21 19:26:21 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Main process exited, code=exited, status=1/FAILURE
+Aug 21 19:26:21 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Failed with result 'exit-code'.
+Aug 21 19:26:23 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Scheduled restart job, restart counter is at 1.
+Aug 21 19:26:23 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:26:23 ctrlpanel python3[80224]: 2026-08-21 19:26:23,902 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 19:26:23 ctrlpanel python3[80224]: 2026-08-21 19:26:23,903 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 19:26:23 ctrlpanel python3[80224]: 2026-08-21 19:26:23,903 INFO Bedrock wake gateway listening on UDP 28000-28000
+
+============================================================
+FIX2_STATUS_COMPLETE
+============================================================
