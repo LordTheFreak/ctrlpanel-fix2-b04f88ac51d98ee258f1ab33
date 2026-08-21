@@ -1,13 +1,13 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T21:05:55+00:00
+published_at=2026-08-21T21:07:44+00:00
 ============================================================
 
 ============================================================
  CTRLPANEL MEGA V2 SAFE
  Usage + Analytics + Doctor + UI Deep Audit
 ============================================================
-start=2026-08-21T21:05:50+00:00
+start=2026-08-21T21:07:39+00:00
 
 [1/22] Sicherheitsprüfung ...
 --- SSH ---
@@ -23,7 +23,7 @@ default via [PRIVATE_IP] dev eth0
 [INFO] Dieses Paket verändert SSH/Netzwerk/PVE NICHT.
 
 [2/22] Projektdateien sichern ...
-backup=/root/ctrlpanel-mega-v2-safe-20260821-210550
+backup=/root/ctrlpanel-mega-v2-safe-20260821-210739
 [ OK ] Backup erstellt.
 
 [3/22] Bestehende Usage-Daten prüfen ...
@@ -82,14 +82,12 @@ No syntax errors detected in /var/www/ctrlpanel/app/Console/Kernel.php
 
 [15/22] Migration ausführen ...
 
-   INFO  Running migrations.  
-
-  2026_08_21_230000_create_server_hourly_stats ........................................................................................ 34.37ms DONE
+   INFO  Nothing to migrate.  
 
 [ OK ] Migration fertig.
 
 [16/22] Bestehende verifizierte Sessions übernehmen ...
-   Illuminate\Database\QueryException  SQLSTATE[01000]: Warning: 1265 Data truncated for column 'server_id' at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `observed_player_usage_sessions` (`server_id`, `server_domain_id`, `started_at`, `last_observed_at`, `ended_at`, `duration_seconds`, `peak_connected_players`, `peak_verified_players`, `source`, `confidence`, `close_reason`, `updated_at`, `created_at`) values (0l3dlbLrm88BoNLj97RC8, 58, 2026-08-21 05:01:39, 2026-08-21 05:01:39, 2026-08-21 05:01:39, 0, 1, 1, legacy_verified, verified, historical_import, 2026-08-21 23:05:53, 2026-08-21 23:05:53)).
+   Illuminate\Database\QueryException  SQLSTATE[01000]: Warning: 1265 Data truncated for column 'server_id' at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `observed_player_usage_sessions` (`server_id`, `server_domain_id`, `started_at`, `last_observed_at`, `ended_at`, `duration_seconds`, `peak_connected_players`, `peak_verified_players`, `source`, `confidence`, `close_reason`, `updated_at`, `created_at`) values (0l3dlbLrm88BoNLj97RC8, 58, 2026-08-21 05:01:39, 2026-08-21 05:01:39, 2026-08-21 05:01:39, 0, 1, 1, legacy_verified, verified, historical_import, 2026-08-21 23:07:42, 2026-08-21 23:07:42)).
 [ OK ] Historie importiert.
 
 [17/22] Live-Daten jetzt erfassen ...
@@ -108,8 +106,8 @@ In Connection.php line 838:
                                                                                                                                                           
   SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'wKUwFHX74BxSqgmPGLnEB' for column `ctrlpanel_free`.`server_hourly_stats`.`ser  
   ver_id` at row 1 (Connection: mysql, Host: [PRIVATE_IP], Port: 3306, Database: ctrlpanel_free, SQL: insert into `server_hourly_stats` (`server_doma  
-  in_id`, `hour_start`, `server_id`, `updated_at`, `created_at`) values (14, 2026-08-21 21:00:00, wKUwFHX74BxSqgmPGLnEB, 2026-08-21 23:05:55, 2026-08-21  
-   23:05:55))                                                                                                                                             
+  in_id`, `hour_start`, `server_id`, `updated_at`, `created_at`) values (14, 2026-08-21 21:00:00, wKUwFHX74BxSqgmPGLnEB, 2026-08-21 23:07:44, 2026-08-21  
+   23:07:44))                                                                                                                                             
                                                                                                                                                           
 
 In MySqlConnection.php line 53:
