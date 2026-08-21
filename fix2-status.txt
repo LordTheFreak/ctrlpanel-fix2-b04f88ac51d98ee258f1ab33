@@ -1,0 +1,150 @@
+============================================================
+FIX2_GITHUB_REMOTE_LOG
+published_at=2026-08-21T19:48:39+00:00
+============================================================
+
+============================================================
+CTRLPANEL FIX2 STATUS
+============================================================
+timestamp=2026-08-21T19:48:37+00:00
+
+=== SERVICES ===
+wake_api=active
+wake_gateway=active
+
+=== PORTS ===
+LISTEN 0      4096       127.0.0.1:8787       0.0.0.0:*    users:(("php8.3",pid=80202,fd=8))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+LISTEN 0      512          0.0.0.0:28000      0.0.0.0:*    users:(("python3",pid=80224,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+UNCONN 0      0            0.0.0.0:28000      0.0.0.0:*    users:(("python3",pid=80224,fd=7))
+
+=== FREE SERVERS ===
+{"id":14,"fqdn":"schulsmp.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27001,"runtime":"sleeping","players":0,"verified":0,"provider":"java_status","provider_health":"healthy","wake_count":2,"last_wake":"2026-08-21 20:53:18","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-21 21:14:05"}
+{"id":20,"fqdn":"mine-attack-tukuf5.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27000,"runtime":"sleeping","players":null,"verified":0,"provider":null,"provider_health":"unknown","wake_count":0,"last_wake":"","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-15 02:05:09"}
+{"id":51,"fqdn":"veltrixmc.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27003,"runtime":"offline","players":0,"verified":0,"provider":"java_status","provider_health":"healthy","wake_count":2,"last_wake":"2026-08-21 16:24:32","idle_since":"","idle_deadline":"","auto_stopped":""}
+{"id":58,"fqdn":"cool.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27004,"runtime":"sleeping","players":0,"verified":0,"provider":"java_status","provider_health":"healthy","wake_count":1,"last_wake":"2026-08-21 07:00:19","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-21 07:25:22"}
+{"id":59,"fqdn":"crunchy.free.mc-serverhost.net","edition":"bedrock","gateway_port":28000,"backend_port":27005,"runtime":"running","players":1,"verified":0,"provider":"bedrock_raknet","provider_health":"healthy_unverified","wake_count":0,"last_wake":"","idle_since":"","idle_deadline":"","auto_stopped":""}
+{"id":60,"fqdn":"server-test.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27002,"runtime":"offline","players":0,"verified":0,"provider":"java_gateway_traffic","provider_health":"healthy","wake_count":2,"last_wake":"2026-08-21 07:02:07","idle_since":"","idle_deadline":"","auto_stopped":""}
+{"id":61,"fqdn":"kaka.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27006,"runtime":"sleeping","players":null,"verified":0,"provider":null,"provider_health":"unknown","wake_count":0,"last_wake":"","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-20 01:45:18"}
+{"id":62,"fqdn":"timgioh.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27007,"runtime":"sleeping","players":null,"verified":0,"provider":null,"provider_health":"unknown","wake_count":0,"last_wake":"","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-20 02:25:18"}
+{"id":64,"fqdn":"test-lbcyyr.free.mc-serverhost.net","edition":"java","gateway_port":28000,"backend_port":27008,"runtime":"sleeping","players":0,"verified":0,"provider":"java_status","provider_health":"healthy","wake_count":1,"last_wake":"2026-08-21 06:54:16","idle_since":"","idle_deadline":"","auto_stopped":"2026-08-21 10:05:20"}
+
+=== WAKE SESSIONS ===
+{"id":9,"domain_id":14,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 20:53:17","started_at":"2026-08-21 20:53:18","ready_at":"2026-08-21 20:53:48","completed_at":"2026-08-21 20:53:48","failed_at":"","failure_reason":null}
+{"id":8,"domain_id":51,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 16:24:31","started_at":"2026-08-21 16:24:32","ready_at":"2026-08-21 16:24:52","completed_at":"2026-08-21 16:24:52","failed_at":"","failure_reason":null}
+{"id":7,"domain_id":51,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 13:09:07","started_at":"2026-08-21 13:09:08","ready_at":"2026-08-21 13:09:28","completed_at":"2026-08-21 13:09:28","failed_at":"","failure_reason":null}
+{"id":5,"domain_id":60,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 07:02:07","started_at":"2026-08-21 07:02:07","ready_at":"2026-08-21 07:02:31","completed_at":"2026-08-21 07:02:31","failed_at":"","failure_reason":null}
+{"id":4,"domain_id":58,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 07:00:19","started_at":"2026-08-21 07:00:19","ready_at":"2026-08-21 07:00:49","completed_at":"2026-08-21 07:00:49","failed_at":"","failure_reason":null}
+{"id":3,"domain_id":60,"state":"TIMEOUT","waiting_players":1,"requested_at":"2026-08-21 06:56:46","started_at":"2026-08-21 06:56:47","ready_at":"","completed_at":"","failed_at":"2026-08-21 06:57:33","failure_reason":"Backend did not become reachable before the client wait deadline."}
+{"id":2,"domain_id":64,"state":"COMPLETED","waiting_players":1,"requested_at":"2026-08-21 06:54:16","started_at":"2026-08-21 06:54:16","ready_at":"2026-08-21 06:54:44","completed_at":"2026-08-21 06:54:44","failed_at":"","failure_reason":null}
+{"id":1,"domain_id":14,"state":"COMPLETED","waiting_players":2,"requested_at":"2026-08-21 01:19:43","started_at":"2026-08-21 01:19:43","ready_at":"2026-08-21 01:20:13","completed_at":"2026-08-21 01:20:13","failed_at":"","failure_reason":null}
+
+=== GATEWAY LOGS ===
+Aug 21 19:26:21 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 19:26:21 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 19:26:21 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:26:21 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:26:21 ctrlpanel python3[80193]: Traceback (most recent call last):
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 1319, in do_open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     h.request(req.get_method(), req.selector, req.data, headers,
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:               encode_chunked=req.has_header('Transfer-encoding'))
+Aug 21 19:26:21 ctrlpanel python3[80193]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1367, in request
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self._send_request(method, url, body, headers, encode_chunked)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1413, in _send_request
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self.endheaders(body, encode_chunked=encode_chunked)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1362, in endheaders
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self._send_output(message_body, encode_chunked=encode_chunked)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1122, in _send_output
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self.send(msg)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1066, in send
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self.connect()
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/http/client.py", line 1032, in connect
+Aug 21 19:26:21 ctrlpanel python3[80193]:     self.sock = self._create_connection(
+Aug 21 19:26:21 ctrlpanel python3[80193]:                 ~~~~~~~~~~~~~~~~~~~~~~~^
+Aug 21 19:26:21 ctrlpanel python3[80193]:         (self.host,self.port), self.timeout, self.source_address)
+Aug 21 19:26:21 ctrlpanel python3[80193]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/socket.py", line 864, in create_connection
+Aug 21 19:26:21 ctrlpanel python3[80193]:     raise exceptions[0]
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/socket.py", line 849, in create_connection
+Aug 21 19:26:21 ctrlpanel python3[80193]:     sock.connect(sa)
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~~^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]: ConnectionRefusedError: [Errno 111] Connection refused
+Aug 21 19:26:21 ctrlpanel python3[80193]: During handling of the above exception, another exception occurred:
+Aug 21 19:26:21 ctrlpanel python3[80193]: Traceback (most recent call last):
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 1092, in <module>
+Aug 21 19:26:21 ctrlpanel python3[80193]:     asyncio.run(main())
+Aug 21 19:26:21 ctrlpanel python3[80193]:     ~~~~~~~~~~~^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return runner.run(main)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return self._loop.run_until_complete(task)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return future.result()
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~~~~^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 1048, in main
+Aug 21 19:26:21 ctrlpanel python3[80193]:     health = await api.health()
+Aug 21 19:26:21 ctrlpanel python3[80193]:              ^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 154, in health
+Aug 21 19:26:21 ctrlpanel python3[80193]:     status, data = await self.request("health", {}, timeout=5)
+Aug 21 19:26:21 ctrlpanel python3[80193]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 95, in request
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return await asyncio.to_thread(self._request_sync, endpoint, payload, timeout)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/asyncio/threads.py", line 25, in to_thread
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return await loop.run_in_executor(None, func_call)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+Aug 21 19:26:21 ctrlpanel python3[80193]:     result = self.fn(*self.args, **self.kwargs)
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/opt/ctrlpanel-wake-gateway/gateway.py", line 83, in _request_sync
+Aug 21 19:26:21 ctrlpanel python3[80193]:     with urllib.request.urlopen(req, timeout=timeout, context=SSL_CONTEXT) as response:
+Aug 21 19:26:21 ctrlpanel python3[80193]:          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 189, in urlopen
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return opener.open(url, data, timeout)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 489, in open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     response = self._open(req, data)
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 506, in _open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     result = self._call_chain(self.handle_open, protocol, protocol +
+Aug 21 19:26:21 ctrlpanel python3[80193]:                               '_open', req)
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 466, in _call_chain
+Aug 21 19:26:21 ctrlpanel python3[80193]:     result = func(*args)
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 1348, in http_open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     return self.do_open(http.client.HTTPConnection, req)
+Aug 21 19:26:21 ctrlpanel python3[80193]:            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aug 21 19:26:21 ctrlpanel python3[80193]:   File "/usr/lib/python3.13/urllib/request.py", line 1322, in do_open
+Aug 21 19:26:21 ctrlpanel python3[80193]:     raise URLError(err)
+Aug 21 19:26:21 ctrlpanel python3[80193]: urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+Aug 21 19:26:21 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Main process exited, code=exited, status=1/FAILURE
+Aug 21 19:26:21 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Failed with result 'exit-code'.
+Aug 21 19:26:23 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Scheduled restart job, restart counter is at 1.
+Aug 21 19:26:23 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:26:23 ctrlpanel python3[80224]: 2026-08-21 19:26:23,902 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 19:26:23 ctrlpanel python3[80224]: 2026-08-21 19:26:23,903 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 19:26:23 ctrlpanel python3[80224]: 2026-08-21 19:26:23,903 INFO Bedrock wake gateway listening on UDP 28000-28000
+
+=== WAKE API LOGS ===
+Aug 21 19:25:16 ctrlpanel php[78276]:   2026-08-21 19:25:15 /api/fix2-log/774c15ec38932faffba2a7729debbafe8357028165cf442d4f7a6e1be5cfaf7e  ~ 0.36ms
+Aug 21 19:26:21 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-api.service - CtrlPanel Internal Wake API...
+Aug 21 19:26:21 ctrlpanel systemd[1]: ctrlpanel-wake-api.service: Deactivated successfully.
+Aug 21 19:26:21 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-api.service - CtrlPanel Internal Wake API.
+Aug 21 19:26:21 ctrlpanel systemd[1]: ctrlpanel-wake-api.service: Consumed 4.095s CPU time, 124.3M memory peak.
+Aug 21 19:26:21 ctrlpanel systemd[1]: Started ctrlpanel-wake-api.service - CtrlPanel Internal Wake API.
+Aug 21 19:26:22 ctrlpanel php[80192]:    INFO  Server running on [http://127.0.0.1:8787].
+Aug 21 19:26:22 ctrlpanel php[80192]:   Press Ctrl+C to stop the server
+Aug 21 19:26:24 ctrlpanel php[80192]:   2026-08-21 19:26:23 /api/fix2-log/9f72d8a4c1634e50b72f8916a03dc8475e8b31f20a6c49d7bf145e3298ac6071  ~ 500.38ms
+Aug 21 19:26:24 ctrlpanel php[80192]:   2026-08-21 19:26:23 /api/wake-gateway/health ..................... ~ 0.04ms
+
+=== FAILED QUEUE JOBS ===
+
+   INFO  No failed jobs found.  
+
+
+FIX2_STATUS_COMPLETE
