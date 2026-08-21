@@ -1,78 +1,837 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T22:58:18+00:00
+published_at=2026-08-21T23:03:29+00:00
 ============================================================
 
 ============================================================
- REAL PLAYER IP FIX V7
- PAPER + JAVA WAKE GATEWAY
+ REAL PLAYER IP V8
+ ONLINE + OFFLINE GATEWAY DIAGNOSTIC
 ============================================================
-start=2026-08-21T22:57:09+00:00
-SCRIPT_VERSION=REAL_PLAYER_IP_FIX_V7
+start=2026-08-21T23:03:27+00:00
+SCRIPT_VERSION=REAL_PLAYER_IP_V8_ONLINE_SAFE_DIAG
 
-[1/8] Safety / Dienste pruefen ...
-SSH=OK
-NETWORK=OK
-WAKE_API=OK
-WAKE_GATEWAY=OK
-GATEWAY_PYTHON=OK
+[1/7] Dienste / Syntax ...
+ssh.service=ACTIVE
+ctrlpanel-wake-api.service=ACTIVE
+ctrlpanel-wake-gateway.service=ACTIVE
 
-[2/8] Testserver bestimmen ...
-domain=xhoelserver.free.mc-serverhost.net
-backend_host=[PRIVATE_IP]
+[2/7] Serverzustand NUR lesen - KEIN Start/Stop/Restart ...
+fqdn=xhoelserver.free.mc-serverhost.net
+probe_host=[PRIVATE_IP]
 backend_port=27009
 identifier=8c8f846d
-
-[3/8] Aktuelle Paper-Einstellung lesen ...
-original_proxy_protocol=false
-
-[4/8] Paper PROXY Protocol aktivieren ...
-PAPER_WRITE_HTTP=204
-PAPER_PROXY_PROTOCOL=TRUE
-state_before_restart=offline
-POWER_HTTP=200
-Warte auf RUNNING ...
-server_state=offline
-server_state=offline
-server_state=offline
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
 server_state=running
-current_proxy_protocol=true
-PAPER_PROXY_ENABLE=OK
 
-[5/8] PROXY v1 direkt gegen Leaf testen ...
-PROXY_HEADER=PROXY TCP4 198.51.100.123 [PRIVATE_IP] 45678 27009
-DIRECT_PROXY_STATUS=PASS
-STATUS_BYTES=143
-DIRECT_LEAF_PROXY=PASS
+[3/7] Paper PROXY Protocol ...
+paper_proxy_protocol=true
 
-[6/8] Gateway-Konfiguration pruefen ...
-19:JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net
+[4/7] Gateway ENV ...
+WAKE_API_BASE=http://127.0.0.1:8787/api/wake-gateway
+WAKE_API_HOST=free.mc-serverhost.net
+WAKE_API_INSECURE_LOCAL_TLS=0
+WAKE_GATEWAY_SHARED_SECRET=[REDACTED]
+JAVA_ENABLED=1
+JAVA_BIND=0.0.0.0
+JAVA_PORT=28000
+BEDROCK_ENABLED=1
+BEDROCK_BIND=0.0.0.0
+BEDROCK_START=28000
+BEDROCK_END=28099
+MAX_WAKE_WAIT=45
+BACKEND_CONNECT_TIMEOUT=0.8
+WAKE_POLL_INTERVAL=0.75
+ACTIVITY_INTERVAL=30
+RESOLVE_CACHE_TTL=30
+BEDROCK_SESSION_TTL=75
+LOG_LEVEL=INFO
+JAVA_PROXY_PROTOCOL_DOMAINS=xhoelserver.free.mc-serverhost.net
+
+[5/7] Gateway Java / Wake / Forwarding Code ...
+
+===== IMPORTANT SYMBOLS =====
+19:LOG = logging.getLogger("ctrlpanel-wake-gateway")
+21:API_BASE = os.environ.get("WAKE_API_BASE", "https://127.0.0.1/api/wake-gateway").rstrip("/")
+28:JAVA_PROXY_PROTOCOL_DOMAINS = {
+31:        "JAVA_PROXY_PROTOCOL_DOMAINS",
+55:def _json_bytes(payload):
+60:    def __init__(self):
+65:    def _request_sync(self, endpoint: str, payload: dict, timeout: float = 5.0):
+67:        path = "/api/wake-gateway/" + endpoint.lstrip("/")
+104:    async def request(self, endpoint: str, payload: dict, timeout: float = 5.0):
+107:    async def resolve_java(self, fqdn: str, cached=True):
+118:    async def resolve_bedrock_port(self, port: int, cached=True):
+129:    async def wake(self, info: dict, endpoint: str, client_ip: str):
+130:        status, data = await self.request("wake", {
+138:        raise RuntimeError(data.get("message") or f"wake API returned HTTP {status}")
+140:    async def complete(self, correlation_id: str, state: str, reason: Optional[str] = None):
+141:        payload = {"correlation_id": correlation_id, "state": state}
+147:            LOG.exception("unable to complete wake session %s", correlation_id)
+149:    async def activity(self, fqdn: str, connections: int, active: int, window: int):
+163:    async def health(self):
+166:            raise RuntimeError(f"wake API health failed: HTTP {status} {data}")
+171:    def __init__(self, api: WakeApi):
+177:    async def add(self, key: str, fqdn: str):
+181:    async def mark_active(self, key: str):
+186:    async def remove(self, key: str):
+190:    async def snapshot(self):
+199:    async def reporter(self):
+214:def decode_varint_from_bytes(buf: bytes, offset=0):
+230:def encode_varint(value: int):
+243:def encode_mc_string(value: str):
+248:async def read_varint(reader: asyncio.StreamReader):
+263:async def read_packet(reader: asyncio.StreamReader, max_size=2_000_000):
+271:def parse_handshake(payload: bytes):
+284:    next_state, pos = decode_varint_from_bytes(payload, pos)
+285:    if next_state not in (1, 2):
+286:        raise ProtocolError("Unsupported next state")
+287:    return protocol, host, server_port, next_state
+290:def parse_login_start(payload: bytes):
+338:async def open_backend(
+340:    proxy_line: bytes = b""
+342:    host = info["backend"]["host"]
+343:    port = int(info["backend"]["port"])
+346:        asyncio.open_connection(host, port),
+350:    if proxy_line:
+351:        writer.write(proxy_line)
 357:def build_java_proxy_line(
-WAKE_GATEWAY_RESTART=OK
+367:        not in JAVA_PROXY_PROTOCOL_DOMAINS
+407:async def relay(src: asyncio.StreamReader, dst: asyncio.StreamWriter, active_cb=None):
+429:async def proxy_java(reader, writer, backend_reader, backend_writer, initial, tracker, track_key):
+430:    backend_writer.write(initial)
+431:    await backend_writer.drain()
+432:    async def active():
+435:        asyncio.create_task(relay(reader, backend_writer, active)),
+436:        asyncio.create_task(relay(backend_reader, writer, active)),
+444:async def local_status(reader, writer, info, protocol):
+488:            info.get("runtime_state") or "unknown"
+491:        if runtime in ("sleeping", "offline"):
+510:        elif runtime == "running":
+584:async def handle_java(
+610:    backend_writer = None
+625:            next_state
+640:        proxy_line = build_java_proxy_line(
+652:        if next_state == 1:
+655:                br, bw = await open_backend(info, proxy_line)
+669:                await proxy_java(
+696:            backend_reader, backend_writer = (
+697:                await open_backend(info, proxy_line)
+704:            # Backend offline:
+706:            if not info.get("wake_allowed"):
+741:            wake = await api.wake(
+747:            correlation = wake.get(
+756:                        wake.get(
+765:                "wake requested for %s; "
+790:                        backend_reader,
+791:                        backend_writer
+792:                    ) = await open_backend(info, proxy_line)
+795:                        "backend ready for %s",
+821:                    "wake timeout for %s",
+839:        await proxy_java(
+842:            backend_reader,
+843:            backend_writer,
+869:                "Gateway proxy error"
+878:        if backend_writer:
+880:            backend_writer.close()
+883:                await backend_writer.wait_closed()
+905:    backend_seen: bool = False
+911:    async def ensure_backend(self):
+914:        loop = asyncio.get_running_loop()
+915:        host = self.info["backend"]["host"]
+916:        port = int(self.info["backend"]["port"])
+922:    async def send(self, data: bytes):
+924:        await self.ensure_backend()
+927:    async def wake_and_retry(self):
+932:            wake = await self.api.wake(self.info, f"{self.info['fqdn']}:{self.listener.port}", self.addr[0])
+933:            self.correlation = wake.get("correlation_id")
+934:            deadline = time.monotonic() + max(5, min(MAX_WAKE_WAIT, int(wake.get("wait_seconds") or MAX_WAKE_WAIT)))
+935:            while time.monotonic() < deadline and not self.backend_seen:
+939:            if self.backend_seen:
+943:                await self.api.complete(self.correlation, "TIMEOUT", "Bedrock backend did not answer")
+945:            LOG.exception("Bedrock wake failed for %s", self.info.get("fqdn"))
+947:                await self.api.complete(self.correlation, "FAILED", "Bedrock gateway wake error")
+951:    async def close(self):
+959:    def __init__(self, session: BedrockSession):
+962:    def datagram_received(self, data, addr):
+963:        self.session.backend_seen = True
+971:    def __init__(self, port: int, api: WakeApi, tracker: ActivityTracker):
+980:    def connection_made(self, transport):
+983:    async def resolve(self):
+991:    def datagram_received(self, data: bytes, addr):
+994:    async def handle(self, data: bytes, addr):
+1000:            # Ping never wakes a sleeping server. If a live backend session exists,
+1015:        # A RakNet connection request is a real join attempt. Give the running
+1016:        # backend a short chance to answer, then wake if it stays silent.
+1017:        if packet_id in (0x05, 0x07) and not session.backend_seen and info.get("wake_allowed"):
+1019:            if not session.backend_seen:
+1020:                asyncio.create_task(session.wake_and_retry())
+1022:    def send_pong(self, ping: bytes, addr, info: dict):
+1055:            info.get("runtime_state") or "unknown"
+1058:        if runtime in ("sleeping", "offline"):
+1080:        elif runtime == "running":
+1121:    async def cleanup(self):
+1131:async def main():
+1135:    LOG.info("CtrlPanel wake API reachable: %s", health.get("service"))
+1141:        server = await asyncio.start_server(lambda r, w: handle_java(r, w, api, tracker), JAVA_BIND, JAVA_PORT, backlog=512)
+1143:        LOG.info("Java wake gateway listening on %s:%d", JAVA_BIND, JAVA_PORT)
+1147:        loop = asyncio.get_running_loop()
+1153:        LOG.info("Bedrock wake gateway listening on UDP %d-%d", BEDROCK_START, BEDROCK_END)
+1159:    loop = asyncio.get_running_loop()
 
-[7/8] Gateway -> Leaf PROXY-Test ...
-GATEWAY_PROXY_STATUS=PASS
-GATEWAY_STATUS_BYTES=143
-GATEWAY_PROXY_STATUS=PASS
+===== GATEWAY.PY LINES 280-700 =====
+    host = host_raw.split("\x00", 1)[0].lower().rstrip(".")
+    pos += slen
+    server_port = struct.unpack(">H", payload[pos:pos+2])[0]
+    pos += 2
+    next_state, pos = decode_varint_from_bytes(payload, pos)
+    if next_state not in (1, 2):
+        raise ProtocolError("Unsupported next state")
+    return protocol, host, server_port, next_state
 
-[8/8] Final Verify ...
-final_proxy_protocol=true
 
------ RECENT GATEWAY LOG -----
+def parse_login_start(payload: bytes):
+    packet_id, pos = decode_varint_from_bytes(
+        payload,
+        0
+    )
+
+    if packet_id != 0:
+        raise ProtocolError(
+            "First login packet is not Login Start"
+        )
+
+    name_len, pos = decode_varint_from_bytes(
+        payload,
+        pos
+    )
+
+    if (
+        name_len < 1
+        or name_len > 16
+        or pos + name_len > len(payload)
+    ):
+        raise ProtocolError(
+            "Invalid Login Start username"
+        )
+
+    try:
+        username = payload[
+            pos:pos + name_len
+        ].decode("ascii")
+    except UnicodeDecodeError:
+        raise ProtocolError(
+            "Invalid username encoding"
+        )
+
+    allowed = (
+        "abcdefghijklmnopqrstuvwxyz"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "0123456789_"
+    )
+
+    if not all(c in allowed for c in username):
+        raise ProtocolError(
+            "Invalid Minecraft username"
+        )
+
+    return username
+
+
+async def open_backend(
+    info: dict,
+    proxy_line: bytes = b""
+):
+    host = info["backend"]["host"]
+    port = int(info["backend"]["port"])
+
+    reader, writer = await asyncio.wait_for(
+        asyncio.open_connection(host, port),
+        timeout=BACKEND_CONNECT_TIMEOUT
+    )
+
+    if proxy_line:
+        writer.write(proxy_line)
+        await writer.drain()
+
+    return reader, writer
+
+
+def build_java_proxy_line(
+    fqdn: str,
+    client_ip: str,
+    client_port: int,
+    local_ip: str,
+    local_port: int,
+) -> bytes:
+    if (
+        not fqdn
+        or fqdn.lower()
+        not in JAVA_PROXY_PROTOCOL_DOMAINS
+    ):
+        return b""
+
+    try:
+        client_family = (
+            socket.AF_INET6
+            if ":" in client_ip
+            else socket.AF_INET
+        )
+
+        local_family = (
+            socket.AF_INET6
+            if ":" in local_ip
+            else socket.AF_INET
+        )
+
+        if client_family != local_family:
+            return b"PROXY UNKNOWN\r\n"
+
+        protocol = (
+            "TCP6"
+            if client_family == socket.AF_INET6
+            else "TCP4"
+        )
+
+        line = (
+            f"PROXY {protocol} "
+            f"{client_ip} "
+            f"{local_ip} "
+            f"{int(client_port)} "
+            f"{int(local_port)}\r\n"
+        )
+
+        return line.encode("ascii")
+
+    except Exception:
+        return b"PROXY UNKNOWN\r\n"
+
+
+async def relay(src: asyncio.StreamReader, dst: asyncio.StreamWriter, active_cb=None):
+    total = 0
+    try:
+        while True:
+            data = await src.read(65536)
+            if not data:
+                break
+            dst.write(data)
+            await dst.drain()
+            total += len(data)
+            if active_cb and total >= 96:
+                await active_cb()
+                active_cb = None
+    except (ConnectionError, asyncio.IncompleteReadError, BrokenPipeError):
+        pass
+    finally:
+        try:
+            dst.write_eof()
+        except Exception:
+            pass
+
+
+async def proxy_java(reader, writer, backend_reader, backend_writer, initial, tracker, track_key):
+    backend_writer.write(initial)
+    await backend_writer.drain()
+    async def active():
+        await tracker.mark_active(track_key)
+    tasks = [
+        asyncio.create_task(relay(reader, backend_writer, active)),
+        asyncio.create_task(relay(backend_reader, writer, active)),
+    ]
+    done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    for task in pending:
+        task.cancel()
+    await asyncio.gather(*pending, return_exceptions=True)
+
+
+async def local_status(reader, writer, info, protocol):
+    try:
+        _, request_payload = await asyncio.wait_for(
+            read_packet(reader, 1024),
+            timeout=3
+        )
+
+        packet_id, _ = decode_varint_from_bytes(
+            request_payload,
+            0
+        )
+
+        if packet_id != 0:
+            return
+
+        profile = info.get("status_profile") or {}
+
+        version_name = (
+            profile.get("version")
+            or "Minecraft"
+        )
+
+        version_protocol = (
+            profile.get("protocol")
+            or protocol
+        )
+
+        max_players = int(
+            profile.get("max_players")
+            or 20
+        )
+
+        online_players = max(
+            0,
+            int(profile.get("online_players") or 0)
+        )
+
+        base_motd = (
+            profile.get("motd")
+            or info.get("fqdn")
+            or "Minecraft Server"
+        )
+
+        runtime = str(
+            info.get("runtime_state") or "unknown"
+        ).lower()
+
+        if runtime in ("sleeping", "offline"):
+            headline = (
+                "§eServer schläft §7• "
+                "§aBeitreten startet ihn"
+            )
+            online_players = 0
+
+        elif runtime == "starting":
+            headline = (
+                "§6Server startet gerade §7• "
+                "§fBitte kurz warten"
+            )
+
+        elif runtime == "stopping":
+            headline = (
+                "§6Server wird gestoppt §7• "
+                "§fBitte kurz warten"
+            )
+
+        elif runtime == "running":
+            # local_status() wird nur benutzt, wenn das Backend
+            # gerade nicht direkt erreichbar war.
+            headline = (
+                "§aServer läuft §7• "
+                "§eVerbindung wird vorbereitet"
+            )
+
+        else:
+            headline = (
+                "§eServer wird vorbereitet"
+            )
+
+        description = {
+            "text": (
+                f"{headline}\n"
+                f"§7{base_motd}"
+            )
+        }
+
+        body = {
+            "version": {
+                "name": str(version_name),
+                "protocol": int(
+                    version_protocol or protocol
+                ),
+            },
+            "players": {
+                "max": max_players,
+                "online": online_players,
+                "sample": [],
+            },
+            "description": description,
+        }
+
+        response_payload = (
+            encode_varint(0)
+            + encode_mc_string(
+                json.dumps(
+                    body,
+                    separators=(",", ":"),
+                    ensure_ascii=False
+                )
+            )
+        )
+
+        writer.write(
+            encode_varint(len(response_payload))
+            + response_payload
+        )
+
+        await writer.drain()
+
+        try:
+            raw, ping_payload = await asyncio.wait_for(
+                read_packet(reader, 1024),
+                timeout=3
+            )
+
+            packet_id, _ = decode_varint_from_bytes(
+                ping_payload,
+                0
+            )
+
+            if packet_id == 1:
+                writer.write(raw)
+                await writer.drain()
+
+        except Exception:
+            pass
+
+    except Exception:
+        pass
+
+async def handle_java(
+    reader: asyncio.StreamReader,
+    writer: asyncio.StreamWriter,
+    api: WakeApi,
+    tracker: ActivityTracker
+):
+    peer = (
+        writer.get_extra_info("peername")
+        or ("0.0.0.0", 0)
+    )
+
+    client_ip = str(peer[0])
+    client_port = int(peer[1]) if len(peer) > 1 else 0
+
+    local = (
+        writer.get_extra_info("sockname")
+        or ("0.0.0.0", 0)
+    )
+
+    local_ip = str(local[0])
+    local_port = int(local[1]) if len(local) > 1 else 0
+
+    track_key = f"java:{id(writer)}"
+
+    fqdn = None
+    correlation = None
+    backend_writer = None
+
+    try:
+        handshake_raw, payload = await asyncio.wait_for(
+            read_packet(
+                reader,
+                4096
+            ),
+            timeout=JAVA_INITIAL_TIMEOUT
+        )
+
+        (
+            protocol,
+            fqdn,
+            requested_port,
+            next_state
+        ) = parse_handshake(payload)
+
+        info = await api.resolve_java(
+            fqdn
+        )
+
+        if not info:
+            LOG.info(
+                "unknown Java host %s from %s",
+                fqdn,
+                client_ip
+            )
+            return
+
+        proxy_line = build_java_proxy_line(
+            fqdn,
+            client_ip,
+            client_port,
+            local_ip,
+            local_port,
+        )
+
+        # -------------------------------------------------
+        # STATUS / SERVER LIST
+        # Darf niemals einen Wake auslösen.
+        # -------------------------------------------------
+        if next_state == 1:
+
+            try:
+                br, bw = await open_backend(info, proxy_line)
+
+            except Exception:
+
+                await local_status(
+                    reader,
+                    writer,
+                    info,
+                    protocol
+                )
+
+                return
+
+            try:
+                await proxy_java(
+                    reader,
+                    writer,
+                    br,
+                    bw,
+                    handshake_raw,
+                    tracker,
+                    track_key
+                )
+
+            finally:
+                bw.close()
+
+                try:
+                    await bw.wait_closed()
+                except Exception:
+                    pass
+
+            return
+
+        # -------------------------------------------------
+        # LOGIN
+        #
+        # Zuerst Backend direkt testen.
+        # Wenn es läuft, einfach normal durchreichen.
+        # -------------------------------------------------
+        try:
+            backend_reader, backend_writer = (
+                await open_backend(info, proxy_line)
+            )
+
+            initial = handshake_raw
+
+[6/7] Listener / Routing Zustand ...
+--- TCP listeners 28000-28099 ---
+LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=10789,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+--- UDP listeners 28000-28099 ---
+UNCONN 0      0      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=10789,fd=7))  
+UNCONN 0      0      0.0.0.0:28001 0.0.0.0:* users:(("python3",pid=10789,fd=8))  
+UNCONN 0      0      0.0.0.0:28002 0.0.0.0:* users:(("python3",pid=10789,fd=9))  
+UNCONN 0      0      0.0.0.0:28003 0.0.0.0:* users:(("python3",pid=10789,fd=10)) 
+UNCONN 0      0      0.0.0.0:28004 0.0.0.0:* users:(("python3",pid=10789,fd=11)) 
+UNCONN 0      0      0.0.0.0:28005 0.0.0.0:* users:(("python3",pid=10789,fd=12)) 
+UNCONN 0      0      0.0.0.0:28006 0.0.0.0:* users:(("python3",pid=10789,fd=13)) 
+UNCONN 0      0      0.0.0.0:28007 0.0.0.0:* users:(("python3",pid=10789,fd=14)) 
+UNCONN 0      0      0.0.0.0:28008 0.0.0.0:* users:(("python3",pid=10789,fd=15)) 
+UNCONN 0      0      0.0.0.0:28009 0.0.0.0:* users:(("python3",pid=10789,fd=16)) 
+UNCONN 0      0      0.0.0.0:28010 0.0.0.0:* users:(("python3",pid=10789,fd=17)) 
+UNCONN 0      0      0.0.0.0:28011 0.0.0.0:* users:(("python3",pid=10789,fd=18)) 
+UNCONN 0      0      0.0.0.0:28012 0.0.0.0:* users:(("python3",pid=10789,fd=19)) 
+UNCONN 0      0      0.0.0.0:28013 0.0.0.0:* users:(("python3",pid=10789,fd=20)) 
+UNCONN 0      0      0.0.0.0:28014 0.0.0.0:* users:(("python3",pid=10789,fd=21)) 
+UNCONN 0      0      0.0.0.0:28015 0.0.0.0:* users:(("python3",pid=10789,fd=22)) 
+UNCONN 0      0      0.0.0.0:28016 0.0.0.0:* users:(("python3",pid=10789,fd=23)) 
+UNCONN 0      0      0.0.0.0:28017 0.0.0.0:* users:(("python3",pid=10789,fd=24)) 
+UNCONN 0      0      0.0.0.0:28018 0.0.0.0:* users:(("python3",pid=10789,fd=25)) 
+UNCONN 0      0      0.0.0.0:28019 0.0.0.0:* users:(("python3",pid=10789,fd=26)) 
+UNCONN 0      0      0.0.0.0:28020 0.0.0.0:* users:(("python3",pid=10789,fd=27)) 
+UNCONN 0      0      0.0.0.0:28021 0.0.0.0:* users:(("python3",pid=10789,fd=28)) 
+UNCONN 0      0      0.0.0.0:28022 0.0.0.0:* users:(("python3",pid=10789,fd=29)) 
+UNCONN 0      0      0.0.0.0:28023 0.0.0.0:* users:(("python3",pid=10789,fd=30)) 
+UNCONN 0      0      0.0.0.0:28024 0.0.0.0:* users:(("python3",pid=10789,fd=31)) 
+UNCONN 0      0      0.0.0.0:28025 0.0.0.0:* users:(("python3",pid=10789,fd=32)) 
+UNCONN 0      0      0.0.0.0:28026 0.0.0.0:* users:(("python3",pid=10789,fd=33)) 
+UNCONN 0      0      0.0.0.0:28027 0.0.0.0:* users:(("python3",pid=10789,fd=34)) 
+UNCONN 0      0      0.0.0.0:28028 0.0.0.0:* users:(("python3",pid=10789,fd=35)) 
+UNCONN 0      0      0.0.0.0:28029 0.0.0.0:* users:(("python3",pid=10789,fd=36)) 
+UNCONN 0      0      0.0.0.0:28030 0.0.0.0:* users:(("python3",pid=10789,fd=37)) 
+UNCONN 0      0      0.0.0.0:28031 0.0.0.0:* users:(("python3",pid=10789,fd=38)) 
+UNCONN 0      0      0.0.0.0:28032 0.0.0.0:* users:(("python3",pid=10789,fd=39)) 
+UNCONN 0      0      0.0.0.0:28033 0.0.0.0:* users:(("python3",pid=10789,fd=40)) 
+UNCONN 0      0      0.0.0.0:28034 0.0.0.0:* users:(("python3",pid=10789,fd=41)) 
+UNCONN 0      0      0.0.0.0:28035 0.0.0.0:* users:(("python3",pid=10789,fd=42)) 
+UNCONN 0      0      0.0.0.0:28036 0.0.0.0:* users:(("python3",pid=10789,fd=43)) 
+UNCONN 0      0      0.0.0.0:28037 0.0.0.0:* users:(("python3",pid=10789,fd=44)) 
+UNCONN 0      0      0.0.0.0:28038 0.0.0.0:* users:(("python3",pid=10789,fd=45)) 
+UNCONN 0      0      0.0.0.0:28039 0.0.0.0:* users:(("python3",pid=10789,fd=46)) 
+UNCONN 0      0      0.0.0.0:28040 0.0.0.0:* users:(("python3",pid=10789,fd=47)) 
+UNCONN 0      0      0.0.0.0:28041 0.0.0.0:* users:(("python3",pid=10789,fd=48)) 
+UNCONN 0      0      0.0.0.0:28042 0.0.0.0:* users:(("python3",pid=10789,fd=49)) 
+UNCONN 0      0      0.0.0.0:28043 0.0.0.0:* users:(("python3",pid=10789,fd=50)) 
+UNCONN 0      0      0.0.0.0:28044 0.0.0.0:* users:(("python3",pid=10789,fd=51)) 
+UNCONN 0      0      0.0.0.0:28045 0.0.0.0:* users:(("python3",pid=10789,fd=52)) 
+UNCONN 0      0      0.0.0.0:28046 0.0.0.0:* users:(("python3",pid=10789,fd=53)) 
+UNCONN 0      0      0.0.0.0:28047 0.0.0.0:* users:(("python3",pid=10789,fd=54)) 
+UNCONN 0      0      0.0.0.0:28048 0.0.0.0:* users:(("python3",pid=10789,fd=55)) 
+UNCONN 0      0      0.0.0.0:28049 0.0.0.0:* users:(("python3",pid=10789,fd=56)) 
+UNCONN 0      0      0.0.0.0:28050 0.0.0.0:* users:(("python3",pid=10789,fd=57)) 
+UNCONN 0      0      0.0.0.0:28051 0.0.0.0:* users:(("python3",pid=10789,fd=58)) 
+UNCONN 0      0      0.0.0.0:28052 0.0.0.0:* users:(("python3",pid=10789,fd=59)) 
+UNCONN 0      0      0.0.0.0:28053 0.0.0.0:* users:(("python3",pid=10789,fd=60)) 
+UNCONN 0      0      0.0.0.0:28054 0.0.0.0:* users:(("python3",pid=10789,fd=61)) 
+UNCONN 0      0      0.0.0.0:28055 0.0.0.0:* users:(("python3",pid=10789,fd=62)) 
+UNCONN 0      0      0.0.0.0:28056 0.0.0.0:* users:(("python3",pid=10789,fd=63)) 
+UNCONN 0      0      0.0.0.0:28057 0.0.0.0:* users:(("python3",pid=10789,fd=64)) 
+UNCONN 0      0      0.0.0.0:28058 0.0.0.0:* users:(("python3",pid=10789,fd=65)) 
+UNCONN 0      0      0.0.0.0:28059 0.0.0.0:* users:(("python3",pid=10789,fd=66)) 
+UNCONN 0      0      0.0.0.0:28060 0.0.0.0:* users:(("python3",pid=10789,fd=67)) 
+UNCONN 0      0      0.0.0.0:28061 0.0.0.0:* users:(("python3",pid=10789,fd=68)) 
+UNCONN 0      0      0.0.0.0:28062 0.0.0.0:* users:(("python3",pid=10789,fd=69)) 
+UNCONN 0      0      0.0.0.0:28063 0.0.0.0:* users:(("python3",pid=10789,fd=70)) 
+UNCONN 0      0      0.0.0.0:28064 0.0.0.0:* users:(("python3",pid=10789,fd=71)) 
+UNCONN 0      0      0.0.0.0:28065 0.0.0.0:* users:(("python3",pid=10789,fd=72)) 
+UNCONN 0      0      0.0.0.0:28066 0.0.0.0:* users:(("python3",pid=10789,fd=73)) 
+UNCONN 0      0      0.0.0.0:28067 0.0.0.0:* users:(("python3",pid=10789,fd=74)) 
+UNCONN 0      0      0.0.0.0:28068 0.0.0.0:* users:(("python3",pid=10789,fd=75)) 
+UNCONN 0      0      0.0.0.0:28069 0.0.0.0:* users:(("python3",pid=10789,fd=76)) 
+UNCONN 0      0      0.0.0.0:28070 0.0.0.0:* users:(("python3",pid=10789,fd=77)) 
+UNCONN 0      0      0.0.0.0:28071 0.0.0.0:* users:(("python3",pid=10789,fd=78)) 
+UNCONN 0      0      0.0.0.0:28072 0.0.0.0:* users:(("python3",pid=10789,fd=79)) 
+UNCONN 0      0      0.0.0.0:28073 0.0.0.0:* users:(("python3",pid=10789,fd=80)) 
+UNCONN 0      0      0.0.0.0:28074 0.0.0.0:* users:(("python3",pid=10789,fd=81)) 
+UNCONN 0      0      0.0.0.0:28075 0.0.0.0:* users:(("python3",pid=10789,fd=82)) 
+UNCONN 0      0      0.0.0.0:28076 0.0.0.0:* users:(("python3",pid=10789,fd=83)) 
+UNCONN 0      0      0.0.0.0:28077 0.0.0.0:* users:(("python3",pid=10789,fd=84)) 
+UNCONN 0      0      0.0.0.0:28078 0.0.0.0:* users:(("python3",pid=10789,fd=85)) 
+UNCONN 0      0      0.0.0.0:28079 0.0.0.0:* users:(("python3",pid=10789,fd=86)) 
+UNCONN 0      0      0.0.0.0:28080 0.0.0.0:* users:(("python3",pid=10789,fd=87)) 
+UNCONN 0      0      0.0.0.0:28081 0.0.0.0:* users:(("python3",pid=10789,fd=88)) 
+UNCONN 0      0      0.0.0.0:28082 0.0.0.0:* users:(("python3",pid=10789,fd=89)) 
+UNCONN 0      0      0.0.0.0:28083 0.0.0.0:* users:(("python3",pid=10789,fd=90)) 
+UNCONN 0      0      0.0.0.0:28084 0.0.0.0:* users:(("python3",pid=10789,fd=91)) 
+UNCONN 0      0      0.0.0.0:28085 0.0.0.0:* users:(("python3",pid=10789,fd=92)) 
+UNCONN 0      0      0.0.0.0:28086 0.0.0.0:* users:(("python3",pid=10789,fd=93)) 
+UNCONN 0      0      0.0.0.0:28087 0.0.0.0:* users:(("python3",pid=10789,fd=94)) 
+UNCONN 0      0      0.0.0.0:28088 0.0.0.0:* users:(("python3",pid=10789,fd=95)) 
+UNCONN 0      0      0.0.0.0:28089 0.0.0.0:* users:(("python3",pid=10789,fd=96)) 
+UNCONN 0      0      0.0.0.0:28090 0.0.0.0:* users:(("python3",pid=10789,fd=97)) 
+UNCONN 0      0      0.0.0.0:28091 0.0.0.0:* users:(("python3",pid=10789,fd=98)) 
+UNCONN 0      0      0.0.0.0:28092 0.0.0.0:* users:(("python3",pid=10789,fd=99)) 
+UNCONN 0      0      0.0.0.0:28093 0.0.0.0:* users:(("python3",pid=10789,fd=100))
+UNCONN 0      0      0.0.0.0:28094 0.0.0.0:* users:(("python3",pid=10789,fd=101))
+UNCONN 0      0      0.0.0.0:28095 0.0.0.0:* users:(("python3",pid=10789,fd=102))
+UNCONN 0      0      0.0.0.0:28096 0.0.0.0:* users:(("python3",pid=10789,fd=103))
+UNCONN 0      0      0.0.0.0:28097 0.0.0.0:* users:(("python3",pid=10789,fd=104))
+UNCONN 0      0      0.0.0.0:28098 0.0.0.0:* users:(("python3",pid=10789,fd=105))
+UNCONN 0      0      0.0.0.0:28099 0.0.0.0:* users:(("python3",pid=10789,fd=106))
+
+--- routes ---
+default via [PRIVATE_IP] dev eth0 
+[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
+
+[7/7] Letzte Gateway Logs ...
+Aug 21 19:57:23 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:57:24 ctrlpanel python3[82175]: 2026-08-21 19:57:24,125 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 19:57:24 ctrlpanel python3[82175]: 2026-08-21 19:57:24,125 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 19:57:24 ctrlpanel python3[82175]: 2026-08-21 19:57:24,135 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 19:59:23 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 19:59:23 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 19:59:23 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:59:23 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 19:59:24 ctrlpanel ctrlpanel-wake-api-wait[82611]: CtrlPanel wake API ready: 127.0.0.1:8787
+Aug 21 19:59:24 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:59:24 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 19:59:25 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 19:59:25 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:59:25 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 19:59:25 ctrlpanel ctrlpanel-wake-api-wait[82624]: CtrlPanel wake API ready: 127.0.0.1:8787
+Aug 21 19:59:25 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 19:59:25 ctrlpanel python3[82626]: 2026-08-21 19:59:25,523 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 19:59:25 ctrlpanel python3[82626]: 2026-08-21 19:59:25,523 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 19:59:25 ctrlpanel python3[82626]: 2026-08-21 19:59:25,534 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:01:40 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:01:40 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:01:40 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:01:40 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:01:41 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Control process exited, code=killed, status=15/TERM
+Aug 21 20:01:41 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Failed with result 'signal'.
+Aug 21 20:01:41 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:01:41 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:01:41 ctrlpanel ctrlpanel-wake-api-wait[82938]: wake_api_ready=YES
+Aug 21 20:01:42 ctrlpanel python3[82940]: 2026-08-21 20:01:42,852 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:01:42 ctrlpanel python3[82940]: 2026-08-21 20:01:42,853 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:01:42 ctrlpanel python3[82940]: 2026-08-21 20:01:42,863 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:01:43 ctrlpanel ctrlpanel-wake-gateway-wait[82942]: java_listener=READY
+Aug 21 20:01:43 ctrlpanel ctrlpanel-wake-gateway-wait[82942]: bedrock_listeners=100/100
+Aug 21 20:01:43 ctrlpanel ctrlpanel-wake-gateway-wait[82942]: gateway_ready=YES
+Aug 21 20:01:43 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:01:43 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:01:43 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:01:43 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:01:43 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:01:43 ctrlpanel ctrlpanel-wake-api-wait[82968]: wake_api_ready=YES
+Aug 21 20:01:43 ctrlpanel python3[82970]: 2026-08-21 20:01:43,701 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:01:43 ctrlpanel python3[82970]: 2026-08-21 20:01:43,701 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:01:43 ctrlpanel python3[82970]: 2026-08-21 20:01:43,712 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:01:43 ctrlpanel ctrlpanel-wake-gateway-wait[82972]: java_listener=READY
+Aug 21 20:01:43 ctrlpanel ctrlpanel-wake-gateway-wait[82972]: bedrock_listeners=100/100
+Aug 21 20:01:43 ctrlpanel ctrlpanel-wake-gateway-wait[82972]: gateway_ready=YES
+Aug 21 20:01:43 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:01:44 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:01:44 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:01:44 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:01:44 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:01:45 ctrlpanel ctrlpanel-wake-api-wait[83000]: wake_api_ready=YES
+Aug 21 20:01:45 ctrlpanel python3[83009]: 2026-08-21 20:01:45,730 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:01:45 ctrlpanel python3[83009]: 2026-08-21 20:01:45,730 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:01:45 ctrlpanel python3[83009]: 2026-08-21 20:01:45,740 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:01:46 ctrlpanel ctrlpanel-wake-gateway-wait[83011]: java_listener=READY
+Aug 21 20:01:46 ctrlpanel ctrlpanel-wake-gateway-wait[83011]: bedrock_listeners=100/100
+Aug 21 20:01:46 ctrlpanel ctrlpanel-wake-gateway-wait[83011]: gateway_ready=YES
+Aug 21 20:01:46 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:03:32 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:03:32 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:03:32 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:03:32 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:03:33 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Control process exited, code=killed, status=15/TERM
+Aug 21 20:03:33 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Failed with result 'signal'.
+Aug 21 20:03:33 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:03:33 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:03:33 ctrlpanel ctrlpanel-wake-api-wait[83211]: wake_api_ready=YES
+Aug 21 20:03:34 ctrlpanel python3[83213]: 2026-08-21 20:03:34,146 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:03:34 ctrlpanel python3[83213]: 2026-08-21 20:03:34,147 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:03:34 ctrlpanel python3[83213]: 2026-08-21 20:03:34,156 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:03:34 ctrlpanel ctrlpanel-wake-gateway-wait[83215]: java_listener=READY
+Aug 21 20:03:34 ctrlpanel ctrlpanel-wake-gateway-wait[83215]: bedrock_listeners=100/100
+Aug 21 20:03:34 ctrlpanel ctrlpanel-wake-gateway-wait[83215]: gateway_ready=YES
+Aug 21 20:03:34 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:03:34 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:03:34 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:03:34 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:03:34 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:03:35 ctrlpanel ctrlpanel-wake-api-wait[83248]: wake_api_ready=YES
+Aug 21 20:03:36 ctrlpanel python3[83254]: 2026-08-21 20:03:36,302 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:03:36 ctrlpanel python3[83254]: 2026-08-21 20:03:36,303 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:03:36 ctrlpanel python3[83254]: 2026-08-21 20:03:36,313 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:03:36 ctrlpanel ctrlpanel-wake-gateway-wait[83256]: java_listener=READY
+Aug 21 20:03:36 ctrlpanel ctrlpanel-wake-gateway-wait[83256]: bedrock_listeners=100/100
+Aug 21 20:03:36 ctrlpanel ctrlpanel-wake-gateway-wait[83256]: gateway_ready=YES
+Aug 21 20:03:36 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:03:38 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:03:38 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:03:38 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:03:38 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:03:38 ctrlpanel ctrlpanel-wake-api-wait[83284]: wake_api_ready=YES
+Aug 21 20:03:39 ctrlpanel python3[83286]: 2026-08-21 20:03:39,032 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:03:39 ctrlpanel python3[83286]: 2026-08-21 20:03:39,032 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:03:39 ctrlpanel python3[83286]: 2026-08-21 20:03:39,042 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:03:39 ctrlpanel ctrlpanel-wake-gateway-wait[83288]: java_listener=READY
+Aug 21 20:03:39 ctrlpanel ctrlpanel-wake-gateway-wait[83288]: bedrock_listeners=100/100
+Aug 21 20:03:39 ctrlpanel ctrlpanel-wake-gateway-wait[83288]: gateway_ready=YES
+Aug 21 20:03:39 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:10:18 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:10:18 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:10:18 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:10:18 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:10:19 ctrlpanel ctrlpanel-wake-api-wait[83969]: wake_api_ready=YES
+Aug 21 20:10:20 ctrlpanel python3[83975]: 2026-08-21 20:10:20,071 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:10:20 ctrlpanel python3[83975]: 2026-08-21 20:10:20,071 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:10:20 ctrlpanel python3[83975]: 2026-08-21 20:10:20,082 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:10:20 ctrlpanel ctrlpanel-wake-gateway-wait[83977]: java_listener=READY
+Aug 21 20:10:20 ctrlpanel ctrlpanel-wake-gateway-wait[83977]: bedrock_listeners=100/100
+Aug 21 20:10:20 ctrlpanel ctrlpanel-wake-gateway-wait[83977]: gateway_ready=YES
+Aug 21 20:10:20 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 21 20:31:57 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:31:57 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 21 20:31:57 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+-- Boot d9bd9eb111e84afd890755fd9a958449 --
+Aug 21 20:32:03 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 21 20:32:04 ctrlpanel ctrlpanel-wake-api-wait[351]: wake_api_ready=YES
+Aug 21 20:32:04 ctrlpanel python3[433]: 2026-08-21 20:32:04,965 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 21 20:32:04 ctrlpanel python3[433]: 2026-08-21 20:32:04,965 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 21 20:32:04 ctrlpanel python3[433]: 2026-08-21 20:32:04,976 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 21 20:32:05 ctrlpanel ctrlpanel-wake-gateway-wait[436]: java_listener=READY
 Aug 21 20:32:05 ctrlpanel ctrlpanel-wake-gateway-wait[436]: bedrock_listeners=100/100
 Aug 21 20:32:05 ctrlpanel ctrlpanel-wake-gateway-wait[436]: gateway_ready=YES
 Aug 21 20:32:05 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
@@ -137,21 +896,13 @@ Aug 21 22:58:13 ctrlpanel ctrlpanel-wake-gateway-wait[10791]: bedrock_listeners=
 Aug 21 22:58:13 ctrlpanel ctrlpanel-wake-gateway-wait[10791]: gateway_ready=YES
 Aug 21 22:58:13 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
 
-FINAL_SSH=OK
-FINAL_NETWORK=OK
-FINAL_PAPER_PROXY_PROTOCOL=TRUE
-DIRECT_LEAF_PROXY=PASS
-GATEWAY_PROXY_STATUS=PASS
-JAVA_REAL_PLAYER_IP_FORWARDING=ACTIVE
-
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=REAL_PLAYER_IP_FIX_V7
-paper_proxy_protocol=TRUE
-direct_leaf_proxy_test=PASS
-gateway_proxy_test=PASS
-java_real_player_ip_forwarding=ACTIVE
-next=EXTERNAL_PLAYER_IP_VERIFY
-end=2026-08-21T22:58:18+00:00
+package=REAL_PLAYER_IP_V8_ONLINE_SAFE_DIAG
+server_power_changes=NONE
+server_offline_required=NO
+goal=ALWAYS_PROXY_IF_ONLINE_WAKE_IF_OFFLINE
+next=PATCH_ALWAYS_ON_REAL_IP_FORWARDING
+end=2026-08-21T23:03:29+00:00
 ============================================================
