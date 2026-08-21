@@ -1,293 +1,335 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T20:03:50+00:00
+published_at=2026-08-21T20:10:35+00:00
 ============================================================
 
 ============================================================
- CtrlPanel FIX2 - Wake Dependency Fix + Deep Audit
+ CtrlPanel MEGA FIX2
+ Usage + Last-Used + Bedrock + DNS + Wake
 ============================================================
-start=2026-08-21T20:03:32+00:00
+start=2026-08-21T20:10:05+00:00
 
-[1/13] Konfiguration sichern ...
-backup=/root/wake-dependency-backup-20260821-200332
-[ OK ] Backup fertig.
+[1/18] Vollständiges Backup der betroffenen Dateien ...
+backup=/root/ctrlpanel-megapack-20260821-201005
+[ OK ] Backup erstellt.
 
-[2/13] Gateway/API-Abhängigkeit korrigieren ...
-[ OK ] PartOf/Requires entfernt.
-[ OK ] Gateway nutzt jetzt Wants + After.
+[2/18] Wake-Gateway Dependency-Reste entfernen ...
+[ OK ] Requires/PartOf/BindsTo zurückgesetzt.
 
-[3/13] Health-Check an neue Architektur anpassen ...
-[ OK ] Health V4 installiert.
+[3/18] Datenbank für echte beobachtete Nutzung erweitern ...
+No syntax errors detected in /var/www/ctrlpanel/database/migrations/2026_08_21_220500_add_observed_player_usage.php
+[ OK ] Migration erstellt.
 
-[4/13] Wake-Stack einmal sauber starten ...
-stack_restart_begin=2026-08-21T20:03:32+00:00
-wake_api_ready=YES
-java_listener=READY
-bedrock_listeners=100/100
-gateway_ready=YES
-api_state=active
-gateway_state=active
-stack_restart_end=2026-08-21T20:03:34+00:00
-[ OK ] Wake-Stack bereit.
+[4/18] ObservedPlayerUsageSession Model installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Models/ObservedPlayerUsageSession.php
+[ OK ] Model installiert.
 
-[5/13] Kritischen API-only Restart testen ...
-gateway_pid_before=83213
-wake_api_ready=YES
-gateway_state=active
-gateway_pid_after=83254
-java_listener=READY
-bedrock_listeners=100/100
-gateway_ready=YES
-[WARN] Gateway wurde beim API-Restart neu gestartet.
-api_restart_connection_refused=0
-[ OK ] API-only Restart ist jetzt sauber.
+[5/18] Neue Nutzungs-Engine installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php
+[ OK ] Nutzungs-Engine installiert.
 
-[6/13] Gateway-only Restart testen ...
-java_listener=READY
-bedrock_listeners=100/100
-gateway_ready=YES
-gateway_restart_connection_refused=0
-[ OK ] Gateway-only Restart sauber.
+[6/18] Statistik-Service installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageQueryService.php
+[ OK ] Statistik-Service installiert.
 
-[7/13] Health-System live testen ...
-active
-active
-active
-java_listener=READY
-bedrock_listeners=100/100
-gateway_ready=YES
-[ OK ] Health-System arbeitet.
+[7/18] Automatische Session-Bereinigung installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Jobs/CloseStaleObservedPlayerUsageSessionsJob.php
+[ OK ] Stale-Session-Job installiert.
 
-[8/13] Java + Bedrock Status ohne Wake testen ...
-java_status=OK schulsmp.free.mc-serverhost.net
-bedrock_status=OK port=28000
-wake_before=8
-wake_after=8
-[ OK ] Status-Pings lösen keinen Wake aus.
+[8/18] Nutzungs-Tracking in Java/Bedrock einhängen ...
+[ OK ] Core Hooks gepatcht.
+No syntax errors detected in /var/www/ctrlpanel/app/Models/ServerDomain.php
+No syntax errors detected in /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php
+No syntax errors detected in /var/www/ctrlpanel/app/Http/Controllers/Api/WakeGatewayController.php
+No syntax errors detected in /var/www/ctrlpanel/app/Services/ServerPowerService.php
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Kernel.php
+[ OK ] Core-Code syntaktisch korrekt.
 
-[9/13] Bedrock-Portvergabe untersuchen ...
---- DnsProvisioningService ---
-dns_service=app/Services/Dns/DnsProvisioningService.php
-12:use Illuminate\Support\Facades\DB;
-71:            $gatewayPort = $this->gatewayPort($domain, $edition, $allocation['port']);
-72:            $srvProtocol = $edition === 'bedrock' ? 'udp' : 'tcp';
-108:                'data.port' => $gatewayPort,
-119:                'port' => $allocation['port'],
-121:                'gateway_port' => $gatewayPort,
-144:                ? $this->settings->java_wake_port
-147:        if (!$this->settings->bedrock_enabled) {
-150:        $start = $this->settings->bedrock_start_port;
-151:        $end = $this->settings->bedrock_end_port;
-153:            throw new RuntimeException('The Bedrock UDP gateway port range is invalid.');
-155:        if ($domain->gateway_port && $domain->gateway_port >= $start && $domain->gateway_port <= $end) {
-156:            return (int) $domain->gateway_port;
-160:            ServerDomain::query()->lockForUpdate()->whereNotNull('gateway_port')->get(['id']);
-163:                ->where('edition', 'bedrock')
-164:                ->whereBetween('gateway_port', [$start, $end])
-165:                ->pluck('gateway_port')
-166:                ->mapWithKeys(fn ($port) => [(int) $port => true]);
-167:            for ($port = $start; $port <= $end; $port++) {
-168:                if (!$used->has($port)) {
-169:                    return $port;
-172:            throw new RuntimeException('No free Bedrock UDP gateway port is available.');
-181:            'BEDROCK' => 'bedrock',
-186:    /** @return array{node_id:int, allocation_id:int, port:int, probe_host:string, egg_id:int} */
-207:        $port = (int) data_get($default, 'attributes.port', 0);
-211:        if ($nodeId < 1 || $allocationId < 1 || $port < 1 || $probeHost === '' || $eggId < 1) {
-218:            'port' => $port,
-230:            $allocation['port'] < $this->settings->allocation_start_port
-231:            || $allocation['port'] > $this->settings->allocation_end_port
-233:            throw new RuntimeException('The server allocation is outside the configured free-hosting port range.');
-237:        if (isset($reserved[$allocation['port']])) {
-238:            throw new RuntimeException('The server allocation uses a reserved port.');
+[9/18] User Usage API installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Http/Controllers/ServerUsageController.php
+No syntax errors detected in /var/www/ctrlpanel/routes/web.php
+[ OK ] Usage API installiert.
 
---- Gateway Port Usage ---
-{"id":14,"fqdn":"schulsmp.free.mc-serverhost.net","edition":"java","gateway_port":28000}
-{"id":20,"fqdn":"mine-attack-tukuf5.free.mc-serverhost.net","edition":"java","gateway_port":28000}
-{"id":51,"fqdn":"veltrixmc.free.mc-serverhost.net","edition":"java","gateway_port":28000}
-{"id":58,"fqdn":"cool.free.mc-serverhost.net","edition":"java","gateway_port":28000}
-{"id":59,"fqdn":"crunchy.free.mc-serverhost.net","edition":"bedrock","gateway_port":28000}
-{"id":60,"fqdn":"server-test.free.mc-serverhost.net","edition":"java","gateway_port":28000}
-{"id":61,"fqdn":"kaka.free.mc-serverhost.net","edition":"java","gateway_port":28000}
-{"id":62,"fqdn":"timgioh.free.mc-serverhost.net","edition":"java","gateway_port":28000}
-{"id":64,"fqdn":"test-lbcyyr.free.mc-serverhost.net","edition":"java","gateway_port":28000}
+[10/18] User/Admin Statistik auf beobachtete Nutzung umstellen ...
+[ OK ] User/Admin Controller aktualisiert.
+No syntax errors detected in /var/www/ctrlpanel/app/Http/Controllers/ServerController.php
+No syntax errors detected in /var/www/ctrlpanel/app/Http/Controllers/Admin/ServerController.php
+[ OK ] Anzeige-Backend aktualisiert.
 
---- freie Bedrock Ports ---
+[11/18] Permanenten Gateway-Port Self-Heal Command installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingGatewayAudit.php
+[ OK ] Gateway-Audit Command installiert.
+
+[12/18] Usage Reporting Command installieren ...
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingUsageReport.php
+[ OK ] Usage Report installiert.
+
+[13/18] Automatische Gateway-Prüfung in Scheduler einbauen ...
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Kernel.php
+[ OK ] Gateway Self-Heal alle 10 Minuten.
+
+[14/18] Migration ausführen und bestehende Daten übernehmen ...
+
+   INFO  Running migrations.  
+
+  2026_08_21_220500_add_observed_player_usage ......................................................................................... 88.43ms DONE
+
+backfill=OK
+[ OK ] Migration + Backfill abgeschlossen.
+
+[15/18] Aktuelle Java/Bedrock Sessions initialisieren ...
+[ OK ] Aktuelle Sessions übernommen.
+
+[16/18] Gateway-Ports und DNS/SRV automatisch prüfen ...
+OK schulsmp.free.mc-serverhost.net -> 28000
+OK mine-attack-tukuf5.free.mc-serverhost.net -> 28000
+OK veltrixmc.free.mc-serverhost.net -> 28000
+OK cool.free.mc-serverhost.net -> 28000
+OK crunchy.free.mc-serverhost.net -> 28000
+OK server-test.free.mc-serverhost.net -> 28000
+OK test-lbcyyr.free.mc-serverhost.net -> 28000
+
+problems=0
+repairs=0
+
+--- Bedrock uniqueness ---
+crunchy.free.mc-serverhost.net=28000
+bedrock_ports_unique=YES
 used=1
 free=99
-next_free=28001
+[ OK ] Port-Audit abgeschlossen.
 
-[10/13] Nutzungszeit-Datenbank untersuchen ...
-=== server_domains relevant columns ===
-last_status_max_players
-runtime_state
-idle_since_at
-idle_deadline_at
-last_player_seen_at
-last_player_activity_at
-active_player_session_started_at
-last_player_session_duration_seconds
-total_player_usage_seconds
-last_player_count
-verified_player_count
-last_player_check_at
-player_provider
-last_verified_player_activity_at
-unverified_players_since_at
-last_wake_at
-wake_count
+[17/18] Laravel, Queue, Scheduler und Wake-Stack neu laden ...
+ctrlpanel-worker:ctrlpanel-worker_00   RUNNING   pid 83932, uptime 0:00:03
+ctrlpanel-worker:ctrlpanel-worker_01   RUNNING   pid 83933, uptime 0:00:03
+gateway_pid_before_api_restart=83286
+wake_api_ready=YES
+gateway_pid_after_api_restart=83975
+[WARN] Gateway wurde noch mit neu gestartet.
+java_listener=READY
+bedrock_listeners=100/100
+gateway_ready=YES
+[ OK ] Wake Stack bereit.
 
-=== usage/session tables ===
-TABLE=player_usage_sessions
-  id
-  server_id
-  server_domain_id
-  started_at
-  last_observed_at
-  ended_at
-  duration_seconds
-  peak_verified_players
-  source
-  close_reason
-  created_at
-  updated_at
-TABLE=wake_sessions
-  id
-  server_id
-  server_domain_id
-  endpoint
-  protocol
-  edition
-  state
-  requested_at
-  started_at
-  ready_at
-  completed_at
-  failed_at
-  waiting_players
-  correlation_id
-  request_ip_hash
-  failure_reason
-  created_at
-  updated_at
+[18/18] Vollständigen Produktionscheck ausführen ...
 
-[11/13] Player-/Usage-Code untersuchen ...
---- Jobs ---
-find: warning: you have specified the global option -maxdepth after the argument -type, but global options are not positional, i.e., -maxdepth affects tests specified before it as well as those specified after it.  Please specify global options before other arguments.
-app/Jobs/CheckIdleServerJob.php
-app/Jobs/CloseStalePlayerUsageSessionsJob.php
-app/Jobs/IngestDiscordActivityJob.php
-app/Jobs/ScheduleIdleServerChecksJob.php
+=== PHP SYNTAX ===
+No syntax errors detected in /var/www/ctrlpanel/app/Models/ObservedPlayerUsageSession.php
+No syntax errors detected in /var/www/ctrlpanel/app/Models/ServerDomain.php
+No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageService.php
+No syntax errors detected in /var/www/ctrlpanel/app/Services/Usage/ObservedPlayerUsageQueryService.php
+No syntax errors detected in /var/www/ctrlpanel/app/Jobs/CloseStaleObservedPlayerUsageSessionsJob.php
+No syntax errors detected in /var/www/ctrlpanel/app/Jobs/CheckIdleServerJob.php
+No syntax errors detected in /var/www/ctrlpanel/app/Http/Controllers/Api/WakeGatewayController.php
+No syntax errors detected in /var/www/ctrlpanel/app/Http/Controllers/ServerUsageController.php
+No syntax errors detected in /var/www/ctrlpanel/app/Services/ServerPowerService.php
+No syntax errors detected in /var/www/ctrlpanel/app/Http/Controllers/ServerController.php
+No syntax errors detected in /var/www/ctrlpanel/app/Http/Controllers/Admin/ServerController.php
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingGatewayAudit.php
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Commands/FreeHostingUsageReport.php
+No syntax errors detected in /var/www/ctrlpanel/app/Console/Kernel.php
+No syntax errors detected in /var/www/ctrlpanel/routes/web.php
 
---- Services ---
-app/Services/DiscordRewards/DiscordActivityIngestService.php
-app/Services/Dns/CloudflareDnsProvider.php
-app/Services/Dns/DisabledDnsProvider.php
-app/Services/Dns/DnsProvisioningService.php
-app/Services/Dns/ServerDomainRenameService.php
-app/Services/Dns/ServerDomainSlugger.php
-app/Services/ServerPlayerStatusService.php
-app/Services/Usage/PlayerUsageQueryService.php
-app/Services/Usage/PlayerUsageService.php
-app/Services/Wake/MinecraftWakeService.php
-app/Services/Wake/ServerRuntimeLock.php
+=== ROUTES ===
+  POST            api/wake-gateway/activity ................................................................... api. › Api\WakeGatewayController@activity
+  POST            api/wake-gateway/complete ................................................................... api. › Api\WakeGatewayController@complete
+  POST            api/wake-gateway/health ....................................................................... api. › Api\WakeGatewayController@health
+  POST            api/wake-gateway/resolve ..................................................................... api. › Api\WakeGatewayController@resolve
+  POST            api/wake-gateway/resolve-port ............................................................ api. › Api\WakeGatewayController@resolvePort
+  POST            api/wake-gateway/wake ........................................................................... api. › Api\WakeGatewayController@wake
+  GET|HEAD        servers/{server}/player-status .................................................. servers.player-status › ServerController@playerStatus
+  GET|HEAD        servers/{server}/usage-status ............................................................ servers.usage-status › ServerUsageController
 
---- relevante Code-Stellen ---
-app/Http/Controllers/ServerController.php:535:            ? app(\App\Services\Usage\PlayerUsageQueryService::class)->summary($server->freeDomain)
-app/Http/Controllers/Api/WakeGatewayController.php:10:use App\Services\Usage\PlayerUsageService;
-app/Http/Controllers/Api/WakeGatewayController.php:144:        PlayerUsageService $usage,
-app/Http/Controllers/Admin/ServerController.php:315:            'server_domains.last_player_activity_at',
-app/Http/Controllers/Admin/ServerController.php:358:                return $server->last_player_activity_at
-app/Http/Controllers/Admin/ServerController.php:359:                    ? CarbonImmutable::parse($server->last_player_activity_at)->diffForHumans()
-app/Http/Controllers/Admin/ServerController.php:362:            ->addColumn('usage_today', fn (Server $server) => app(\App\Services\Usage\PlayerUsageQueryService::class)->formatDuration((int) $server->usage_today_seconds))
-app/Http/Controllers/Admin/ServerController.php:363:            ->addColumn('usage_7d', fn (Server $server) => app(\App\Services\Usage\PlayerUsageQueryService::class)->formatDuration((int) $server->usage_7d_seconds))
-app/Http/Controllers/Admin/ServerController.php:364:            ->addColumn('usage_30d', fn (Server $server) => app(\App\Services\Usage\PlayerUsageQueryService::class)->formatDuration((int) $server->usage_30d_seconds))
-app/Http/Controllers/Admin/ServerController.php:418:            $subquery->from('player_usage_sessions')
-app/Http/Controllers/Admin/ServerController.php:423:                ->whereColumn('player_usage_sessions.server_id', 'servers.id')
-app/Console/Kernel.php:12:use App\Jobs\CloseStalePlayerUsageSessionsJob;
-app/Console/Kernel.php:47:        $schedule->job(new CloseStalePlayerUsageSessionsJob())->everyFiveMinutes()->withoutOverlapping();
-app/Models/Server.php:214:    public function playerUsageSessions(): HasMany
-app/Models/Server.php:216:        return $this->hasMany(PlayerUsageSession::class, 'server_id', 'id');
-app/Models/PlayerUsageSession.php:8:class PlayerUsageSession extends Model
-app/Models/ServerDomain.php:31:        'last_player_activity_at', 'active_player_session_started_at',
-app/Models/ServerDomain.php:32:        'last_player_session_duration_seconds', 'total_player_usage_seconds',
-app/Models/ServerDomain.php:51:        'last_player_activity_at' => 'datetime',
-app/Models/ServerDomain.php:54:        'total_player_usage_seconds' => 'integer',
-app/Models/ServerDomain.php:73:    public function usageSessions(): HasMany
-app/Models/ServerDomain.php:75:        return $this->hasMany(PlayerUsageSession::class, 'server_domain_id');
-app/Services/ServerPowerService.php:9:use App\Services\Usage\PlayerUsageService;
-app/Services/ServerPowerService.php:21:        private readonly PlayerUsageService $usage,
-app/Services/Usage/PlayerUsageService.php:5:use App\Models\PlayerUsageSession;
-app/Services/Usage/PlayerUsageService.php:14:class PlayerUsageService
-app/Services/Usage/PlayerUsageService.php:23:    ): ?PlayerUsageSession {
-app/Services/Usage/PlayerUsageService.php:41:                ): ?PlayerUsageSession {
-app/Services/Usage/PlayerUsageService.php:49:                    ): ?PlayerUsageSession {
-app/Services/Usage/PlayerUsageService.php:51:                        $session = PlayerUsageSession::query()
-app/Services/Usage/PlayerUsageService.php:60:                                $session = PlayerUsageSession::create([
-app/Services/Usage/PlayerUsageService.php:78:                            $lastActivity = $lockedDomain->last_player_activity_at;
-app/Services/Usage/PlayerUsageService.php:80:                                'last_player_activity_at' => !$lastActivity || $observedAt->gt($lastActivity)
-app/Services/Usage/PlayerUsageService.php:116:                            $lockedDomain->increment('total_player_usage_seconds', $duration);
-app/Services/Usage/PlayerUsageService.php:127:    public function closeStale(PlayerUsageSession $session, CarbonInterface $cutoff): ?PlayerUsageSession
-app/Services/Usage/PlayerUsageQueryService.php:5:use App\Models\PlayerUsageSession;
-app/Services/Usage/PlayerUsageQueryService.php:10:class PlayerUsageQueryService
-app/Services/Usage/PlayerUsageQueryService.php:25:        $sessions = PlayerUsageSession::query()
-app/Services/Usage/PlayerUsageQueryService.php:45:            $result[$key] = $sessions->sum(function (PlayerUsageSession $session) use ($start, $end, $open, $currentEnd): int {
-app/Services/Usage/PlayerUsageQueryService.php:58:        $totalSeconds = (int) $domain->total_player_usage_seconds + $currentSeconds;
-app/Services/Usage/PlayerUsageQueryService.php:60:            'has_data' => $sessions->isNotEmpty() || $domain->last_player_activity_at !== null,
-app/Services/Usage/PlayerUsageQueryService.php:61:            'last_activity_at' => $domain->last_player_activity_at,
-app/Jobs/CheckIdleServerJob.php:9:use App\Services\Usage\PlayerUsageService;
-app/Jobs/CheckIdleServerJob.php:48:        PlayerUsageService $usage,
-app/Jobs/CheckIdleServerJob.php:70:        PlayerUsageService $usage,
-app/Jobs/CloseStalePlayerUsageSessionsJob.php:5:use App\Models\PlayerUsageSession;
-app/Jobs/CloseStalePlayerUsageSessionsJob.php:6:use App\Services\Usage\PlayerUsageService;
-app/Jobs/CloseStalePlayerUsageSessionsJob.php:15:class CloseStalePlayerUsageSessionsJob implements ShouldQueue, ShouldBeUnique
-app/Jobs/CloseStalePlayerUsageSessionsJob.php:21:    public function handle(FreeHostingSettings $settings, PlayerUsageService $usage): void
-app/Jobs/CloseStalePlayerUsageSessionsJob.php:24:        PlayerUsageSession::query()
+=== SCHEDULER ===
+  */5  * * * *  App\Jobs\SyncServerDomainsJob .............................................................................. Next Due: 4 minutes from now
+  */10 * * * *  php artisan freehosting:gateway-audit --repair ............................................................. Next Due: 9 minutes from now
+  *    * * * *  App\Jobs\ScheduleIdleServerChecksJob ...................................................................... Next Due: 34 seconds from now
+  */5  * * * *  App\Jobs\CloseStalePlayerUsageSessionsJob .................................................................. Next Due: 4 minutes from now
+  */5  * * * *  App\Jobs\CloseStaleObservedPlayerUsageSessionsJob .......................................................... Next Due: 4 minutes from now
 
---- Scheduler ---
-  */5 * * * *  App\Jobs\SyncServerDomainsJob ................................................................................ Next Due: 1 minute from now
-  *   * * * *  App\Jobs\ScheduleIdleServerChecksJob ....................................................................... Next Due: 11 seconds from now
-  */5 * * * *  App\Jobs\CloseStalePlayerUsageSessionsJob .................................................................... Next Due: 1 minute from now
+=== DATABASE ===
+observed_table=YES
+last_used_at=YES
+active_observed_session_started_at=YES
+last_observed_session_duration_seconds=YES
+total_observed_usage_seconds=YES
+last_observed_connected_players=YES
+last_observed_source=YES
 
-[12/13] Aktuellen Serverstatus erfassen ...
-{"id":14,"fqdn":"schulsmp.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":0,"verified_players":0,"provider":"java_status","provider_health":"healthy","last_player_activity":"","usage_seconds":0,"wake_count":2,"last_wake":"2026-08-21 20:53:18","auto_stopped":"2026-08-21 21:14:05"}
-{"id":20,"fqdn":"mine-attack-tukuf5.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":null,"verified_players":0,"provider":null,"provider_health":"unknown","last_player_activity":"","usage_seconds":0,"wake_count":0,"last_wake":"","auto_stopped":"2026-08-15 02:05:09"}
-{"id":51,"fqdn":"veltrixmc.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"offline","players":0,"verified_players":0,"provider":"java_status","provider_health":"healthy","last_player_activity":"2026-08-21 11:10:43","usage_seconds":0,"wake_count":2,"last_wake":"2026-08-21 16:24:32","auto_stopped":""}
-{"id":58,"fqdn":"cool.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":0,"verified_players":0,"provider":"java_status","provider_health":"healthy","last_player_activity":"2026-08-21 05:01:39","usage_seconds":0,"wake_count":1,"last_wake":"2026-08-21 07:00:19","auto_stopped":"2026-08-21 07:25:22"}
-{"id":59,"fqdn":"crunchy.free.mc-serverhost.net","edition":"bedrock","gateway_port":28000,"runtime":"running","players":1,"verified_players":0,"provider":"bedrock_raknet","provider_health":"healthy_unverified","last_player_activity":"","usage_seconds":0,"wake_count":0,"last_wake":"","auto_stopped":""}
-{"id":60,"fqdn":"server-test.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"offline","players":0,"verified_players":0,"provider":"java_gateway_traffic","provider_health":"healthy","last_player_activity":"2026-08-21 05:06:10","usage_seconds":121,"wake_count":2,"last_wake":"2026-08-21 07:02:07","auto_stopped":""}
-{"id":61,"fqdn":"kaka.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":null,"verified_players":0,"provider":null,"provider_health":"unknown","last_player_activity":"","usage_seconds":0,"wake_count":0,"last_wake":"","auto_stopped":"2026-08-20 01:45:18"}
-{"id":62,"fqdn":"timgioh.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":null,"verified_players":0,"provider":null,"provider_health":"unknown","last_player_activity":"","usage_seconds":0,"wake_count":0,"last_wake":"","auto_stopped":"2026-08-20 02:25:18"}
-{"id":64,"fqdn":"test-lbcyyr.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":0,"verified_players":0,"provider":"java_status","provider_health":"healthy","last_player_activity":"","usage_seconds":0,"wake_count":1,"last_wake":"2026-08-21 06:54:16","auto_stopped":"2026-08-21 10:05:20"}
+=== OBSERVED USAGE REPORT ===
+[
+    {
+        "id": 14,
+        "fqdn": "schulsmp.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": 0,
+        "last_used": "2026-08-14T14:45:06+02:00",
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": "java_status"
+    },
+    {
+        "id": 20,
+        "fqdn": "mine-attack-tukuf5.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": null,
+        "last_used": "2026-08-15T01:40:09+02:00",
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": null
+    },
+    {
+        "id": 51,
+        "fqdn": "veltrixmc.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "offline",
+        "players": 0,
+        "last_used": "2026-08-21T11:10:43+02:00",
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": "java_status"
+    },
+    {
+        "id": 58,
+        "fqdn": "cool.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": 0,
+        "last_used": "2026-08-21T05:01:39+02:00",
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": "java_status"
+    },
+    {
+        "id": 59,
+        "fqdn": "crunchy.free.mc-serverhost.net",
+        "edition": "bedrock",
+        "runtime": "running",
+        "players": 1,
+        "last_used": null,
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": null
+    },
+    {
+        "id": 60,
+        "fqdn": "server-test.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "offline",
+        "players": 0,
+        "last_used": "2026-08-21T05:06:10+02:00",
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": "java_gateway_traffic"
+    },
+    {
+        "id": 61,
+        "fqdn": "kaka.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": null,
+        "last_used": null,
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": null
+    },
+    {
+        "id": 62,
+        "fqdn": "timgioh.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": null,
+        "last_used": "2026-08-20T02:00:19+02:00",
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": null
+    },
+    {
+        "id": 64,
+        "fqdn": "test-lbcyyr.free.mc-serverhost.net",
+        "edition": "java",
+        "runtime": "sleeping",
+        "players": 0,
+        "last_used": null,
+        "today": "0m",
+        "7d": "0m",
+        "30d": "0m",
+        "total": "0m",
+        "source": null
+    }
+]
 
-[13/13] Finaler Systemcheck ...
---- SYSTEMD ---
-MainPID=83286
-NRestarts=0
-Requires=system.slice sysinit.target ctrlpanel-wake-api.service
-Wants=ctrlpanel-wake-api.service network-online.target tmp.mount
-PartOf=
-After=sysinit.target -.mount system.slice tmp.mount basic.target systemd-journald.socket php8.3-fpm.service network-online.target ctrlpanel-wake-api.service systemd-tmpfiles-setup.service
-ActiveState=active
-SubState=running
+=== OBSERVED SESSIONS ===
 
---- LISTENERS ---
+=== SERVER USAGE SUMMARY ===
+{"id":14,"fqdn":"schulsmp.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":0,"verified":0,"last_used":"2026-08-14 14:45:06","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":"java_status","provider":"java_status","provider_health":"healthy"}
+{"id":20,"fqdn":"mine-attack-tukuf5.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":null,"verified":0,"last_used":"2026-08-15 01:40:09","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":null,"provider":null,"provider_health":"unknown"}
+{"id":51,"fqdn":"veltrixmc.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"offline","players":0,"verified":0,"last_used":"2026-08-21 11:10:43","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":"java_status","provider":"java_status","provider_health":"healthy"}
+{"id":58,"fqdn":"cool.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":0,"verified":0,"last_used":"2026-08-21 05:01:39","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":"java_status","provider":"java_status","provider_health":"healthy"}
+{"id":59,"fqdn":"crunchy.free.mc-serverhost.net","edition":"bedrock","gateway_port":28000,"runtime":"running","players":1,"verified":0,"last_used":"","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":null,"provider":"bedrock_raknet","provider_health":"healthy_unverified"}
+{"id":60,"fqdn":"server-test.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"offline","players":0,"verified":0,"last_used":"2026-08-21 05:06:10","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":"java_gateway_traffic","provider":"java_gateway_traffic","provider_health":"healthy"}
+{"id":61,"fqdn":"kaka.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":null,"verified":0,"last_used":"","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":null,"provider":null,"provider_health":"unknown"}
+{"id":62,"fqdn":"timgioh.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":null,"verified":0,"last_used":"2026-08-20 02:00:19","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":null,"provider":null,"provider_health":"unknown"}
+{"id":64,"fqdn":"test-lbcyyr.free.mc-serverhost.net","edition":"java","gateway_port":28000,"runtime":"sleeping","players":0,"verified":0,"last_used":"","usage_today":"0m","usage_7d":"0m","usage_30d":"0m","usage_total":"0m","current_session":null,"source":null,"provider":"java_status","provider_health":"healthy"}
+
+=== SAFE WAKE TEST ===
+java_status_ping=OK schulsmp.free.mc-serverhost.net
+bedrock_status_ping=OK 28000
+wake_before=8
+wake_after=8
+[ OK ] Status-Pings weiterhin sicher.
+
+=== SERVICES ===
+ctrlpanel-wake-api.service=active
+ctrlpanel-wake-gateway.service=active
+ctrlpanel-wake-health.timer=active
+ctrlpanel-scheduler.timer=active
+
+=== BEDROCK LISTENERS ===
 java_listener=READY
 bedrock_listeners=100/100
 gateway_ready=YES
 
---- QUEUE ---
-ctrlpanel-worker:ctrlpanel-worker_00   RUNNING   pid 77796, uptime 1:30:30
-ctrlpanel-worker:ctrlpanel-worker_01   RUNNING   pid 77807, uptime 1:30:29
+=== FAILED JOBS ===
 
    INFO  No failed jobs found.  
 
 
---- NEW CONNECTION REFUSED ---
+=== SYSTEMD DEPENDENCIES ===
+MainPID=83975
+NRestarts=0
+Requires=sysinit.target ctrlpanel-wake-api.service system.slice
+Wants=ctrlpanel-wake-api.service tmp.mount network-online.target
+BindsTo=
+PartOf=
+After=ctrlpanel-wake-api.service system.slice -.mount systemd-journald.socket network-online.target sysinit.target basic.target php8.3-fpm.service tmp.mount systemd-tmpfiles-setup.service
+ActiveState=active
+SubState=running
+
+=== NEW WAKE ERRORS ===
 connection_refused_since_start=0
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-end=2026-08-21T20:03:50+00:00
+package=OBSERVED_USAGE_MEGA_V1
+end=2026-08-21T20:10:35+00:00
 ============================================================
