@@ -1,92 +1,51 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T21:46:34+00:00
+published_at=2026-08-21T21:52:48+00:00
 ============================================================
 
 ============================================================
- CTRLPANEL V3.5 ADMIN DATATABLE FIX
+ CTRLPANEL V4.2 EXECUTION RESET + STATE CHECK
 ============================================================
-start=2026-08-21T21:46:30+00:00
+time=2026-08-21T21:52:46+00:00
 
-[1/8] Safety ...
-ssh=OK
-network=OK
-pve_untouched=YES
-console_untouched=YES
+=== SCRIPT IDENTITY ===
+SCRIPT_VERSION=V4.2
+SCRIPT_SHA256=0b1644be9889ccf8954ec4418d9900016e47c0ab4c66f598af33e7b0d286706f
 
-[2/8] Controller sichern ...
-backup=/root/ServerController.php.datatable-20260821-214630.bak
+=== CORE HEALTH ===
+ssh=active
+wake_api=active
+wake_gateway=active
+scheduler=active
 
-[3/8] Datatable-Code reparieren ...
-carbon_immutable_import=ALREADY_PRESENT
-add_usage_window=REPLACED
-No syntax errors detected in app/Http/Controllers/Admin/ServerController.php
+=== V4 FILES ===
+app/Http/Controllers/ServerMetricsController.php=NO
+app/Http/Controllers/ServerModsController.php=NO
+resources/views/servers/partials/free-server-tools.blade.php=NO
+public/js/free-queue-sound.js=NO
 
-[4/8] Exakte Datatable-DB-Abfrage testen ...
-query_rows=10
-{"id":"0l3dlbLrm88BoNLj97RC8","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
-{"id":"4b0DhVcFzQTNBDx2KdPsK","today":121,"seven_days":121,"thirty_days":121,"runtime":"offline"}
-{"id":"HcaV_GfoWBFljif-3Q_Mm","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
-{"id":"jyJwg1lntzMKrYPHVUHOB","today":0,"seven_days":0,"thirty_days":0,"runtime":"offline"}
-{"id":"lbCYYrgP8z9N1Q-UOF_9-","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
-{"id":"r1-MzgzK_6O8t36QOBCJd","today":0,"seven_days":0,"thirty_days":0,"runtime":"offline"}
-{"id":"rO3qwl64u-AsL1XdvytBa","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
-{"id":"tukUF5Zx13_xDa_zOU3OX","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
-{"id":"VJOwZGj7C1tqD59KBvUZ-","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
-{"id":"wKUwFHX74BxSqgmPGLnEB","today":0,"seven_days":0,"thirty_days":0,"runtime":"sleeping"}
-DATATABLE_CORE_QUERY=OK
-controller_query_test=OK
+=== V4 ROUTES ===
 
-[5/8] Alte Schema-Fehler aus failed_jobs entfernen ...
-old_schema_failures_removed=0
-failed_jobs_remaining=0
+=== TOOLBAR ===
+toolbar_count=0
 
-[6/8] Laravel Cache leeren ...
+=== QUEUE SOUND ===
+queue_sound_count=0
 
-   INFO  Clearing cached bootstrap files.  
-
-  config ............................................................................................................................... 1.92ms DONE
-  cache ................................................................................................................................ 6.07ms DONE
-  compiled ............................................................................................................................. 1.08ms DONE
-  events ............................................................................................................................... 0.57ms DONE
-  routes ............................................................................................................................... 0.54ms DONE
-  views ............................................................................................................................... 11.22ms DONE
-  laravel-settings ..................................................................................................................... 0.32ms DONE
-
-cache=OK
-
-[7/8] Controller/Routes prüfen ...
-No syntax errors detected in app/Http/Controllers/Admin/ServerController.php
-  GET|HEAD        admin/servers/datatable .................................................... admin.servers.datatable › Admin\ServerController@datatable
-
---- Carbon Import ---
-22:use Carbon\CarbonImmutable;
-308:        $now = CarbonImmutable::now($timezone);
-363:                    ? CarbonImmutable::parse($lastUsed)->diffForHumans()
-422:        CarbonImmutable $start,
-423:        CarbonImmutable $end
-
---- Usage Function ---
-419:    private function addUsageWindow(
-
---- Failed Jobs ---
+=== FAILED JOBS ===
 
    INFO  No failed jobs found.  
 
 
-[8/8] Final Safety ...
-ssh.service=active
-ctrlpanel-wake-api.service=active
-ctrlpanel-wake-gateway.service=active
-ctrlpanel-wake-health.timer=active
-ctrlpanel-scheduler.timer=active
+=== FINAL ===
 FINAL_SSH=OK
 FINAL_NETWORK=OK
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=CTRLPANEL_V3_5_ADMIN_DATATABLE_FIX
-datatable_query=OK
-end=2026-08-21T21:46:34+00:00
+package=CTRLPANEL_V4_2_EXECUTION_RESET
+script_version=V4.2
+changes_made=NO
+end=2026-08-21T21:52:48+00:00
 ============================================================
