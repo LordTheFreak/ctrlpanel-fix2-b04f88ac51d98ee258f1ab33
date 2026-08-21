@@ -1,79 +1,161 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T22:15:51+00:00
+published_at=2026-08-21T22:21:51+00:00
 ============================================================
 
 ============================================================
- REAL PLAYER IP FIX V4
- FIXED END-TO-END TEST
+ REAL PLAYER IP DIAGNOSTIC V5
+ PROXY PROTOCOL / LEAF SOCKET PROBE
 ============================================================
-start=2026-08-21T22:14:07+00:00
+start=2026-08-21T22:21:48+00:00
 
-[1/7] Safety ...
+[1/6] Safety ...
 SSH=OK
 NETWORK=OK
+CHANGES_MADE=NO
 
-[2/7] Gateway Patch prüfen ...
-GATEWAY_PROXY_SUPPORT=OK
+[2/6] Aktuelle Paper-Konfiguration ...
+SERVER_IDENTIFIER=8c8f846d
+BACKEND_HOST=[PRIVATE_IP]
+BACKEND_PORT=27009
+113:   bungee-cord:
+115:   proxy-protocol: false
+116:   velocity:
 
-[3/7] Paper proxy-protocol = true setzen ...
-WRITE_HTTP=204
-PAPER_PROXY_PROTOCOL=TRUE
+[3/6] Gateway Header-Code ...
+352-        await writer.drain()
+353-
+354-    return reader, writer
+355-
+356-
+357:def build_java_proxy_line(
+358-    fqdn: str,
+359-    client_ip: str,
+360-    client_port: int,
+361-    local_ip: str,
+362-    local_port: int,
+363-) -> bytes:
+364-    if (
+365-        not fqdn
+366-        or fqdn.lower()
+367-        not in JAVA_PROXY_PROTOCOL_DOMAINS
+368-    ):
+369-        return b""
+370-
+371-    try:
+372-        client_family = (
+373-            socket.AF_INET6
+374-            if ":" in client_ip
+375-            else socket.AF_INET
+376-        )
+377-
+378-        local_family = (
+379-            socket.AF_INET6
+380-            if ":" in local_ip
+381-            else socket.AF_INET
+382-        )
+383-
+384-        if client_family != local_family:
+385-            return b"PROXY UNKNOWN\r\n"
+386-
+387-        protocol = (
+388-            "TCP6"
+389-            if client_family == socket.AF_INET6
+390-            else "TCP4"
+391-        )
+392-
+393-        line = (
+394-            f"PROXY {protocol} "
+395-            f"{client_ip} "
+396-            f"{local_ip} "
+397-            f"{int(client_port)} "
+398-            f"{int(local_port)}\r\n"
+399-        )
+400-
+401-        return line.encode("ascii")
+402-
+403-    except Exception:
+404-        return b"PROXY UNKNOWN\r\n"
+405-
+406-
+407-async def relay(src: asyncio.StreamReader, dst: asyncio.StreamWriter, active_cb=None):
+408-    total = 0
+409-    try:
+410-        while True:
+411-            data = await src.read(65536)
+412-            if not data:
+413-                break
+414-            dst.write(data)
+415-            await dst.drain()
+416-            total += len(data)
+417-            if active_cb and total >= 96:
 
-[4/7] Server neu starten ...
-RESTART_HTTP=200
-Warte auf Backend ...
+630-        )
+631-
+632-        if not info:
+633-            LOG.info(
+634-                "unknown Java host %s from %s",
+635-                fqdn,
+636-                client_ip
+637-            )
+638-            return
+639-
+640:        proxy_line = build_java_proxy_line(
+641-            fqdn,
+642-            client_ip,
+643-            client_port,
+644-            local_ip,
+645-            local_port,
+646-        )
+647-
+648-        # -------------------------------------------------
+649-        # STATUS / SERVER LIST
+650-        # Darf niemals einen Wake auslösen.
+651-        # -------------------------------------------------
+652-        if next_state == 1:
+653-
+654-            try:
+655-                br, bw = await open_backend(info, proxy_line)
+656-
+657-            except Exception:
+658-
+659-                await local_status(
+660-                    reader,
+661-                    writer,
+662-                    info,
+663-                    protocol
+664-                )
+665-
 
-[5/7] Echter Gateway -> Paper Status-Test ...
-attempt=1 error=EOF while reading VarInt
-attempt=2 error=EOF while reading VarInt
-attempt=3 error=EOF while reading VarInt
-attempt=4 error=EOF while reading VarInt
-attempt=5 error=EOF while reading VarInt
-attempt=6 error=EOF while reading VarInt
-attempt=7 error=EOF while reading VarInt
-attempt=8 error=EOF while reading VarInt
-attempt=9 error=EOF while reading VarInt
-attempt=10 error=EOF while reading VarInt
-attempt=11 error=EOF while reading VarInt
-attempt=12 error=EOF while reading VarInt
-attempt=13 error=EOF while reading VarInt
-attempt=14 error=EOF while reading VarInt
-attempt=15 error=EOF while reading VarInt
-attempt=16 error=EOF while reading VarInt
-attempt=17 error=EOF while reading VarInt
-attempt=18 error=EOF while reading VarInt
-attempt=19 error=EOF while reading VarInt
-attempt=20 error=EOF while reading VarInt
-attempt=21 error=EOF while reading VarInt
-attempt=22 error=EOF while reading VarInt
-attempt=23 error=EOF while reading VarInt
-attempt=24 error=EOF while reading VarInt
-attempt=25 error=EOF while reading VarInt
-attempt=26 error=EOF while reading VarInt
-attempt=27 error=EOF while reading VarInt
-attempt=28 error=EOF while reading VarInt
-attempt=29 error=EOF while reading VarInt
-attempt=30 error=EOF while reading VarInt
-attempt=31 error=EOF while reading VarInt
-attempt=32 error=EOF while reading VarInt
-attempt=33 error=EOF while reading VarInt
-attempt=34 error=EOF while reading VarInt
-attempt=35 error=EOF while reading VarInt
-attempt=36 error=EOF while reading VarInt
-attempt=37 error=EOF while reading VarInt
-attempt=38 error=EOF while reading VarInt
-attempt=39 error=EOF while reading VarInt
-attempt=40 error=EOF while reading VarInt
-attempt=41 error=EOF while reading VarInt
-attempt=42 error=EOF while reading VarInt
-attempt=43 error=EOF while reading VarInt
-attempt=44 error=EOF while reading VarInt
-attempt=45 error=EOF while reading VarInt
-GATEWAY_STATUS=FAILED
-LAST_ERROR=EOF while reading VarInt
-[FEHLER] End-to-End Test fehlgeschlagen.
-Paper bleibt NICHT absichtlich kaputt.
-Rollback auf proxy-protocol=false ...
-ROLLBACK_WRITE_HTTP=204
-ROLLBACK_RESTART=SENT
+[4/6] Letzte Minecraft-Konsole nach PROXY Fehlern durchsuchen ...
+
+FILE=logs/latest.log HTTP=200
+[00:19:30] [Server thread/INFO]: Xhoelscm lost connection: Disconnected
+
+FILE=logs/latest.log.gz HTTP=500
+
+[5/6] Gateway Service Logs ...
+
+[6/6] Gateway Netzwerkdaten feststellen ...
+GATEWAY_TEST_LOCAL=('127.0.0.1', 51678)
+GATEWAY_TEST_PEER=('127.0.0.1', 28000)
+
+--- listener ---
+LISTEN 0      512          0.0.0.0:28000      0.0.0.0:*    users:(("python3",pid=6892,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+--- failed jobs ---
+
+   INFO  No failed jobs found.  
+
+
+--- final safety ---
+FINAL_SSH=OK
+FINAL_NETWORK=OK
+
+============================================================
+FIX2_STATUS_COMPLETE
+result=SUCCESS
+package=REAL_PLAYER_IP_DIAGNOSTIC_V5
+changes_made=NO
+end=2026-08-21T22:21:51+00:00
+============================================================
