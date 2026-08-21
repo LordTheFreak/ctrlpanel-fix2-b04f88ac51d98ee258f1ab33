@@ -1,36 +1,37 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T21:13:28+00:00
+published_at=2026-08-21T21:14:38+00:00
 ============================================================
 
 ============================================================
- CTRLPANEL V3 SCHEMA REPAIR + ANALYTICS
- STRING SERVER IDs + USAGE + UI DEEP AUDIT
+ CTRLPANEL V3.1 MIGRATION HOTFIX
 ============================================================
-start=2026-08-21T21:13:26+00:00
+[1/5] Migration sichern ...
+[2/5] RuntimeException-Warning reparieren ...
+runtime_exception_fix=OK
+No syntax errors detected in database/migrations/2026_08_21_231500_fix_freehosting_string_server_ids.php
 
-[1/24] Sicherheitsprüfung ...
-ssh_service=active
-ssh_listener=OK
-network_route=OK
-[INFO] SSH/Netzwerk/PVE werden NICHT verändert.
+[3/5] Migration ausführen ...
 
-[2/24] Backup erstellen ...
-backup=/root/ctrlpanel-v3-schema-repair-20260821-211326
+   INFO  Running migrations.  
 
-[3/24] Tatsächlichen server_id Typ bestimmen ...
-servers={"COLUMN_TYPE":"varchar(64)","IS_NULLABLE":"NO","CHARACTER_SET_NAME":"utf8mb4","COLLATION_NAME":"utf8mb4_unicode_ci"}
-player_usage_sessions={"COLUMN_TYPE":"varchar(191)","IS_NULLABLE":"NO","CHARACTER_SET_NAME":"utf8mb4","COLLATION_NAME":"utf8mb4_unicode_ci"}
-wake_sessions={"COLUMN_TYPE":"varchar(191)","IS_NULLABLE":"NO","CHARACTER_SET_NAME":"utf8mb4","COLLATION_NAME":"utf8mb4_unicode_ci"}
-observed_player_usage_sessions={"COLUMN_TYPE":"bigint(20) unsigned","IS_NULLABLE":"NO","CHARACTER_SET_NAME":null,"COLLATION_NAME":null}
-server_hourly_stats={"COLUMN_TYPE":"bigint(20) unsigned","IS_NULLABLE":"NO","CHARACTER_SET_NAME":null,"COLLATION_NAME":null}
+  2026_08_21_231500_fix_freehosting_string_server_ids ................................................................................. 36.32ms DONE
 
-[4/24] Dauerhafte Schema-Fix-Migration schreiben ...
-PHP Warning:  The use statement with non-compound name 'RuntimeException' has no effect in /var/www/ctrlpanel/database/migrations/2026_08_21_231500_fix_freehosting_string_server_ids.php on line 6
-No syntax errors detected in /var/www/ctrlpanel/database/migrations/2026_08_21_231500_fix_freehosting_string_server_ids.php
 
-In 2026_08_21_231500_fix_freehosting_string_server_ids.php line 6:
-                                                                             
-  The use statement with non-compound name 'RuntimeException' has no effect  
-                                                                             
+[4/5] server_id Typen prüfen ...
+player_usage_sessions=varchar(191) charset=utf8mb4 collation=utf8mb4_unicode_ci
+observed_player_usage_sessions=varchar(191) charset=utf8mb4 collation=utf8mb4_unicode_ci
+server_hourly_stats=varchar(191) charset=utf8mb4 collation=utf8mb4_unicode_ci
+SERVER_ID_SCHEMA_MATCH=YES
 
+[5/5] Echter String-ID Schreibtest ...
+written=FIX2-32b93e6adc6f2a8d
+read=FIX2-32b93e6adc6f2a8d
+STRING_ID_WRITE_TEST=YES
+
+============================================================
+FIX2_STATUS_COMPLETE
+result=SUCCESS
+package=CTRLPANEL_V3_1_MIGRATION_HOTFIX
+schema_fixed=YES
+============================================================
