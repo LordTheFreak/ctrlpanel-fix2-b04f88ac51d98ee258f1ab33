@@ -1,92 +1,42 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:13:44+00:00
+published_at=2026-08-22T14:13:54+00:00
 ============================================================
 
 ============================================================
- FIX2 V24
- REAL CLIENT LIVE TRACE
+ FIX2 V25 - REAL CLIENT LOG SNAPSHOT
 ============================================================
-start=2026-08-22T14:12:11+00:00
-SCRIPT_VERSION=V24_REAL_CLIENT_TRACE
+start=2026-08-22T14:13:52+00:00
+SCRIPT_VERSION=V25_REAL_CLIENT_LOG_SNAPSHOT
 
-[INFO] KEINE Aenderungen.
-[INFO] KEIN Server-Neustart.
-[INFO] KEIN MikroTik.
-[INFO] xhoelserver wird NICHT angefasst.
+[INFO] Keine Aenderungen
+[INFO] Kein Neustart
+[INFO] Kein MikroTik
+[INFO] xhoelserver bleibt unberuehrt
 
-[1/5] Zustand pruefen ...
+[1/6] Gateway Status
 active
 LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=59056,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
+[2/6] DNS
+5.61.167.129    STREAM testserver222.free.mc-serverhost.net
+5.61.167.129    DGRAM  
+5.61.167.129    RAW    
+0 0 28000 testserver222.free.mc-serverhost.net.
+
+[3/6] Gateway JAVA Logs letzte 30 Minuten
+Aug 22 14:09:26.747118 ctrlpanel python3[59056]: 2026-08-22 14:09:26,746 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 22 14:09:26.757902 ctrlpanel python3[59056]: 2026-08-22 14:09:26,757 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 22 14:09:30.062518 ctrlpanel python3[59056]: 2026-08-22 14:09:30,062 INFO JAVA_PROXY_HEADER fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:33520 destination=127.0.0.1:28000 protocol=TCP4
+
+[4/6] Alle aktuellen Verbindungen auf 28000
+
+[5/6] Testserver222 Zustand + Leaf Log
 backend_port=27010
 identifier=dc4c2e9b
-state=running
+server_state=running
 
-============================================================
- JETZT:
-
- 1. Minecraft Serverliste oeffnen
- 2. Serverliste mehrmals aktualisieren
- 3. Join auf:
-
-    testserver222.free.mc-serverhost.net
-
- Script beobachtet 90 Sekunden.
-============================================================
-
-waiting=2s
-waiting=4s
-waiting=6s
-waiting=8s
-waiting=10s
-waiting=12s
-waiting=14s
-waiting=16s
-waiting=18s
-waiting=20s
-waiting=22s
-waiting=24s
-waiting=26s
-waiting=28s
-waiting=30s
-waiting=32s
-waiting=34s
-waiting=36s
-waiting=38s
-waiting=40s
-waiting=42s
-waiting=44s
-waiting=46s
-waiting=48s
-waiting=50s
-waiting=52s
-waiting=54s
-waiting=56s
-waiting=58s
-waiting=60s
-waiting=62s
-waiting=64s
-waiting=66s
-waiting=68s
-waiting=70s
-waiting=72s
-waiting=74s
-waiting=76s
-waiting=78s
-waiting=80s
-waiting=82s
-waiting=84s
-waiting=86s
-waiting=88s
-waiting=90s
-
-[2/5] Gateway Log seit Start ...
--- No entries --
-
-[3/5] Aktuelle TCP Verbindungen Port 28000 ...
-
-[4/5] Leaf latest.log ...
+===== LEAF LAST 250 LINES =====
 [01:27:21] [ServerMain/INFO]: [bootstrap] Running Java 25 (OpenJDK 64-Bit Server VM 25.0.3+9-LTS; Eclipse Adoptium Temurin-25.0.3+9) on Linux 6.17.2-1-pve (amd64)
 [01:27:22] [ServerMain/INFO]: [bootstrap] Loading Leaf 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) for Minecraft 1.21.11
 [01:27:22] [ServerMain/INFO]: [LeafConfig] Loading config...
@@ -140,20 +90,22 @@ waiting=90s
 [01:27:42] [Server thread/INFO]: Done (21.871s)! For help, type "help"
 
 
-[5/5] Auswertung ...
-real_client_reached_gateway=NO
-xhoelserver_modified=NO
-mikrotik_modified=NO
-server_power_changes=NONE
-gateway_changes=NONE
-paper_changes=NONE
+[6/6] Aktuelle PROXY Konfiguration
+JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
+365:def effective_java_client_ip(
+379:def normalize_java_fqdn(
+401:def build_java_proxy_line(
 
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V24_REAL_CLIENT_TRACE
+package=V25_REAL_CLIENT_LOG_SNAPSHOT
 domain=testserver222.free.mc-serverhost.net
-real_client_seen=0
-next=CHECK_REAL_CLIENT_PATH
+xhoelserver_modified=NO
+mikrotik_modified=NO
+gateway_modified=NO
+paper_modified=NO
+server_power_changes=NONE
+next=ANALYZE_REAL_CLIENT_LOG
 result=SUCCESS
-end=2026-08-22T14:13:44+00:00
+end=2026-08-22T14:13:54+00:00
 ============================================================
