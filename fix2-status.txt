@@ -1,87 +1,159 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:09:30+00:00
+published_at=2026-08-22T14:13:44+00:00
 ============================================================
 
 ============================================================
- FIX2 V23
- ROBUST JAVA PROXY PATCH
+ FIX2 V24
+ REAL CLIENT LIVE TRACE
 ============================================================
-start=2026-08-22T14:09:25+00:00
-SCRIPT_VERSION=V23_ROBUST_JAVA_PROXY_PATCH
+start=2026-08-22T14:12:11+00:00
+SCRIPT_VERSION=V24_REAL_CLIENT_TRACE
 
-[INFO] testserver222 wird bearbeitet.
-[INFO] xhoelserver wird NICHT bearbeitet.
-[INFO] MikroTik wird NICHT bearbeitet.
-[INFO] Minecraft-Server wird NICHT neu gestartet.
+[INFO] KEINE Aenderungen.
+[INFO] KEIN Server-Neustart.
+[INFO] KEIN MikroTik.
+[INFO] xhoelserver wird NICHT angefasst.
 
-gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v23-20260822-140925.bak
-env_backup=/etc/ctrlpanel/wake-gateway.env.v23-20260822-140925.bak
-
-[1/8] Aktuellen Gateway-Code pruefen ...
-344:async def open_backend(
-364:def effective_java_client_ip(client_ip: str) -> str:
-412:def build_java_proxy_line(
-643:async def handle_java(
-[ OK ] build_java_proxy_line gefunden.
-
-[2/8] ENV nur fuer testserver222 bereinigen ...
-ENV_PATCH=OK
-JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
-[ OK ] Fake Public-IP Override entfernt.
-
-[3/8] Gateway-Funktionen robust ersetzen ...
-FUNCTION_PATCH=OK
-[ OK ] Gateway Python Syntax ist gueltig.
-
-[4/8] Sicherstellen, dass testserver222 PROXY Protocol nutzt ...
-paper_proxy_protocol=true
-[ OK ] Paper erwartet PROXY Protocol.
-
-[5/8] Gateway neu laden ...
+[1/5] Zustand pruefen ...
+active
 LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=59056,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-[ OK ] Gateway aktiv.
-[ OK ] Port 28000 lauscht.
 
-[6/8] Serverlisten-Ping lokal testen ...
-LOCAL_SERVERLIST_STATUS=PASS
-status_bytes=143
+backend_port=27010
+identifier=dc4c2e9b
+state=running
 
-[7/8] Gateway Log des Tests ...
-Aug 22 14:09:26 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 22 14:09:26 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 22 14:09:26 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 22 14:09:26 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Consumed 4.784s CPU time, 25.2M memory peak.
-Aug 22 14:09:26 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 22 14:09:26 ctrlpanel ctrlpanel-wake-api-wait[59054]: wake_api_ready=YES
-Aug 22 14:09:26 ctrlpanel python3[59056]: 2026-08-22 14:09:26,746 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 22 14:09:26 ctrlpanel python3[59056]: 2026-08-22 14:09:26,746 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 22 14:09:26 ctrlpanel python3[59056]: 2026-08-22 14:09:26,757 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 22 14:09:26 ctrlpanel ctrlpanel-wake-gateway-wait[59058]: java_listener=READY
-Aug 22 14:09:26 ctrlpanel ctrlpanel-wake-gateway-wait[59058]: bedrock_listeners=100/100
-Aug 22 14:09:26 ctrlpanel ctrlpanel-wake-gateway-wait[59058]: gateway_ready=YES
-Aug 22 14:09:26 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 22 14:09:30 ctrlpanel python3[59056]: 2026-08-22 14:09:30,062 INFO JAVA_PROXY_HEADER fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:33520 destination=127.0.0.1:28000 protocol=TCP4
+============================================================
+ JETZT:
 
-[8/8] Final Verify ...
-JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
-fake_ip_override=REMOVED
-365:def effective_java_client_ip(
-379:def normalize_java_fqdn(
-401:def build_java_proxy_line(
+ 1. Minecraft Serverliste oeffnen
+ 2. Serverliste mehrmals aktualisieren
+ 3. Join auf:
+
+    testserver222.free.mc-serverhost.net
+
+ Script beobachtet 90 Sekunden.
+============================================================
+
+waiting=2s
+waiting=4s
+waiting=6s
+waiting=8s
+waiting=10s
+waiting=12s
+waiting=14s
+waiting=16s
+waiting=18s
+waiting=20s
+waiting=22s
+waiting=24s
+waiting=26s
+waiting=28s
+waiting=30s
+waiting=32s
+waiting=34s
+waiting=36s
+waiting=38s
+waiting=40s
+waiting=42s
+waiting=44s
+waiting=46s
+waiting=48s
+waiting=50s
+waiting=52s
+waiting=54s
+waiting=56s
+waiting=58s
+waiting=60s
+waiting=62s
+waiting=64s
+waiting=66s
+waiting=68s
+waiting=70s
+waiting=72s
+waiting=74s
+waiting=76s
+waiting=78s
+waiting=80s
+waiting=82s
+waiting=84s
+waiting=86s
+waiting=88s
+waiting=90s
+
+[2/5] Gateway Log seit Start ...
+-- No entries --
+
+[3/5] Aktuelle TCP Verbindungen Port 28000 ...
+
+[4/5] Leaf latest.log ...
+[01:27:21] [ServerMain/INFO]: [bootstrap] Running Java 25 (OpenJDK 64-Bit Server VM 25.0.3+9-LTS; Eclipse Adoptium Temurin-25.0.3+9) on Linux 6.17.2-1-pve (amd64)
+[01:27:22] [ServerMain/INFO]: [bootstrap] Loading Leaf 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) for Minecraft 1.21.11
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Loading config...
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 1 threads for Async Pathfinding
+[01:27:22] [ServerMain/WARN]: [LeafConfig] You enabled faster random generator, it will offset location of slime chunk
+[01:27:22] [ServerMain/WARN]: [LeafConfig] If your server has slime farms or facilities need vanilla slime chunk,
+[01:27:22] [ServerMain/WARN]: [LeafConfig] set performance.faster-random-generator.use-legacy-random-for-slime-chunk to true to use LegacyRandomSource for slime chunk generation.
+[01:27:22] [ServerMain/WARN]: [LeafConfig] Set performance.faster-random-generator.warn-for-slime-chunk to false to disable this warning.
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 2 threads for Async Entity Tracker
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 8 threads for Parallel World Ticking
+[01:27:22] [ServerMain/WARN]: [LeafConfig] You have following experimental module(s) enabled: [MultithreadedTracker.enabled, SparklyPaperParallelWorldTicking.enabled], please proceed with caution!
+[01:27:22] [ServerMain/INFO]: [LeafConfig] Successfully loaded config in 599ms.
+[01:27:23] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
+[01:27:23] [ServerMain/INFO]: [PluginInitializerManager] Initialized 0 plugins
+[01:27:32] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[01:27:36] [ServerMain/INFO]: Loaded 1470 recipes
+[01:27:36] [ServerMain/INFO]: Loaded 1584 advancements
+[01:27:36] [ServerMain/INFO]: Resource reload finished after 683 ms
+[01:27:36] [ServerMain/INFO]: RecipeManager took approximately 2 tasks/224 ms (1 tasks/224 ms preparing, 1 tasks/0 ms applying)
+[01:27:36] [ServerMain/INFO]: ServerFunctionLibrary took approximately 3 tasks/9 ms (2 tasks/0 ms preparing, 1 tasks/9 ms applying)
+[01:27:36] [ServerMain/INFO]: ServerAdvancementManager took approximately 2 tasks/438 ms (1 tasks/406 ms preparing, 1 tasks/32 ms applying)
+[01:27:36] [ServerMain/INFO]: Total blocking time: 41 ms
+[01:27:36] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[01:27:37] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 584.5ms
+[01:27:37] [Server thread/INFO]: Starting minecraft server version 1.21.11
+[01:27:37] [Server thread/INFO]: Loading properties
+[01:27:37] [Server thread/INFO]: This server is running Leaf version 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[01:27:37] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[01:27:38] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[01:27:38] [Server thread/INFO]: Using 4 threads for Netty based IO
+[01:27:39] [Server thread/INFO]: [MoonriseCommon] Paper is using 1 worker threads, 1 I/O threads
+[01:27:40] [Server thread/INFO]: Using 8 permits for parallel world ticking
+[01:27:40] [Server thread/INFO]: Default game type: SURVIVAL
+[01:27:40] [Server thread/INFO]: Generating keypair
+[01:27:40] [Server thread/INFO]: Starting Minecraft server on 0.0.0.0:27010
+[01:27:40] [Server thread/WARN]: Using HAProxy, please ensure the server port is adequately firewalled.
+[01:27:40] [Server thread/INFO]: Paper: Using libdeflate (Linux x86_64) compression from Velocity.
+[01:27:40] [Server thread/INFO]: Paper: Using OpenSSL 3.x.x (Linux x86_64) cipher from Velocity.
+[01:27:40] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[01:27:40] [Server thread/INFO]: Preparing level "world"
+[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+[01:27:41] [Server thread/INFO]: Preparing spawn area: 100%
+[01:27:41] [Server thread/INFO]: Prepared spawn area in 1 ms
+[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+[01:27:41] [Server thread/INFO]: Prepared spawn area in 0 ms
+[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_end'...
+[01:27:41] [Server thread/INFO]: Prepared spawn area in 0 ms
+[01:27:41] [Server thread/INFO]: Done preparing level "world" (1.268s)
+[01:27:42] [Server thread/INFO]: [spark] Starting background profiler...
+[01:27:42] [Server thread/INFO]: Running delayed init tasks
+[01:27:42] [Server thread/INFO]: Done (21.871s)! For help, type "help"
+
+
+[5/5] Auswertung ...
+real_client_reached_gateway=NO
+xhoelserver_modified=NO
+mikrotik_modified=NO
+server_power_changes=NONE
+gateway_changes=NONE
+paper_changes=NONE
 
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V23_ROBUST_JAVA_PROXY_PATCH
-result=SUCCESS
+package=V24_REAL_CLIENT_TRACE
 domain=testserver222.free.mc-serverhost.net
-xhoelserver_modified=NO
-mikrotik_modified=NO
-minecraft_server_restart=NO
-paper_proxy_protocol=TRUE
-local_serverlist_status=PASS
-fake_public_ip_override=REMOVED
-source_ip_mode=SOCKET_PEER_IP
-next=TEST_SERVERLIST_AND_JOIN
-end=2026-08-22T14:09:30+00:00
+real_client_seen=0
+next=CHECK_REAL_CLIENT_PATH
+result=SUCCESS
+end=2026-08-22T14:13:44+00:00
 ============================================================
