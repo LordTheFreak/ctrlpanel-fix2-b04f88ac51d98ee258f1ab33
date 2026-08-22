@@ -1,71 +1,45 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:28:10+00:00
+published_at=2026-08-22T14:30:51+00:00
 ============================================================
 
 ============================================================
- FIX2 V29
- TESTSERVER222 RAW MITM MODE
+ FIX2 V30
+ REPAIR RAW-MITM / PAPER PROXY MISMATCH
 ============================================================
-start=2026-08-22T14:28:02+00:00
-SCRIPT_VERSION=V29_TESTSERVER222_RAW_MITM
+start=2026-08-22T14:30:47+00:00
+SCRIPT_VERSION=V30_RAW_MITM_PAPER_FIX
 
 [INFO] Nur testserver222.
-[INFO] Kein MikroTik.
 [INFO] xhoelserver wird NICHT veraendert.
-[INFO] PROXY Protocol wird fuer testserver222 entfernt.
+[INFO] MikroTik wird NICHT veraendert.
 
-env_backup=/etc/ctrlpanel/wake-gateway.env.v29-20260822-142802.bak
-
-[1/8] Testserver bestimmen ...
+[1/7] Server bestimmen ...
 identifier=dc4c2e9b
 backend_port=27010
-state=running
-paper_backup=/root/testserver222-paper-global-v29-20260822-142802.yml
 
-[2/8] Paper PROXY Protocol feststellen ...
-paper_proxy_before=true
+[2/7] paper-global.yml lesen und sichern ...
+paper_read_http=200
+115:  proxy-protocol: true
 
-[3/8] Neue Paper-Konfiguration erzeugen ...
-paper_new_proxy_protocol=false
+[3/7] proxy-protocol:false erzeugen ...
+PAPER_PATCH=OK
+115:  proxy-protocol: false
 
-[4/8] Paper-Datei schreiben ...
+[4/7] Datei ueber Pterodactyl RAW schreiben ...
 paper_write_http=400
-   Exception  Paper write failed HTTP 400.
+paper_write_body={
+    "errors": [
+        {
+            "code": "BadRequestHttpException",
+            "status": "400",
+            "detail": "The JSON data passed in the request appears to be malformed: Syntax error"
+        }
+    ]
+}
+   Exception  Paper write failed.
+[ OK ] Paper-Datei geschrieben.
 
-[5/8] testserver222 aus PROXY-Domainliste entfernen ...
-ENV_PROXY_DOMAIN_REMOVED=YES
-JAVA_PROXY_PROTOCOL_DOMAINS=
-[ OK ] testserver222 verwendet keinen PROXY-Header mehr.
-
-[6/8] Gateway auf RAW MITM umschalten ...
-LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=60673,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-[ OK ] Gateway RAW-MITM aktiv.
-
-[7/8] Minecraft-Server neu laden falls notwendig ...
-[INFO] Server war running.
-[INFO] Ein Neustart ist fuer Paper proxy-protocol=false notwendig.
-restart_http=200
-[INFO] Warte auf RUNNING ...
-server_state=running
-
-[8/8] Serverlisten-Test ...
-RAW_MITM_SERVERLIST=PASS
-status_bytes=197
-
-===== FINAL PAPER VERIFY =====
-paper_proxy_final=true
-
-============================================================
-FIX2_STATUS_COMPLETE
-package=V29_TESTSERVER222_RAW_MITM
-domain=testserver222.free.mc-serverhost.net
-xhoelserver_modified=NO
-mikrotik_modified=NO
-proxy_protocol=DISABLED
-mitm_mode=RAW_TCP_AFTER_HANDSHAKE
-serverlist_test=PASS
-result=SUCCESS
-next=TEST_REAL_MINECRAFT_CLIENT
-end=2026-08-22T14:28:10+00:00
-============================================================
+[5/7] Datei sofort verifizieren ...
+paper_proxy_protocol=true
+[ERROR] Paper steht noch nicht auf false.
