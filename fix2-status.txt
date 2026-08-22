@@ -1,23 +1,179 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:16:17+00:00
+published_at=2026-08-22T14:24:35+00:00
 ============================================================
 
 ============================================================
- FIX2 V26
- JAVA ACCEPT TRACE
+ FIX2 V28
+ TRANSPARENT MITM / IP_TRANSPARENT DIAGNOSTIC
 ============================================================
-start=2026-08-22T14:16:17+00:00
-SCRIPT_VERSION=V26_JAVA_ACCEPT_TRACE
+start=2026-08-22T14:24:34+00:00
+SCRIPT_VERSION=V28_TRANSPARENT_MITM_DIAG
 
-[INFO] Kein MikroTik
-[INFO] Kein Minecraft-Server-Neustart
-[INFO] xhoelserver wird NICHT veraendert
+[INFO] Keine Aenderungen.
+[INFO] Kein Gateway-Neustart.
+[INFO] Kein Minecraft-Server-Neustart.
+[INFO] Kein MikroTik.
+[INFO] xhoelserver wird NICHT angefasst.
 
-gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v26-20260822-141617.bak
 
-[1/6] handle_java suchen ...
-690:async def handle_java(
+[1/9] testserver222 bestimmen ...
+domain=testserver222.free.mc-serverhost.net
+backend_port=27010
+identifier=dc4c2e9b
+server_state=running
 
-[2/6] Sofort-Logging beim TCP Accept einbauen ...
-handle_java peer/local block not found
+[2/9] Pterodactyl Allocation analysieren ...
+pterodactyl_node=NodeHost1
+server_identifier=dc4c2e9b
+allocation=[PRIVATE_IP]:27010 alias=5.61.167.129 default=True
+backend_allocation_ip=[PRIVATE_IP]
+backend_allocation_alias=5.61.167.129
+backend_host_candidate=5.61.167.129
+
+backend_host_candidate=5.61.167.129
+
+[3/9] Gateway Backend-Konfiguration untersuchen ...
+113:    async def resolve_java(self, fqdn: str, cached=True):
+118:        status, data = await self.request("resolve", {"fqdn": fqdn, "edition": "java"})
+124:    async def resolve_bedrock_port(self, port: int, cached=True):
+129:        status, data = await self.request("resolve-port", {"port": port, "edition": "bedrock"})
+344:async def open_backend(
+348:    host = info["backend"]["host"]
+349:    port = int(info["backend"]["port"])
+734:        info = await api.resolve_java(
+761:                br, bw = await open_backend(info, proxy_line)
+803:                await open_backend(info, proxy_line)
+847:            wake = await api.wake(
+888:                        await api.resolve_java(
+898:                    ) = await open_backend(info, proxy_line)
+1021:        host = self.info["backend"]["host"]
+1022:        port = int(self.info["backend"]["port"])
+1038:            wake = await self.api.wake(self.info, f"{self.info['fqdn']}:{self.listener.port}", self.addr[0])
+1084:        self.last_resolve = 0.0
+1089:    async def resolve(self):
+1091:        if self.info and now - self.last_resolve < CACHE_TTL:
+1093:        self.info = await self.api.resolve_bedrock_port(self.port, cached=False)
+1094:        self.last_resolve = now
+1101:        info = await self.resolve()
+
+--- relevante ENV Werte ---
+WAKE_API_BASE=http://127.0.0.1:8787/api/wake-gateway
+WAKE_API_HOST=free.mc-serverhost.net
+WAKE_API_INSECURE_LOCAL_TLS=0
+WAKE_GATEWAY_SHARED_SECRET=[REDACTED]
+JAVA_ENABLED=1
+JAVA_BIND=0.0.0.0
+JAVA_PORT=28000
+BACKEND_CONNECT_TIMEOUT=0.8
+WAKE_POLL_INTERVAL=0.75
+JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
+
+[4/9] Routing des CtrlPanel-LXC ...
+--- addresses ---
+lo               UNKNOWN        127.0.0.1/8 
+eth0@if379       UP             [PRIVATE_IP]/24 
+
+--- routes ---
+default via [PRIVATE_IP] dev eth0 
+[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
+
+--- default route ---
+1.1.1.1 via [PRIVATE_IP] dev eth0 src [PRIVATE_IP] uid 0 
+    cache 
+
+--- backend resolution ---
+5.61.167.129    STREAM 5.61.167.129
+5.61.167.129    DGRAM  
+5.61.167.129    RAW    
+backend_ip=5.61.167.129
+
+--- route to backend ---
+5.61.167.129 via [PRIVATE_IP] dev eth0 src [PRIVATE_IP] uid 0 
+    cache 
+
+[5/9] Backend TCP Erreichbarkeit ...
+BACKEND_TCP_27010=PASS
+
+[6/9] Linux Transparent Proxy Support ...
+--- kernel ---
+Linux ctrlpanel 6.17.2-1-pve #1 SMP PREEMPT_DYNAMIC PMX 6.17.2-1 (2025-10-21T11:55Z) x86_64 GNU/Linux
+
+--- sysctl ---
+net.ipv4.ip_forward = 0
+net.ipv4.ip_nonlocal_bind = 0
+net.ipv4.conf.all.rp_filter = 2
+net.ipv4.conf.default.rp_filter = 2
+net.ipv4.conf.all.route_localnet = 0
+
+--- netfilter modules ---
+nf_tables             360448  4161 nft_compat,nft_chain_nat
+nfnetlink              20480  26 nft_compat,nf_conntrack_netlink,nf_tables,ip_set,nfnetlink_log
+
+--- nftables ---
+/usr/sbin/nft
+table inet filter
+
+--- iptables TPROXY target ---
+iptables=NOT_INSTALLED
+
+[7/9] Gateway Service Capabilities ...
+CapabilityBoundingSet=cap_chown cap_dac_override cap_dac_read_search cap_fowner cap_fsetid cap_kill cap_setgid cap_setuid cap_setpcap cap_linux_immutable cap_net_bind_service cap_net_broadcast cap_net_admin cap_net_raw cap_ipc_lock cap_ipc_owner cap_sys_module cap_sys_rawio cap_sys_chroot cap_sys_ptrace cap_sys_pacct cap_sys_admin cap_sys_boot cap_sys_nice cap_sys_resource cap_sys_time cap_sys_tty_config cap_mknod cap_lease cap_audit_write cap_audit_control cap_setfcap cap_mac_override cap_mac_admin cap_syslog cap_wake_alarm cap_block_suspend cap_audit_read cap_perfmon cap_bpf cap_checkpoint_restore
+AmbientCapabilities=
+User=www-data
+Group=www-data
+PrivateNetwork=no
+NoNewPrivileges=yes
+RestrictAddressFamilies=~
+
+--- python binary capabilities ---
+python_bin=/usr/bin/python3.13
+
+--- current shell caps ---
+Current: =ep
+Bounding set =cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_linux_immutable,cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw,cap_ipc_lock,cap_ipc_owner,cap_sys_module,cap_sys_rawio,cap_sys_chroot,cap_sys_ptrace,cap_sys_pacct,cap_sys_admin,cap_sys_boot,cap_sys_nice,cap_sys_resource,cap_sys_time,cap_sys_tty_config,cap_mknod,cap_lease,cap_audit_write,cap_audit_control,cap_setfcap,cap_mac_override,cap_mac_admin,cap_syslog,cap_wake_alarm,cap_block_suspend,cap_audit_read,cap_perfmon,cap_bpf,cap_checkpoint_restore
+Ambient set =
+Current IAB: 
+Securebits: 00/0x0/1'b0 (no-new-privs=0)
+ secure-noroot: no (unlocked)
+ secure-no-suid-fixup: no (unlocked)
+ secure-keep-caps: no (unlocked)
+ secure-no-ambient-raise: no (unlocked)
+uid=0(root) euid=0(root)
+gid=0(root)
+groups=
+Guessed mode: HYBRID (4)
+
+[8/9] IP_TRANSPARENT Socket-Test ...
+IP_TRANSPARENT_SETSOCKOPT=PASS
+IP_TRANSPARENT_NONLOCAL_BIND=PASS
+
+[9/9] Rueckweg-Anforderungen bestimmen ...
+
+Fuer echtes transparentes TCP muss gelten:
+
+CLIENT -> Gateway:28000
+Gateway -> Backend:27010 mit CLIENT-IP als Source
+Backend-Antwort -> wieder ueber Gateway
+
+gateway_to_backend_ip=5.61.167.129
+5.61.167.129 via [PRIVATE_IP] dev eth0 src [PRIVATE_IP] uid 0 
+    cache 
+
+--- aktueller Gateway Listener ---
+LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=59056,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+============================================================
+FIX2_STATUS_COMPLETE
+package=V28_TRANSPARENT_MITM_DIAG
+domain=testserver222.free.mc-serverhost.net
+backend_port=27010
+xhoelserver_modified=NO
+mikrotik_modified=NO
+gateway_modified=NO
+paper_modified=NO
+server_power_changes=NONE
+next=BUILD_TRANSPARENT_MITM_FROM_RESULTS
+result=SUCCESS
+end=2026-08-22T14:24:35+00:00
+============================================================
