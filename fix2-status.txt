@@ -1,15 +1,50 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T16:02:43+00:00
+published_at=2026-08-22T16:08:39+00:00
 ============================================================
 
 ============================================================
- V45B - TRANSPARENT SOURCE-IP OVER WIREGUARD
+ V49B - SWITCH TESTSERVER222 TO WIREGUARD
 ============================================================
-SCRIPT_VERSION=V45B_WG_TRANSPARENT_SOURCE_PROBE
-time=2026-08-22T16:02:42+00:00
+SCRIPT_VERSION=V49B_WG_PRODUCTION_SWITCH
 
-[1/5] WireGuard pruefen ...
+[INFO] Wake-on-Join bleibt erhalten.
+[INFO] Sleeping-MOTD bleibt erhalten.
+[INFO] xhoelserver bleibt unangetastet.
+[INFO] Port 25565 bleibt unangetastet.
+[INFO] MikroTik bleibt unangetastet.
+
+[1/7] WireGuard pruefen ...
+PING [PRIVATE_IP] ([PRIVATE_IP]) 56(84) bytes of data.
+64 bytes from [PRIVATE_IP]: icmp_seq=1 ttl=64 time=0.346 ms
+64 bytes from [PRIVATE_IP]: icmp_seq=2 ttl=64 time=0.324 ms
+
+--- [PRIVATE_IP] ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1051ms
+rtt min/avg/max/mdev = 0.324/0.335/0.346/0.011 ms
+wireguard_handshake_age=66s
+[ OK ] WireGuard aktiv.
+
+[2/7] CtrlPanel Return-Path auf WireGuard umstellen ...
+[ OK ] WireGuard Return-Path aktiv.
+
+[3/7] Produktionspfad mit Fake-IP testen ...
+WG_PRODUCTION_TRANSPARENT_PROBE=PASS
+[ OK ] Echter Minecraft-Port funktioniert transparent ueber VPN.
+
+[4/7] Gateway Backend auf WireGuard umstellen ...
+JAVA_TRANSPARENT_DOMAIN=testserver222.free.mc-serverhost.net
+JAVA_TRANSPARENT_BACKEND_HOST=[PRIVATE_IP]
+
+[5/7] Gateway neu starten ...
+[ OK ] Gateway aktiv.
+
+[6/7] Alten fehlgeschlagenen Direkt-Container-Routeversuch entfernen ...
+[ OK ] Bereinigt.
+
+[7/7] Rollback vorbereiten ...
+
+===== FINAL STATUS =====
 interface: wg-minecraft
   public key: d8Lr1g1CMIVHe7umcW7Ic+VCPQqjXEKeBzkPE22eDhw=
   private key: (hidden)
@@ -18,22 +53,46 @@ interface: wg-minecraft
 peer: UjzPLuyDGz3RRJHTgn48YtTBfqUtX8PcQgd+hQ2Mkho=
   endpoint: [PRIVATE_IP]:51888
   allowed ips: [PRIVATE_IP]/32
-  latest handshake: 1 minute, 36 seconds ago
-  transfer: 5.64 KiB received, 7.72 KiB sent
+  latest handshake: 1 minute, 10 seconds ago
+  transfer: 7.65 KiB received, 9.61 KiB sent
   persistent keepalive: every 25 seconds
-[ OK ] VPN aktiv.
 
-[2/5] Lokalen Rueckweg fuer Fake-IP installieren ...
-[ OK ] Fake-IP Return-Path aktiv.
+table inet ctrlpanel_tmitm_local { # handle 10
+	chain prerouting { # handle 1
+		type filter hook prerouting priority mangle; policy accept;
+		iifname "wg-minecraft" ip saddr [PRIVATE_IP] tcp sport 27010 counter packets 4 bytes 441 meta mark set 0x00004d4a # handle 2
+	}
+}
 
-[3/5] IP_TRANSPARENT Test ...
-container_reported_source=ERROR:ConnectionRefusedError(111, 'Connection refused')
+JAVA_TRANSPARENT_DOMAIN=testserver222.free.mc-serverhost.net
+JAVA_TRANSPARENT_BACKEND_HOST=[PRIVATE_IP]
 
-[4/5] Ergebnis bewerten ...
-[ERROR] Transparente VPN-Verbindung fehlgeschlagen.
+Aug 22 16:08:35 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 22 16:08:35 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 22 16:08:35 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 22 16:08:35 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 22 16:08:35 ctrlpanel ctrlpanel-wake-api-wait[72490]: wake_api_ready=YES
+Aug 22 16:08:36 ctrlpanel python3[72492]: 2026-08-22 16:08:36,153 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 22 16:08:36 ctrlpanel python3[72492]: 2026-08-22 16:08:36,153 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 22 16:08:36 ctrlpanel python3[72492]: 2026-08-22 16:08:36,164 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 22 16:08:36 ctrlpanel ctrlpanel-wake-gateway-wait[72494]: java_listener=READY
+Aug 22 16:08:36 ctrlpanel ctrlpanel-wake-gateway-wait[72494]: bedrock_listeners=100/100
+Aug 22 16:08:36 ctrlpanel ctrlpanel-wake-gateway-wait[72494]: gateway_ready=YES
+Aug 22 16:08:36 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
 
+============================================================
 FIX2_STATUS_COMPLETE
-package=V45B_WG_TRANSPARENT_SOURCE_PROBE
-transparent_vpn_probe=FAIL
-container_reported_source=ERROR:ConnectionRefusedError(111, 'Connection refused')
-result=FAILED
+package=V49B_WG_PRODUCTION_SWITCH
+wireguard=PASS
+transparent_source_path=PASS
+transparent_backend=[PRIVATE_IP]:27010
+wake_on_join=PRESERVED
+sleeping_motd=PRESERVED
+proxy_protocol=DISABLED
+xhoelserver_modified=NO
+port_25565_modified=NO
+mikrotik_modified=NO
+rollback=/root/v49-rollback.sh
+result=SUCCESS
+next=REAL_PLAYER_TEST
+============================================================
