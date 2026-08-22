@@ -1,59 +1,25 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-21T23:44:43+00:00
+published_at=2026-08-22T14:07:44+00:00
 ============================================================
 
 ============================================================
- FIX2 V20
- TESTSERVER222 READ-ONLY REACHABILITY CHECK
+ FIX2 V22
+ JAVA REAL CLIENT IP / HOST NORMALIZATION
 ============================================================
-start=2026-08-21T23:44:41+00:00
-SCRIPT_VERSION=V20_TESTSERVER222_READONLY
+start=2026-08-22T14:07:44+00:00
+SCRIPT_VERSION=V22_JAVA_PROXY_REWRITE
 
-[INFO] Keine Aenderungen.
-[INFO] Kein Server-Neustart.
-[INFO] xhoelserver wird NICHT angefasst.
+[INFO] Nur testserver222 wird fuer PROXY Protocol verwendet.
+[INFO] xhoelserver wird NICHT veraendert.
+[INFO] MikroTik wird NICHT veraendert.
 
-[1/6] DNS ...
-5.61.167.129    STREAM testserver222.free.mc-serverhost.net
-5.61.167.129    DGRAM  
-5.61.167.129    RAW    
---- SRV ---
-0 0 28000 testserver222.free.mc-serverhost.net.
+gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v22-20260822-140744.bak
+env_backup=/etc/ctrlpanel/wake-gateway.env.v22-20260822-140744.bak
 
-[2/6] Gateway ...
-active
-LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=13964,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-
-[3/6] Lokal Port 28000 ...
-LOCAL_28000=PASS
-
-[4/6] Public/Hairpin Port 28000 ...
-PUBLIC_28000=FAIL
-
-[5/6] Minecraft Status ueber lokalen Gateway ...
-LOCAL_MC_STATUS=PASS
-status_bytes=143
-
-[6/6] Aktuelle Testserver-Konfiguration ...
+[1/8] ENV bereinigen ...
 JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
-JAVA_PRIVATE_CLIENT_IP_OVERRIDE=5.61.167.129
-backend_port=27010
-identifier=dc4c2e9b
-server_state=running
+[ OK ] Fake-IP-Override entfernt.
 
-===== GATEWAY LOG =====
-Aug 21 23:44:42 ctrlpanel python3[13964]: 2026-08-21 23:44:42,005 INFO JAVA_PLAYER_IP socket_ip=127.0.0.1 forwarded_ip=5.61.167.129 mode=PRIVATE_TO_PUBLIC
-
-============================================================
-FIX2_STATUS_COMPLETE
-package=V20_TESTSERVER222_READONLY
-xhoelserver_modified=NO
-server_power_changes=NONE
-local_28000=PASS
-public_28000=FAIL
-local_mc_status=PASS
-next=CHECK_V20_GITHUB
-result=SUCCESS
-end=2026-08-21T23:44:43+00:00
-============================================================
+[2/8] Gateway-Code normalisieren ...
+build_java_proxy_line Block nicht gefunden
