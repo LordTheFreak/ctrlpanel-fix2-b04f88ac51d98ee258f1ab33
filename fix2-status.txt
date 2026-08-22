@@ -1,45 +1,74 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:30:51+00:00
+published_at=2026-08-22T14:33:59+00:00
 ============================================================
 
 ============================================================
- FIX2 V30
- REPAIR RAW-MITM / PAPER PROXY MISMATCH
+ FIX2 V31
+ CORRECT PTERODACTYL RAW FILE WRITE
 ============================================================
-start=2026-08-22T14:30:47+00:00
-SCRIPT_VERSION=V30_RAW_MITM_PAPER_FIX
+start=2026-08-22T14:33:17+00:00
+SCRIPT_VERSION=V31_CORRECT_RAW_FILE_WRITE
 
 [INFO] Nur testserver222.
-[INFO] xhoelserver wird NICHT veraendert.
-[INFO] MikroTik wird NICHT veraendert.
+[INFO] xhoelserver bleibt unangetastet.
+[INFO] MikroTik bleibt unangetastet.
 
-[1/7] Server bestimmen ...
+[1/7] Server ermitteln ...
 identifier=dc4c2e9b
 backend_port=27010
 
-[2/7] paper-global.yml lesen und sichern ...
+[2/7] Original paper-global.yml sichern ...
 paper_read_http=200
 115:  proxy-protocol: true
 
-[3/7] proxy-protocol:false erzeugen ...
-PAPER_PATCH=OK
+[3/7] proxy-protocol auf false setzen ...
+[ OK ] YAML vorbereitet.
 115:  proxy-protocol: false
 
-[4/7] Datei ueber Pterodactyl RAW schreiben ...
-paper_write_http=400
-paper_write_body={
-    "errors": [
-        {
-            "code": "BadRequestHttpException",
-            "status": "400",
-            "detail": "The JSON data passed in the request appears to be malformed: Syntax error"
-        }
-    ]
-}
-   Exception  Paper write failed.
-[ OK ] Paper-Datei geschrieben.
+[4/7] Mit FRISCHEM text/plain HTTP Request schreiben ...
+paper_write_http=204
+[ OK ] HTTP-Schreibvorgang abgeschlossen.
 
-[5/7] Datei sofort verifizieren ...
-paper_proxy_protocol=true
-[ERROR] Paper steht noch nicht auf false.
+[5/7] Datei direkt wieder lesen und pruefen ...
+paper_proxy_verified=false
+[ OK ] proxy-protocol ist wirklich FALSE.
+
+[6/7] Nur testserver222 neu starten ...
+restart_http=200
+[INFO] Warte bis Server wieder voll gestartet ist ...
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=starting
+server_state=running
+
+[7/7] RAW-MITM lokal testen ...
+RAW_MITM_STATUS=PASS
+minecraft_version=Leaf 1.21.11
+online_players=1
+status_json_bytes=220
+
+===== FINAL SETTINGS =====
+JAVA_PROXY_PROTOCOL_DOMAINS=
+paper_proxy_final=false
+
+===== RECENT GATEWAY LOG =====
+Aug 22 14:33:58 ctrlpanel python3[60673]: 2026-08-22 14:33:58,880 INFO JAVA_PROXY_BYPASS fqdn='testserver222.free.mc-serverhost.net' normalized=testserver222.free.mc-serverhost.net client=127.0.0.1:44276
+
+============================================================
+FIX2_STATUS_COMPLETE
+package=V31_CORRECT_RAW_FILE_WRITE
+domain=testserver222.free.mc-serverhost.net
+paper_proxy_protocol=FALSE
+gateway_proxy_protocol=DISABLED
+mitm_mode=RAW_TCP
+xhoelserver_modified=NO
+mikrotik_modified=NO
+result=SUCCESS
+next=REAL_MINECRAFT_CLIENT_TEST
+end=2026-08-22T14:33:59+00:00
+============================================================
