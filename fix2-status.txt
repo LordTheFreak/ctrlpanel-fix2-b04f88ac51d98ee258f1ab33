@@ -1,91 +1,47 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:35:54+00:00
+published_at=2026-08-22T14:44:37+00:00
 ============================================================
 
 ============================================================
- FIX2 V32
- TRANSPARENT MITM NODE DISCOVERY
+ FIX2 V34
+ TRUE TRANSPARENT JAVA MITM
 ============================================================
-start=2026-08-22T14:35:52+00:00
-SCRIPT_VERSION=V32_TRANSPARENT_NODE_DISCOVERY
+start=2026-08-22T14:44:27+00:00
+SCRIPT_VERSION=V34_TRUE_TRANSPARENT_MITM
 
-[INFO] Keine Aenderungen.
-[INFO] Server bleibt online.
-[INFO] Gateway bleibt funktionierend.
-[INFO] Kein MikroTik.
-[INFO] xhoelserver wird NICHT angefasst.
+[INFO] Nur testserver222.
+[INFO] xhoelserver wird NICHT veraendert.
+[INFO] MikroTik wird NICHT veraendert.
+[INFO] Port 25565 wird NICHT angefasst.
 
+gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v34-20260822-144427.bak
+env_backup=/etc/ctrlpanel/wake-gateway.env.v34-20260822-144427.bak
 
-[1/7] Pterodactyl Server + Node ermitteln ...
+[1/10] Backend private IP bestimmen ...
+backend_private_ip=[PRIVATE_IP]
 identifier=dc4c2e9b
 backend_port=27010
-node_name=NodeHost1
-backend_private_ip=[PRIVATE_IP]
-backend_public_alias=5.61.167.129
+[ OK ] Backend gefunden.
 
-backend_private_ip=[PRIVATE_IP]
+[2/10] Paper muss PROXY Protocol deaktiviert haben ...
+paper_proxy_protocol=false
+[ OK ] Paper RAW-Modus ist korrekt.
 
-[2/7] Pterodactyl Node Daten ...
-node_id=1
-node_name=NodeHost1
-node_fqdn=node.mc-serverhost.net
-node_scheme=https
-node_daemon_port=8080
+[3/10] Lokalen Transparent-Return-Path installieren ...
+Created symlink '/etc/systemd/system/multi-user.target.wants/ctrlpanel-transparent-local-return.service' → '/etc/systemd/system/ctrlpanel-transparent-local-return.service'.
+[ OK ] Lokaler Return-Path aktiv.
 
-node_fqdn=node.mc-serverhost.net
+[4/10] Node-Rueckweg mit echter IP_TRANSPARENT Verbindung testen ...
+TRANSPARENT_BACKEND_PROBE=FAIL
+error=TimeoutError('timed out')
 
-[3/7] Routing CtrlPanel -> Backend ...
-lo               UNKNOWN        127.0.0.1/8 
-eth0@if379       UP             [PRIVATE_IP]/24 
+[ERROR] Transparent-Rueckweg funktioniert noch nicht.
+[INFO] Aktuell funktionierender RAW-Gateway bleibt erhalten.
 
-default via [PRIVATE_IP] dev eth0 
-[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
-
---- Route zum Backend ---
-[PRIVATE_IP] dev eth0 src [PRIVATE_IP] uid 0 
-    cache 
-
---- Backend Port ---
-backend_private_27010=PASS
-
-[4/7] Node DNS/IP ...
-[PRIVATE_IP]  STREAM node.mc-serverhost.net
-[PRIVATE_IP]  DGRAM  
-[PRIVATE_IP]  RAW    
-node_ip=[PRIVATE_IP]
-
-[5/7] SSH Erreichbarkeit Node ...
-node_tcp_22=OPEN
-node_tcp_2022=OPEN
-
---- SSH Batch Test ---
-Warning: Permanently added '[PRIVATE_IP]' (ED25519) to the list of known hosts.
-root@[PRIVATE_IP]: Permission denied (publickey,password).
-NODE_SSH_BATCH=NO_ACCESS
-
-[6/7] Transparent Gateway Voraussetzungen ...
-net.ipv4.ip_forward = 0
-net.ipv4.ip_nonlocal_bind = 0
-net.ipv4.conf.all.rp_filter = 2
-IP_TRANSPARENT=PASS
-TRANSPARENT_SOURCE_BIND=PASS
-
-[7/7] Aktueller funktionierender Zustand ...
-JAVA_PROXY_PROTOCOL_DOMAINS=
-active
-LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=60673,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-
-============================================================
 FIX2_STATUS_COMPLETE
-package=V32_TRANSPARENT_NODE_DISCOVERY
-domain=testserver222.free.mc-serverhost.net
-current_raw_mitm=PRESERVED
-xhoelserver_modified=NO
-mikrotik_modified=NO
-server_power_changes=NONE
-network_changes=NONE
-next=BUILD_TRUE_TRANSPARENT_MITM
-result=SUCCESS
-end=2026-08-22T14:35:54+00:00
-============================================================
+package=V34_TRUE_TRANSPARENT_MITM
+transparent_probe=FAIL
+gateway_modified=NO
+result=FAILED
+next=CHECK_NODE_V33_COUNTERS
