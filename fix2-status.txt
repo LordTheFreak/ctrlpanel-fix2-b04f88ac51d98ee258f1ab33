@@ -1,106 +1,16 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:57:52+00:00
+published_at=2026-08-22T15:02:13+00:00
 ============================================================
 
 ============================================================
- FIX2 V34
- TRUE TRANSPARENT JAVA MITM
+ FIX2 V39
+ DIRECT CONTAINER TRANSPARENT MITM
 ============================================================
-start=2026-08-22T14:57:42+00:00
-SCRIPT_VERSION=V34_TRUE_TRANSPARENT_MITM
+SCRIPT_VERSION=V39_DIRECT_CONTAINER_MITM
 
-[INFO] Nur testserver222.
-[INFO] xhoelserver wird NICHT veraendert.
-[INFO] MikroTik wird NICHT veraendert.
-[INFO] Port 25565 wird NICHT angefasst.
+[1/5] Direkte Container-Route ...
+[PRIVATE_IP] via [PRIVATE_IP] dev eth0 src [PRIVATE_IP] uid 0 
+    cache 
 
-gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v34-20260822-145742.bak
-env_backup=/etc/ctrlpanel/wake-gateway.env.v34-20260822-145742.bak
-
-[1/10] Backend private IP bestimmen ...
-backend_private_ip=[PRIVATE_IP]
-identifier=dc4c2e9b
-backend_port=27010
-[ OK ] Backend gefunden.
-
-[2/10] Paper muss PROXY Protocol deaktiviert haben ...
-paper_proxy_protocol=false
-[ OK ] Paper RAW-Modus ist korrekt.
-
-[3/10] Lokalen Transparent-Return-Path installieren ...
-Created symlink '/etc/systemd/system/multi-user.target.wants/ctrlpanel-transparent-local-return.service' → '/etc/systemd/system/ctrlpanel-transparent-local-return.service'.
-[ OK ] Lokaler Return-Path aktiv.
-
-[4/10] Node-Rueckweg mit echter IP_TRANSPARENT Verbindung testen ...
-TRANSPARENT_BACKEND_PROBE=PASS
-transparent_source=198.51.100.123
-status_bytes=143
-[ OK ] Der komplette transparente TCP-Rueckweg funktioniert.
-
-[5/10] Gateway-Service CAP_NET_ADMIN geben ...
-gateway_pid=63057
-gateway_cap_eff=0000000000001000
-gateway_cap_net_admin=YES
-[ OK ] Gateway darf IP_TRANSPARENT verwenden.
-
-[6/10] Transparent-Konfiguration in ENV setzen ...
-JAVA_TRANSPARENT_DOMAIN=testserver222.free.mc-serverhost.net
-JAVA_TRANSPARENT_BACKEND_HOST=[PRIVATE_IP]
-
-[7/10] Gateway auf echten transparenten MITM patchen ...
-TRUE_TRANSPARENT_PATCH=OK
-[ OK ] Gateway Python-Syntax korrekt.
-
-[8/10] Gateway aktivieren ...
-LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=63085,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-[ OK ] Gateway aktiv.
-
-[9/10] Lokaler RAW-Serverlisten-Test ...
-LOCAL_RAW_STATUS=PASS
-
-[10/10] Rollback-Datei erstellen ...
-
-===== Gateway Log =====
-Aug 22 14:57:45 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 22 14:57:45 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 22 14:57:45 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 22 14:57:45 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 22 14:57:46 ctrlpanel ctrlpanel-wake-api-wait[63055]: wake_api_ready=YES
-Aug 22 14:57:46 ctrlpanel python3[63057]: 2026-08-22 14:57:46,321 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 22 14:57:46 ctrlpanel python3[63057]: 2026-08-22 14:57:46,321 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 22 14:57:46 ctrlpanel python3[63057]: 2026-08-22 14:57:46,332 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 22 14:57:46 ctrlpanel ctrlpanel-wake-gateway-wait[63060]: java_listener=READY
-Aug 22 14:57:46 ctrlpanel ctrlpanel-wake-gateway-wait[63060]: bedrock_listeners=100/100
-Aug 22 14:57:46 ctrlpanel ctrlpanel-wake-gateway-wait[63060]: gateway_ready=YES
-Aug 22 14:57:46 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 22 14:57:48 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 22 14:57:48 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
-Aug 22 14:57:48 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 22 14:57:48 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
-Aug 22 14:57:48 ctrlpanel ctrlpanel-wake-api-wait[63083]: wake_api_ready=YES
-Aug 22 14:57:49 ctrlpanel python3[63085]: 2026-08-22 14:57:49,127 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
-Aug 22 14:57:49 ctrlpanel python3[63085]: 2026-08-22 14:57:49,127 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 22 14:57:49 ctrlpanel python3[63085]: 2026-08-22 14:57:49,137 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 22 14:57:49 ctrlpanel ctrlpanel-wake-gateway-wait[63087]: java_listener=READY
-Aug 22 14:57:49 ctrlpanel ctrlpanel-wake-gateway-wait[63087]: bedrock_listeners=100/100
-Aug 22 14:57:49 ctrlpanel ctrlpanel-wake-gateway-wait[63087]: gateway_ready=YES
-Aug 22 14:57:49 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
-Aug 22 14:57:52 ctrlpanel python3[63085]: 2026-08-22 14:57:52,492 INFO JAVA_TRANSPARENT_CLIENT fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:38978
-
-============================================================
-FIX2_STATUS_COMPLETE
-package=V34_TRUE_TRANSPARENT_MITM
-domain=testserver222.free.mc-serverhost.net
-transparent_probe=PASS
-paper_proxy_protocol=FALSE
-proxy_protocol=DISABLED
-transparent_mitm=ENABLED
-xhoelserver_modified=NO
-mikrotik_modified=NO
-port_25565_modified=NO
-rollback=/root/v34-rollback.sh
-result=SUCCESS
-next=REAL_PLAYER_JOIN_TEST
-end=2026-08-22T14:57:52+00:00
-============================================================
+[2/5] Backend direkt testen ...
