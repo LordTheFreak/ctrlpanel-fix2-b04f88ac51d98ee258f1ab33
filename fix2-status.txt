@@ -1,12 +1,12 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T16:17:54+00:00
+published_at=2026-08-22T16:19:15+00:00
 ============================================================
 
 ============================================================
  V51 - REAL JOIN / WAKE CAPTURE
 ============================================================
-time=2026-08-22T16:16:46+00:00
+time=2026-08-22T16:17:59+00:00
 
 [1/4] Gateway pruefen ...
 active
@@ -27,3 +27,45 @@ LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=72894,fd=6)
  Wenn moeglich zum Test ueber Handy-Hotspot/Mobilfunk.
 ============================================================
 
+
+[3/4] Netzwerk-Counter ...
+table inet ctrlpanel_v51_join_probe { # handle 13
+	chain prerouting { # handle 1
+		type filter hook prerouting priority raw; policy accept;
+		tcp dport 28000 counter packets 0 bytes 0 comment "V51_IN_TO_28000" # handle 2
+		tcp sport 28000 counter packets 0 bytes 0 comment "V51_OUT_FROM_28000" # handle 3
+	}
+}
+
+[4/4] Gateway/Wake Logs seit Testbeginn ...
+
+===== GATEWAY =====
+-- No entries --
+
+===== WAKE API =====
+Aug 22 16:18:47 ctrlpanel php[93]:   2026-08-22 16:18:46 .............................................. ~ 0.13ms
+
+===== CURRENT ENV =====
+JAVA_PROXY_PROTOCOL_DOMAINS=
+JAVA_TRANSPARENT_DOMAIN=testserver222.free.mc-serverhost.net
+JAVA_TRANSPARENT_BACKEND_HOST=[PRIVATE_IP]
+
+===== WIREGUARD =====
+interface: wg-minecraft
+  public key: d8Lr1g1CMIVHe7umcW7Ic+VCPQqjXEKeBzkPE22eDhw=
+  private key: (hidden)
+  listening port: 51888
+
+peer: UjzPLuyDGz3RRJHTgn48YtTBfqUtX8PcQgd+hQ2Mkho=
+  endpoint: [PRIVATE_IP]:51888
+  allowed ips: [PRIVATE_IP]/32
+  latest handshake: 1 minute, 17 seconds ago
+  transfer: 9.25 KiB received, 10.75 KiB sent
+  persistent keepalive: every 25 seconds
+
+============================================================
+FIX2_STATUS_COMPLETE
+package=V51_REAL_JOIN_CAPTURE
+changes=NONE
+result=SUCCESS
+============================================================
