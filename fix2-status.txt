@@ -1,45 +1,66 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T15:04:56+00:00
+published_at=2026-08-22T15:09:32+00:00
 ============================================================
 
 ============================================================
- FIX2 V40
- REAL INBOUND SOURCE-IP DIAGNOSTIC
+ FIX2 V41
+ REAL JAVA TCP ACCEPT LOGGER
 ============================================================
-SCRIPT_VERSION=V40_REAL_SOURCE_DIAG
-time=2026-08-22T15:04:56+00:00
+SCRIPT_VERSION=V41_REAL_TCP_ACCEPT_LOGGER
+start=2026-08-22T15:07:59+00:00
 
-[INFO] Keine Aenderungen.
-[INFO] Kein Neustart.
+[INFO] Nur Logging.
+[INFO] Keine Routing-Aenderungen.
 [INFO] Kein MikroTik.
 [INFO] Kein Minecraft-Server-Neustart.
+[INFO] xhoelserver-Konfiguration bleibt unveraendert.
 
-[1/5] Gateway Status
-active
+gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v41-20260822-150759.bak
 
-[2/5] Transparent Settings
-JAVA_PROXY_PROTOCOL_DOMAINS=
-JAVA_TRANSPARENT_DOMAIN=testserver222.free.mc-serverhost.net
-JAVA_TRANSPARENT_BACKEND_HOST=[PRIVATE_IP]
+[1/5] Logger robust in handle_java einfuegen ...
+ACCEPT_LOGGER_PATCH=OK
 
-[3/5] Letzte echten Client-Verbindungen
-Aug 22 14:57:52 ctrlpanel python3[63085]: 2026-08-22 14:57:52,492 INFO JAVA_TRANSPARENT_CLIENT fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:38978
+[2/5] Python Syntax pruefen ...
+[ OK ] Python-Syntax korrekt.
 
-[4/5] Aktuelle TCP-Verbindungen auf 28000
+[3/5] Gateway neu laden ...
+LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=63786,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+[ OK ] Gateway aktiv.
 
-[5/5] Netzwerk
-lo               UNKNOWN        127.0.0.1/8 
-eth0@if379       UP             [PRIVATE_IP]/24 
+[4/5] Alte Testzeilen markieren ...
+CAPTURE_START=2026-08-22T15:08:02+00:00
+Aug 22 15:08:00 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 22 15:08:00 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 22 15:08:00 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 22 15:08:00 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 22 15:08:00 ctrlpanel ctrlpanel-wake-api-wait[63784]: wake_api_ready=YES
+Aug 22 15:08:00 ctrlpanel python3[63786]: 2026-08-22 15:08:00,505 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 22 15:08:00 ctrlpanel python3[63786]: 2026-08-22 15:08:00,505 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 22 15:08:00 ctrlpanel python3[63786]: 2026-08-22 15:08:00,515 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 22 15:08:00 ctrlpanel ctrlpanel-wake-gateway-wait[63788]: java_listener=READY
+Aug 22 15:08:00 ctrlpanel ctrlpanel-wake-gateway-wait[63788]: bedrock_listeners=100/100
+Aug 22 15:08:00 ctrlpanel ctrlpanel-wake-gateway-wait[63788]: gateway_ready=YES
+Aug 22 15:08:00 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
 
-default via [PRIVATE_IP] dev eth0 
-[PRIVATE_IP] via [PRIVATE_IP] dev eth0 
-[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
+[5/5] 90 Sekunden auf echte Verbindung warten ...
+
+############################################################
+# JETZT in Minecraft auf testserver222 joinen.             #
+############################################################
+
+
+===== JAVA TCP ACCEPTS =====
 
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V40_REAL_SOURCE_DIAG
-changes=NONE
+package=V41_REAL_TCP_ACCEPT_LOGGER
+changes=LOGGING_ONLY
+gateway_active=YES
+minecraft_server_restart=NO
+xhoelserver_modified=NO
+mikrotik_modified=NO
 result=SUCCESS
-next=IDENTIFY_WHERE_REAL_IP_IS_LOST
+next=IDENTIFY_REAL_INBOUND_SOURCE
+end=2026-08-22T15:09:32+00:00
 ============================================================
