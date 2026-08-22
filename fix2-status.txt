@@ -1,146 +1,14 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T15:37:01+00:00
+published_at=2026-08-22T15:38:42+00:00
 ============================================================
 
 ============================================================
- V43 - CTRLPANEL WIREGUARD PREPARATION
+ V44 - WIREGUARD LINK TEST
 ============================================================
-time=2026-08-22T15:36:19+00:00
+time=2026-08-22T15:38:40+00:00
 
-[INFO] Wake-on-Join bleibt unveraendert.
-[INFO] Sleeping-MOTD bleibt unveraendert.
-[INFO] Minecraft Backend wird noch NICHT umgestellt.
-[INFO] xhoelserver bleibt unveraendert.
-[INFO] Port 25565 bleibt unveraendert.
-[INFO] MikroTik bleibt unveraendert.
-
-[1/7] WireGuard installieren ...
-Hit:1 http://security.debian.org trixie-security InRelease
-Hit:2 http://deb.debian.org/debian trixie InRelease
-Get:3 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
-Hit:4 https://packages.sury.org/php trixie InRelease
-Fetched 47.3 kB in 0s (263 kB/s)
-Reading package lists...
-Reading package lists...
-Building dependency tree...
-Reading state information...
-The following additional packages will be installed:
-  apparmor busybox dracut-install initramfs-tools initramfs-tools-bin
-  initramfs-tools-core klibc-utils libklibc linux-base
-  linux-image-6.12.101+deb13-rt-amd64 linux-image-rt-amd64 zstd
-Suggested packages:
-  apparmor-profiles-extra apparmor-utils firmware-linux-free linux-doc-6.12
-  debian-kernel-handbook grub-pc | grub-efi-amd64 | extlinux openresolv
-  | resolvconf
-The following NEW packages will be installed:
-  apparmor busybox dracut-install initramfs-tools initramfs-tools-bin
-  initramfs-tools-core klibc-utils libklibc linux-base
-  linux-image-6.12.101+deb13-rt-amd64 linux-image-rt-amd64 wireguard-tools
-  zstd
-0 upgraded, 13 newly installed, 0 to remove and 0 not upgraded.
-Need to get 110 MB of archives.
-After this operation, 119 MB of additional disk space will be used.
-Get:1 http://deb.debian.org/debian trixie/main amd64 linux-base all 4.12.1 [25.5 kB]
-Get:2 http://security.debian.org trixie-security/main amd64 linux-image-6.12.101+deb13-rt-amd64 amd64 6.12.101-1 [108 MB]
-Get:3 http://deb.debian.org/debian trixie/main amd64 dracut-install amd64 106-6 [37.8 kB]
-Get:4 http://deb.debian.org/debian trixie/main amd64 initramfs-tools-bin amd64 0.148.4 [17.5 kB]
-Get:5 http://deb.debian.org/debian trixie/main amd64 libklibc amd64 2.0.14-1 [44.8 kB]
-Get:6 http://deb.debian.org/debian trixie/main amd64 klibc-utils amd64 2.0.14-1 [95.1 kB]
-Get:7 http://deb.debian.org/debian trixie/main amd64 initramfs-tools-core all 0.148.4 [50.7 kB]
-Get:8 http://deb.debian.org/debian trixie/main amd64 initramfs-tools all 0.148.4 [17.4 kB]
-Get:9 http://deb.debian.org/debian trixie/main amd64 apparmor amd64 4.1.0-1 [710 kB]
-Get:10 http://deb.debian.org/debian trixie/main amd64 busybox amd64 1:1.37.0-6+b8 [485 kB]
-Get:11 http://deb.debian.org/debian trixie/main amd64 wireguard-tools amd64 1.0.20210914-3 [84.9 kB]
-Get:12 http://deb.debian.org/debian trixie/main amd64 zstd amd64 1.5.7+dfsg-1 [756 kB]
-Get:13 http://security.debian.org trixie-security/main amd64 linux-image-rt-amd64 amd64 6.12.101-1 [1,484 B]
-Preconfiguring packages ...
-Fetched 110 MB in 5s (24.1 MB/s)
-Selecting previously unselected package linux-base.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 54393 files and directories currently installed.)
-Preparing to unpack .../0-linux-base_4.12.1_all.deb ...
-Unpacking linux-base (4.12.1) ...
-Selecting previously unselected package dracut-install.
-Preparing to unpack .../1-dracut-install_106-6_amd64.deb ...
-Unpacking dracut-install (106-6) ...
-Selecting previously unselected package initramfs-tools-bin.
-Preparing to unpack .../2-initramfs-tools-bin_0.148.4_amd64.deb ...
-Unpacking initramfs-tools-bin (0.148.4) ...
-Selecting previously unselected package libklibc:amd64.
-Preparing to unpack .../3-libklibc_2.0.14-1_amd64.deb ...
-Unpacking libklibc:amd64 (2.0.14-1) ...
-Selecting previously unselected package klibc-utils.
-Preparing to unpack .../4-klibc-utils_2.0.14-1_amd64.deb ...
-Unpacking klibc-utils (2.0.14-1) ...
-Selecting previously unselected package initramfs-tools-core.
-Preparing to unpack .../5-initramfs-tools-core_0.148.4_all.deb ...
-Unpacking initramfs-tools-core (0.148.4) ...
-Selecting previously unselected package initramfs-tools.
-Preparing to unpack .../6-initramfs-tools_0.148.4_all.deb ...
-Unpacking initramfs-tools (0.148.4) ...
-Setting up linux-base (4.12.1) ...
-Selecting previously unselected package linux-image-6.12.101+deb13-rt-amd64.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 54535 files and directories currently installed.)
-Preparing to unpack .../0-linux-image-6.12.101+deb13-rt-amd64_6.12.101-1_amd64.deb ...
-Unpacking linux-image-6.12.101+deb13-rt-amd64 (6.12.101-1) ...
-Selecting previously unselected package apparmor.
-Preparing to unpack .../1-apparmor_4.1.0-1_amd64.deb ...
-Unpacking apparmor (4.1.0-1) ...
-Selecting previously unselected package busybox.
-Preparing to unpack .../2-busybox_1%3a1.37.0-6+b8_amd64.deb ...
-Unpacking busybox (1:1.37.0-6+b8) ...
-Selecting previously unselected package linux-image-rt-amd64.
-Preparing to unpack .../3-linux-image-rt-amd64_6.12.101-1_amd64.deb ...
-Unpacking linux-image-rt-amd64 (6.12.101-1) ...
-Selecting previously unselected package wireguard-tools.
-Preparing to unpack .../4-wireguard-tools_1.0.20210914-3_amd64.deb ...
-Unpacking wireguard-tools (1.0.20210914-3) ...
-Selecting previously unselected package zstd.
-Preparing to unpack .../5-zstd_1.5.7+dfsg-1_amd64.deb ...
-Unpacking zstd (1.5.7+dfsg-1) ...
-Setting up apparmor (4.1.0-1) ...
-Created symlink '/etc/systemd/system/sysinit.target.wants/apparmor.service' → '/usr/lib/systemd/system/apparmor.service'.
-Setting up busybox (1:1.37.0-6+b8) ...
-Setting up libklibc:amd64 (2.0.14-1) ...
-Setting up wireguard-tools (1.0.20210914-3) ...
-wg-quick.target is a disabled or a static unit, not starting it.
-Setting up dracut-install (106-6) ...
-Setting up klibc-utils (2.0.14-1) ...
-No diversion 'diversion of /usr/share/initramfs-tools/hooks/klibc to /usr/share/initramfs-tools/hooks/klibc^i-t by klibc-utils', none removed.
-Setting up zstd (1.5.7+dfsg-1) ...
-Setting up initramfs-tools-bin (0.148.4) ...
-Setting up initramfs-tools-core (0.148.4) ...
-Setting up initramfs-tools (0.148.4) ...
-update-initramfs: deferring update (trigger activated)
-Setting up linux-image-6.12.101+deb13-rt-amd64 (6.12.101-1) ...
-I: /vmlinuz.old is now a symlink to boot/vmlinuz-6.12.101+deb13-rt-amd64
-I: /initrd.img.old is now a symlink to boot/initrd.img-6.12.101+deb13-rt-amd64
-I: /vmlinuz is now a symlink to boot/vmlinuz-6.12.101+deb13-rt-amd64
-I: /initrd.img is now a symlink to boot/initrd.img-6.12.101+deb13-rt-amd64
-/etc/kernel/postinst.d/initramfs-tools:
-update-initramfs: Generating /boot/initrd.img-6.12.101+deb13-rt-amd64
-Setting up linux-image-rt-amd64 (6.12.101-1) ...
-Processing triggers for man-db (2.13.1-1) ...
-Processing triggers for initramfs-tools (0.148.4) ...
-update-initramfs: Generating /boot/initrd.img-6.12.101+deb13-rt-amd64
-[ OK ] WireGuard vorhanden.
-
-[2/7] CtrlPanel-Schluessel erzeugen ...
-[ OK ] CtrlPanel-Keypair vorhanden.
-
-[3/7] Bestehende Konfiguration sichern ...
-[INFO] Keine bestehende wg-minecraft Konfiguration.
-
-[4/7] WireGuard konfigurieren ...
-Created symlink '/etc/systemd/system/multi-user.target.wants/wg-quick@wg-minecraft.service' → '/usr/lib/systemd/system/wg-quick@.service'.
-[ OK ] wg-minecraft gestartet.
-
-[5/7] Interface pruefen ...
-3: wg-minecraft: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1420 qdisc noqueue state UNKNOWN group default qlen 1000
-    inet [PRIVATE_IP]/30 scope global wg-minecraft
-       valid_lft forever preferred_lft forever
-
---- WireGuard ---
+[1/5] WireGuard
 interface: wg-minecraft
   public key: d8Lr1g1CMIVHe7umcW7Ic+VCPQqjXEKeBzkPE22eDhw=
   private key: (hidden)
@@ -149,37 +17,43 @@ interface: wg-minecraft
 peer: UjzPLuyDGz3RRJHTgn48YtTBfqUtX8PcQgd+hQ2Mkho=
   endpoint: [PRIVATE_IP]:51888
   allowed ips: [PRIVATE_IP]/32
-  transfer: 0 B received, 148 B sent
+  latest handshake: 36 seconds ago
+  transfer: 212 B received, 1.86 KiB sent
   persistent keepalive: every 25 seconds
 
-[6/7] Routing pruefen ...
---- Route zu Node-WG-IP ---
+[2/5] Ping NodeHost1 ueber VPN
+PING [PRIVATE_IP] ([PRIVATE_IP]) 56(84) bytes of data.
+64 bytes from [PRIVATE_IP]: icmp_seq=1 ttl=64 time=0.314 ms
+64 bytes from [PRIVATE_IP]: icmp_seq=2 ttl=64 time=0.508 ms
+64 bytes from [PRIVATE_IP]: icmp_seq=3 ttl=64 time=0.506 ms
+
+--- [PRIVATE_IP] ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2047ms
+rtt min/avg/max/mdev = 0.314/0.442/0.508/0.090 ms
+[ OK ] VPN Ping funktioniert.
+
+[3/5] Minecraft Backend ueber VPN
+[ OK ] [PRIVATE_IP]:27010 erreichbar.
+
+[4/5] Handshake pruefen
+latest_handshake_age=38s
+[ OK ] Aktueller WireGuard-Handshake vorhanden.
+
+[5/5] Route
 [PRIVATE_IP] dev wg-minecraft src [PRIVATE_IP] uid 0 
     cache 
 
---- UDP Listener ---
-UNCONN 0      0      0.0.0.0:51888 0.0.0.0:*                                     
-UNCONN 0      0         [::]:51888    [::]:*                                     
-
-[INFO] Ein Handshake ist jetzt noch NICHT zwingend vorhanden,
-[INFO] weil NodeHost1 unseren Public Key erst im naechsten Schritt bekommt.
-
-[7/7] Final ...
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V43_CTRLPANEL_WIREGUARD_PREP
-result=SUCCESS
-wg_interface=wg-minecraft
-ctrlpanel_wg_ip=[PRIVATE_IP]
-node_wg_ip=[PRIVATE_IP]
-node_lan_ip=[PRIVATE_IP]
+package=V44_WIREGUARD_LINK_TEST
+wireguard_handshake=PASS
+wg_ping=PASS
+minecraft_vpn_backend=PASS
 wake_on_join_modified=NO
 sleeping_motd_modified=NO
 xhoelserver_modified=NO
 port_25565_modified=NO
 mikrotik_modified=NO
-
-CTRLPANEL_PUBLIC_KEY=d8Lr1g1CMIVHe7umcW7Ic+VCPQqjXEKeBzkPE22eDhw=
-
-next=FINALIZE_NODE_PEER
+result=SUCCESS
+next=TRANSPARENT_VPN_SOURCE_TEST
 ============================================================
