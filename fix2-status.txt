@@ -1,51 +1,43 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T16:21:03+00:00
+published_at=2026-08-22T16:23:52+00:00
 ============================================================
 
 ============================================================
- V52 - DIRECT INTERNAL WAKE TEST
+ V53 - WAN PORT 28000 TEST
 ============================================================
-time=2026-08-22T16:20:42+00:00
 
-[INFO] Keine Konfiguration wird geaendert.
-[INFO] Dieser Test simuliert einen echten Java-Login.
-[INFO] Falls der Server AUS ist, MUSS dadurch Wake-on-Join starten.
-
-[1/4] Gateway pruefen ...
+[1/3] Gateway
 active
-active
-[ OK ] Gateway bereit.
+LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=72894,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
-[2/4] Minecraft LOGIN direkt an Gateway senden ...
-connecting=127.0.0.1:28000
-gateway_tcp_connect=PASS
-minecraft_login_sent=YES
-received_bytes=174
-[ OK ] Login-Probe gesendet.
+[2/3] Capture
 
-[3/4] 10 Sekunden auf Wake reagieren lassen ...
+============================================================
+JETZT 60 SEKUNDEN ZEIT.
 
-[4/4] Logs auswerten ...
+Wichtig:
+Mit HANDY-MOBILFUNK, NICHT deinem WLAN,
+Minecraft verbinden mit:
 
-===== GATEWAY =====
-Aug 22 16:20:42 ctrlpanel python3[72894]: 2026-08-22 16:20:42,955 INFO JAVA_TCP_ACCEPT source=127.0.0.1:59888 local=127.0.0.1:28000
-Aug 22 16:20:43 ctrlpanel python3[72894]: 2026-08-22 16:20:43,032 INFO JAVA_TRANSPARENT_CLIENT fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:59888
+testserver222.free.mc-serverhost.net:28000
 
-===== WAKE API =====
-Aug 22 16:20:43 ctrlpanel php[93]:   2026-08-22 16:20:42 /api/wake-gateway/resolve .................... ~ 0.13ms
-Aug 22 16:20:46 ctrlpanel php[93]:   2026-08-22 16:20:46 /api/wake-gateway/activity ................... ~ 0.12ms
-Aug 22 16:20:55 ctrlpanel php[93]:   2026-08-22 16:20:55 .............................................. ~ 0.12ms
+Also diesmal PORT 28000 DIREKT angeben.
+============================================================
 
-===== EXPECTED =====
-JAVA_TCP_ACCEPT
-valid Java login attempt
-wake requested
-backend ready
+[3/3] Ergebnis
+table inet ctrlpanel_v53_wan { # handle 14
+	chain input { # handle 1
+		type filter hook input priority raw; policy accept;
+		tcp dport 28000 counter packets 0 bytes 0 comment "WAN_28000_IN" # handle 2
+	}
+}
+
+===== GATEWAY LOG =====
+-- No entries --
 
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V52_DIRECT_INTERNAL_WAKE
-changes=NONE
+package=V53_WAN_28000
 result=SUCCESS
 ============================================================
