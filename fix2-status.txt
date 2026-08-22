@@ -1,14 +1,15 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T15:38:42+00:00
+published_at=2026-08-22T16:02:31+00:00
 ============================================================
 
 ============================================================
- V44 - WIREGUARD LINK TEST
+ V45B - TRANSPARENT SOURCE-IP OVER WIREGUARD
 ============================================================
-time=2026-08-22T15:38:40+00:00
+SCRIPT_VERSION=V45B_WG_TRANSPARENT_SOURCE_PROBE
+time=2026-08-22T16:02:30+00:00
 
-[1/5] WireGuard
+[1/5] WireGuard pruefen ...
 interface: wg-minecraft
   public key: d8Lr1g1CMIVHe7umcW7Ic+VCPQqjXEKeBzkPE22eDhw=
   private key: (hidden)
@@ -17,43 +18,34 @@ interface: wg-minecraft
 peer: UjzPLuyDGz3RRJHTgn48YtTBfqUtX8PcQgd+hQ2Mkho=
   endpoint: [PRIVATE_IP]:51888
   allowed ips: [PRIVATE_IP]/32
-  latest handshake: 36 seconds ago
-  transfer: 212 B received, 1.86 KiB sent
+  latest handshake: 1 minute, 24 seconds ago
+  transfer: 5.12 KiB received, 7.19 KiB sent
   persistent keepalive: every 25 seconds
+[ OK ] VPN aktiv.
 
-[2/5] Ping NodeHost1 ueber VPN
-PING [PRIVATE_IP] ([PRIVATE_IP]) 56(84) bytes of data.
-64 bytes from [PRIVATE_IP]: icmp_seq=1 ttl=64 time=0.314 ms
-64 bytes from [PRIVATE_IP]: icmp_seq=2 ttl=64 time=0.508 ms
-64 bytes from [PRIVATE_IP]: icmp_seq=3 ttl=64 time=0.506 ms
+[2/5] Lokalen Rueckweg fuer Fake-IP installieren ...
+[ OK ] Fake-IP Return-Path aktiv.
 
---- [PRIVATE_IP] ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2047ms
-rtt min/avg/max/mdev = 0.314/0.442/0.508/0.090 ms
-[ OK ] VPN Ping funktioniert.
+[3/5] IP_TRANSPARENT Test ...
+container_reported_source=198.51.100.123
 
-[3/5] Minecraft Backend ueber VPN
-[ OK ] [PRIVATE_IP]:27010 erreichbar.
+[4/5] Ergebnis bewerten ...
+[ OK ] Container sieht exakt die gespoofte Client-IP.
 
-[4/5] Handshake pruefen
-latest_handshake_age=38s
-[ OK ] Aktueller WireGuard-Handshake vorhanden.
-
-[5/5] Route
-[PRIVATE_IP] dev wg-minecraft src [PRIVATE_IP] uid 0 
-    cache 
-
+[5/5] Final ...
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V44_WIREGUARD_LINK_TEST
-wireguard_handshake=PASS
-wg_ping=PASS
-minecraft_vpn_backend=PASS
+package=V45B_WG_TRANSPARENT_SOURCE_PROBE
+wireguard=PASS
+ip_transparent=PASS
+source_preservation=PASS
+expected_source=198.51.100.123
+container_reported_source=198.51.100.123
 wake_on_join_modified=NO
 sleeping_motd_modified=NO
 xhoelserver_modified=NO
 port_25565_modified=NO
 mikrotik_modified=NO
 result=SUCCESS
-next=TRANSPARENT_VPN_SOURCE_TEST
+next=SWITCH_TESTSERVER222_TO_WIREGUARD
 ============================================================
