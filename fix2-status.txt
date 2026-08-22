@@ -1,74 +1,91 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:33:59+00:00
+published_at=2026-08-22T14:35:54+00:00
 ============================================================
 
 ============================================================
- FIX2 V31
- CORRECT PTERODACTYL RAW FILE WRITE
+ FIX2 V32
+ TRANSPARENT MITM NODE DISCOVERY
 ============================================================
-start=2026-08-22T14:33:17+00:00
-SCRIPT_VERSION=V31_CORRECT_RAW_FILE_WRITE
+start=2026-08-22T14:35:52+00:00
+SCRIPT_VERSION=V32_TRANSPARENT_NODE_DISCOVERY
 
-[INFO] Nur testserver222.
-[INFO] xhoelserver bleibt unangetastet.
-[INFO] MikroTik bleibt unangetastet.
+[INFO] Keine Aenderungen.
+[INFO] Server bleibt online.
+[INFO] Gateway bleibt funktionierend.
+[INFO] Kein MikroTik.
+[INFO] xhoelserver wird NICHT angefasst.
 
-[1/7] Server ermitteln ...
+
+[1/7] Pterodactyl Server + Node ermitteln ...
 identifier=dc4c2e9b
 backend_port=27010
+node_name=NodeHost1
+backend_private_ip=[PRIVATE_IP]
+backend_public_alias=5.61.167.129
 
-[2/7] Original paper-global.yml sichern ...
-paper_read_http=200
-115:  proxy-protocol: true
+backend_private_ip=[PRIVATE_IP]
 
-[3/7] proxy-protocol auf false setzen ...
-[ OK ] YAML vorbereitet.
-115:  proxy-protocol: false
+[2/7] Pterodactyl Node Daten ...
+node_id=1
+node_name=NodeHost1
+node_fqdn=node.mc-serverhost.net
+node_scheme=https
+node_daemon_port=8080
 
-[4/7] Mit FRISCHEM text/plain HTTP Request schreiben ...
-paper_write_http=204
-[ OK ] HTTP-Schreibvorgang abgeschlossen.
+node_fqdn=node.mc-serverhost.net
 
-[5/7] Datei direkt wieder lesen und pruefen ...
-paper_proxy_verified=false
-[ OK ] proxy-protocol ist wirklich FALSE.
+[3/7] Routing CtrlPanel -> Backend ...
+lo               UNKNOWN        127.0.0.1/8 
+eth0@if379       UP             [PRIVATE_IP]/24 
 
-[6/7] Nur testserver222 neu starten ...
-restart_http=200
-[INFO] Warte bis Server wieder voll gestartet ist ...
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=starting
-server_state=running
+default via [PRIVATE_IP] dev eth0 
+[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
 
-[7/7] RAW-MITM lokal testen ...
-RAW_MITM_STATUS=PASS
-minecraft_version=Leaf 1.21.11
-online_players=1
-status_json_bytes=220
+--- Route zum Backend ---
+[PRIVATE_IP] dev eth0 src [PRIVATE_IP] uid 0 
+    cache 
 
-===== FINAL SETTINGS =====
+--- Backend Port ---
+backend_private_27010=PASS
+
+[4/7] Node DNS/IP ...
+[PRIVATE_IP]  STREAM node.mc-serverhost.net
+[PRIVATE_IP]  DGRAM  
+[PRIVATE_IP]  RAW    
+node_ip=[PRIVATE_IP]
+
+[5/7] SSH Erreichbarkeit Node ...
+node_tcp_22=OPEN
+node_tcp_2022=OPEN
+
+--- SSH Batch Test ---
+Warning: Permanently added '[PRIVATE_IP]' (ED25519) to the list of known hosts.
+root@[PRIVATE_IP]: Permission denied (publickey,password).
+NODE_SSH_BATCH=NO_ACCESS
+
+[6/7] Transparent Gateway Voraussetzungen ...
+net.ipv4.ip_forward = 0
+net.ipv4.ip_nonlocal_bind = 0
+net.ipv4.conf.all.rp_filter = 2
+IP_TRANSPARENT=PASS
+TRANSPARENT_SOURCE_BIND=PASS
+
+[7/7] Aktueller funktionierender Zustand ...
 JAVA_PROXY_PROTOCOL_DOMAINS=
-paper_proxy_final=false
-
-===== RECENT GATEWAY LOG =====
-Aug 22 14:33:58 ctrlpanel python3[60673]: 2026-08-22 14:33:58,880 INFO JAVA_PROXY_BYPASS fqdn='testserver222.free.mc-serverhost.net' normalized=testserver222.free.mc-serverhost.net client=127.0.0.1:44276
+active
+LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=60673,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V31_CORRECT_RAW_FILE_WRITE
+package=V32_TRANSPARENT_NODE_DISCOVERY
 domain=testserver222.free.mc-serverhost.net
-paper_proxy_protocol=FALSE
-gateway_proxy_protocol=DISABLED
-mitm_mode=RAW_TCP
+current_raw_mitm=PRESERVED
 xhoelserver_modified=NO
 mikrotik_modified=NO
+server_power_changes=NONE
+network_changes=NONE
+next=BUILD_TRUE_TRANSPARENT_MITM
 result=SUCCESS
-next=REAL_MINECRAFT_CLIENT_TEST
-end=2026-08-22T14:33:59+00:00
+end=2026-08-22T14:35:54+00:00
 ============================================================
