@@ -1,13 +1,13 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:44:37+00:00
+published_at=2026-08-22T14:52:11+00:00
 ============================================================
 
 ============================================================
  FIX2 V34
  TRUE TRANSPARENT JAVA MITM
 ============================================================
-start=2026-08-22T14:44:27+00:00
+start=2026-08-22T14:52:01+00:00
 SCRIPT_VERSION=V34_TRUE_TRANSPARENT_MITM
 
 [INFO] Nur testserver222.
@@ -15,8 +15,8 @@ SCRIPT_VERSION=V34_TRUE_TRANSPARENT_MITM
 [INFO] MikroTik wird NICHT veraendert.
 [INFO] Port 25565 wird NICHT angefasst.
 
-gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v34-20260822-144427.bak
-env_backup=/etc/ctrlpanel/wake-gateway.env.v34-20260822-144427.bak
+gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v34-20260822-145201.bak
+env_backup=/etc/ctrlpanel/wake-gateway.env.v34-20260822-145201.bak
 
 [1/10] Backend private IP bestimmen ...
 backend_private_ip=[PRIVATE_IP]
