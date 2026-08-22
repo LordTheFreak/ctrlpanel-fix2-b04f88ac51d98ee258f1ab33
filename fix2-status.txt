@@ -1,71 +1,51 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T16:19:15+00:00
+published_at=2026-08-22T16:21:03+00:00
 ============================================================
 
 ============================================================
- V51 - REAL JOIN / WAKE CAPTURE
+ V52 - DIRECT INTERNAL WAKE TEST
 ============================================================
-time=2026-08-22T16:17:59+00:00
+time=2026-08-22T16:20:42+00:00
+
+[INFO] Keine Konfiguration wird geaendert.
+[INFO] Dieser Test simuliert einen echten Java-Login.
+[INFO] Falls der Server AUS ist, MUSS dadurch Wake-on-Join starten.
 
 [1/4] Gateway pruefen ...
 active
 active
-LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=72894,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-[ OK ] Gateway lauscht auf 28000.
+[ OK ] Gateway bereit.
 
-[2/4] Paketzaehler installieren ...
-[ OK ] Capture aktiv.
+[2/4] Minecraft LOGIN direkt an Gateway senden ...
+connecting=127.0.0.1:28000
+gateway_tcp_connect=PASS
+minecraft_login_sent=YES
+received_bytes=174
+[ OK ] Login-Probe gesendet.
 
-============================================================
- JETZT innerhalb der naechsten 75 Sekunden:
+[3/4] 10 Sekunden auf Wake reagieren lassen ...
 
- testserver222.free.mc-serverhost.net
-
- einmal in Minecraft beitreten.
-
- Wenn moeglich zum Test ueber Handy-Hotspot/Mobilfunk.
-============================================================
-
-
-[3/4] Netzwerk-Counter ...
-table inet ctrlpanel_v51_join_probe { # handle 13
-	chain prerouting { # handle 1
-		type filter hook prerouting priority raw; policy accept;
-		tcp dport 28000 counter packets 0 bytes 0 comment "V51_IN_TO_28000" # handle 2
-		tcp sport 28000 counter packets 0 bytes 0 comment "V51_OUT_FROM_28000" # handle 3
-	}
-}
-
-[4/4] Gateway/Wake Logs seit Testbeginn ...
+[4/4] Logs auswerten ...
 
 ===== GATEWAY =====
--- No entries --
+Aug 22 16:20:42 ctrlpanel python3[72894]: 2026-08-22 16:20:42,955 INFO JAVA_TCP_ACCEPT source=127.0.0.1:59888 local=127.0.0.1:28000
+Aug 22 16:20:43 ctrlpanel python3[72894]: 2026-08-22 16:20:43,032 INFO JAVA_TRANSPARENT_CLIENT fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:59888
 
 ===== WAKE API =====
-Aug 22 16:18:47 ctrlpanel php[93]:   2026-08-22 16:18:46 .............................................. ~ 0.13ms
+Aug 22 16:20:43 ctrlpanel php[93]:   2026-08-22 16:20:42 /api/wake-gateway/resolve .................... ~ 0.13ms
+Aug 22 16:20:46 ctrlpanel php[93]:   2026-08-22 16:20:46 /api/wake-gateway/activity ................... ~ 0.12ms
+Aug 22 16:20:55 ctrlpanel php[93]:   2026-08-22 16:20:55 .............................................. ~ 0.12ms
 
-===== CURRENT ENV =====
-JAVA_PROXY_PROTOCOL_DOMAINS=
-JAVA_TRANSPARENT_DOMAIN=testserver222.free.mc-serverhost.net
-JAVA_TRANSPARENT_BACKEND_HOST=[PRIVATE_IP]
-
-===== WIREGUARD =====
-interface: wg-minecraft
-  public key: d8Lr1g1CMIVHe7umcW7Ic+VCPQqjXEKeBzkPE22eDhw=
-  private key: (hidden)
-  listening port: 51888
-
-peer: UjzPLuyDGz3RRJHTgn48YtTBfqUtX8PcQgd+hQ2Mkho=
-  endpoint: [PRIVATE_IP]:51888
-  allowed ips: [PRIVATE_IP]/32
-  latest handshake: 1 minute, 17 seconds ago
-  transfer: 9.25 KiB received, 10.75 KiB sent
-  persistent keepalive: every 25 seconds
+===== EXPECTED =====
+JAVA_TCP_ACCEPT
+valid Java login attempt
+wake requested
+backend ready
 
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V51_REAL_JOIN_CAPTURE
+package=V52_DIRECT_INTERNAL_WAKE
 changes=NONE
 result=SUCCESS
 ============================================================
