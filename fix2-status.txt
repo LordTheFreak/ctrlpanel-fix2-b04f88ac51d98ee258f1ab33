@@ -1,25 +1,87 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:07:44+00:00
+published_at=2026-08-22T14:09:30+00:00
 ============================================================
 
 ============================================================
- FIX2 V22
- JAVA REAL CLIENT IP / HOST NORMALIZATION
+ FIX2 V23
+ ROBUST JAVA PROXY PATCH
 ============================================================
-start=2026-08-22T14:07:44+00:00
-SCRIPT_VERSION=V22_JAVA_PROXY_REWRITE
+start=2026-08-22T14:09:25+00:00
+SCRIPT_VERSION=V23_ROBUST_JAVA_PROXY_PATCH
 
-[INFO] Nur testserver222 wird fuer PROXY Protocol verwendet.
-[INFO] xhoelserver wird NICHT veraendert.
-[INFO] MikroTik wird NICHT veraendert.
+[INFO] testserver222 wird bearbeitet.
+[INFO] xhoelserver wird NICHT bearbeitet.
+[INFO] MikroTik wird NICHT bearbeitet.
+[INFO] Minecraft-Server wird NICHT neu gestartet.
 
-gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v22-20260822-140744.bak
-env_backup=/etc/ctrlpanel/wake-gateway.env.v22-20260822-140744.bak
+gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v23-20260822-140925.bak
+env_backup=/etc/ctrlpanel/wake-gateway.env.v23-20260822-140925.bak
 
-[1/8] ENV bereinigen ...
+[1/8] Aktuellen Gateway-Code pruefen ...
+344:async def open_backend(
+364:def effective_java_client_ip(client_ip: str) -> str:
+412:def build_java_proxy_line(
+643:async def handle_java(
+[ OK ] build_java_proxy_line gefunden.
+
+[2/8] ENV nur fuer testserver222 bereinigen ...
+ENV_PATCH=OK
 JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
-[ OK ] Fake-IP-Override entfernt.
+[ OK ] Fake Public-IP Override entfernt.
 
-[2/8] Gateway-Code normalisieren ...
-build_java_proxy_line Block nicht gefunden
+[3/8] Gateway-Funktionen robust ersetzen ...
+FUNCTION_PATCH=OK
+[ OK ] Gateway Python Syntax ist gueltig.
+
+[4/8] Sicherstellen, dass testserver222 PROXY Protocol nutzt ...
+paper_proxy_protocol=true
+[ OK ] Paper erwartet PROXY Protocol.
+
+[5/8] Gateway neu laden ...
+LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=59056,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+[ OK ] Gateway aktiv.
+[ OK ] Port 28000 lauscht.
+
+[6/8] Serverlisten-Ping lokal testen ...
+LOCAL_SERVERLIST_STATUS=PASS
+status_bytes=143
+
+[7/8] Gateway Log des Tests ...
+Aug 22 14:09:26 ctrlpanel systemd[1]: Stopping ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 22 14:09:26 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Deactivated successfully.
+Aug 22 14:09:26 ctrlpanel systemd[1]: Stopped ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 22 14:09:26 ctrlpanel systemd[1]: ctrlpanel-wake-gateway.service: Consumed 4.784s CPU time, 25.2M memory peak.
+Aug 22 14:09:26 ctrlpanel systemd[1]: Starting ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway...
+Aug 22 14:09:26 ctrlpanel ctrlpanel-wake-api-wait[59054]: wake_api_ready=YES
+Aug 22 14:09:26 ctrlpanel python3[59056]: 2026-08-22 14:09:26,746 INFO CtrlPanel wake API reachable: ctrlpanel-wake-api
+Aug 22 14:09:26 ctrlpanel python3[59056]: 2026-08-22 14:09:26,746 INFO Java wake gateway listening on 0.0.0.0:28000
+Aug 22 14:09:26 ctrlpanel python3[59056]: 2026-08-22 14:09:26,757 INFO Bedrock wake gateway listening on UDP 28000-28099
+Aug 22 14:09:26 ctrlpanel ctrlpanel-wake-gateway-wait[59058]: java_listener=READY
+Aug 22 14:09:26 ctrlpanel ctrlpanel-wake-gateway-wait[59058]: bedrock_listeners=100/100
+Aug 22 14:09:26 ctrlpanel ctrlpanel-wake-gateway-wait[59058]: gateway_ready=YES
+Aug 22 14:09:26 ctrlpanel systemd[1]: Started ctrlpanel-wake-gateway.service - CtrlPanel Minecraft Wake-on-Join Gateway.
+Aug 22 14:09:30 ctrlpanel python3[59056]: 2026-08-22 14:09:30,062 INFO JAVA_PROXY_HEADER fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:33520 destination=127.0.0.1:28000 protocol=TCP4
+
+[8/8] Final Verify ...
+JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
+fake_ip_override=REMOVED
+365:def effective_java_client_ip(
+379:def normalize_java_fqdn(
+401:def build_java_proxy_line(
+
+============================================================
+FIX2_STATUS_COMPLETE
+package=V23_ROBUST_JAVA_PROXY_PATCH
+result=SUCCESS
+domain=testserver222.free.mc-serverhost.net
+xhoelserver_modified=NO
+mikrotik_modified=NO
+minecraft_server_restart=NO
+paper_proxy_protocol=TRUE
+local_serverlist_status=PASS
+fake_public_ip_override=REMOVED
+source_ip_mode=SOCKET_PEER_IP
+next=TEST_SERVERLIST_AND_JOIN
+end=2026-08-22T14:09:30+00:00
+============================================================
