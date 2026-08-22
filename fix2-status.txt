@@ -1,16 +1,45 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T15:02:13+00:00
+published_at=2026-08-22T15:04:56+00:00
 ============================================================
 
 ============================================================
- FIX2 V39
- DIRECT CONTAINER TRANSPARENT MITM
+ FIX2 V40
+ REAL INBOUND SOURCE-IP DIAGNOSTIC
 ============================================================
-SCRIPT_VERSION=V39_DIRECT_CONTAINER_MITM
+SCRIPT_VERSION=V40_REAL_SOURCE_DIAG
+time=2026-08-22T15:04:56+00:00
 
-[1/5] Direkte Container-Route ...
-[PRIVATE_IP] via [PRIVATE_IP] dev eth0 src [PRIVATE_IP] uid 0 
-    cache 
+[INFO] Keine Aenderungen.
+[INFO] Kein Neustart.
+[INFO] Kein MikroTik.
+[INFO] Kein Minecraft-Server-Neustart.
 
-[2/5] Backend direkt testen ...
+[1/5] Gateway Status
+active
+
+[2/5] Transparent Settings
+JAVA_PROXY_PROTOCOL_DOMAINS=
+JAVA_TRANSPARENT_DOMAIN=testserver222.free.mc-serverhost.net
+JAVA_TRANSPARENT_BACKEND_HOST=[PRIVATE_IP]
+
+[3/5] Letzte echten Client-Verbindungen
+Aug 22 14:57:52 ctrlpanel python3[63085]: 2026-08-22 14:57:52,492 INFO JAVA_TRANSPARENT_CLIENT fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:38978
+
+[4/5] Aktuelle TCP-Verbindungen auf 28000
+
+[5/5] Netzwerk
+lo               UNKNOWN        127.0.0.1/8 
+eth0@if379       UP             [PRIVATE_IP]/24 
+
+default via [PRIVATE_IP] dev eth0 
+[PRIVATE_IP] via [PRIVATE_IP] dev eth0 
+[PRIVATE_IP]/24 dev eth0 proto kernel scope link src [PRIVATE_IP] 
+
+============================================================
+FIX2_STATUS_COMPLETE
+package=V40_REAL_SOURCE_DIAG
+changes=NONE
+result=SUCCESS
+next=IDENTIFY_WHERE_REAL_IP_IS_LOST
+============================================================
