@@ -1,111 +1,23 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T14:13:54+00:00
+published_at=2026-08-22T14:16:17+00:00
 ============================================================
 
 ============================================================
- FIX2 V25 - REAL CLIENT LOG SNAPSHOT
+ FIX2 V26
+ JAVA ACCEPT TRACE
 ============================================================
-start=2026-08-22T14:13:52+00:00
-SCRIPT_VERSION=V25_REAL_CLIENT_LOG_SNAPSHOT
+start=2026-08-22T14:16:17+00:00
+SCRIPT_VERSION=V26_JAVA_ACCEPT_TRACE
 
-[INFO] Keine Aenderungen
-[INFO] Kein Neustart
 [INFO] Kein MikroTik
-[INFO] xhoelserver bleibt unberuehrt
+[INFO] Kein Minecraft-Server-Neustart
+[INFO] xhoelserver wird NICHT veraendert
 
-[1/6] Gateway Status
-active
-LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=59056,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+gateway_backup=/opt/ctrlpanel-wake-gateway/gateway.py.v26-20260822-141617.bak
 
-[2/6] DNS
-5.61.167.129    STREAM testserver222.free.mc-serverhost.net
-5.61.167.129    DGRAM  
-5.61.167.129    RAW    
-0 0 28000 testserver222.free.mc-serverhost.net.
+[1/6] handle_java suchen ...
+690:async def handle_java(
 
-[3/6] Gateway JAVA Logs letzte 30 Minuten
-Aug 22 14:09:26.747118 ctrlpanel python3[59056]: 2026-08-22 14:09:26,746 INFO Java wake gateway listening on 0.0.0.0:28000
-Aug 22 14:09:26.757902 ctrlpanel python3[59056]: 2026-08-22 14:09:26,757 INFO Bedrock wake gateway listening on UDP 28000-28099
-Aug 22 14:09:30.062518 ctrlpanel python3[59056]: 2026-08-22 14:09:30,062 INFO JAVA_PROXY_HEADER fqdn=testserver222.free.mc-serverhost.net source=127.0.0.1:33520 destination=127.0.0.1:28000 protocol=TCP4
-
-[4/6] Alle aktuellen Verbindungen auf 28000
-
-[5/6] Testserver222 Zustand + Leaf Log
-backend_port=27010
-identifier=dc4c2e9b
-server_state=running
-
-===== LEAF LAST 250 LINES =====
-[01:27:21] [ServerMain/INFO]: [bootstrap] Running Java 25 (OpenJDK 64-Bit Server VM 25.0.3+9-LTS; Eclipse Adoptium Temurin-25.0.3+9) on Linux 6.17.2-1-pve (amd64)
-[01:27:22] [ServerMain/INFO]: [bootstrap] Loading Leaf 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) for Minecraft 1.21.11
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Loading config...
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 1 threads for Async Pathfinding
-[01:27:22] [ServerMain/WARN]: [LeafConfig] You enabled faster random generator, it will offset location of slime chunk
-[01:27:22] [ServerMain/WARN]: [LeafConfig] If your server has slime farms or facilities need vanilla slime chunk,
-[01:27:22] [ServerMain/WARN]: [LeafConfig] set performance.faster-random-generator.use-legacy-random-for-slime-chunk to true to use LegacyRandomSource for slime chunk generation.
-[01:27:22] [ServerMain/WARN]: [LeafConfig] Set performance.faster-random-generator.warn-for-slime-chunk to false to disable this warning.
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 2 threads for Async Entity Tracker
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Using 8 threads for Parallel World Ticking
-[01:27:22] [ServerMain/WARN]: [LeafConfig] You have following experimental module(s) enabled: [MultithreadedTracker.enabled, SparklyPaperParallelWorldTicking.enabled], please proceed with caution!
-[01:27:22] [ServerMain/INFO]: [LeafConfig] Successfully loaded config in 599ms.
-[01:27:23] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
-[01:27:23] [ServerMain/INFO]: [PluginInitializerManager] Initialized 0 plugins
-[01:27:32] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
-[01:27:36] [ServerMain/INFO]: Loaded 1470 recipes
-[01:27:36] [ServerMain/INFO]: Loaded 1584 advancements
-[01:27:36] [ServerMain/INFO]: Resource reload finished after 683 ms
-[01:27:36] [ServerMain/INFO]: RecipeManager took approximately 2 tasks/224 ms (1 tasks/224 ms preparing, 1 tasks/0 ms applying)
-[01:27:36] [ServerMain/INFO]: ServerFunctionLibrary took approximately 3 tasks/9 ms (2 tasks/0 ms preparing, 1 tasks/9 ms applying)
-[01:27:36] [ServerMain/INFO]: ServerAdvancementManager took approximately 2 tasks/438 ms (1 tasks/406 ms preparing, 1 tasks/32 ms applying)
-[01:27:36] [ServerMain/INFO]: Total blocking time: 41 ms
-[01:27:36] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
-[01:27:37] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 584.5ms
-[01:27:37] [Server thread/INFO]: Starting minecraft server version 1.21.11
-[01:27:37] [Server thread/INFO]: Loading properties
-[01:27:37] [Server thread/INFO]: This server is running Leaf version 1.21.11-175-ver/1.21.11@3606c2f (2026-08-16T03:51:56Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
-[01:27:37] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
-[01:27:38] [Server thread/INFO]: Server Ping Player Sample Count: 12
-[01:27:38] [Server thread/INFO]: Using 4 threads for Netty based IO
-[01:27:39] [Server thread/INFO]: [MoonriseCommon] Paper is using 1 worker threads, 1 I/O threads
-[01:27:40] [Server thread/INFO]: Using 8 permits for parallel world ticking
-[01:27:40] [Server thread/INFO]: Default game type: SURVIVAL
-[01:27:40] [Server thread/INFO]: Generating keypair
-[01:27:40] [Server thread/INFO]: Starting Minecraft server on 0.0.0.0:27010
-[01:27:40] [Server thread/WARN]: Using HAProxy, please ensure the server port is adequately firewalled.
-[01:27:40] [Server thread/INFO]: Paper: Using libdeflate (Linux x86_64) compression from Velocity.
-[01:27:40] [Server thread/INFO]: Paper: Using OpenSSL 3.x.x (Linux x86_64) cipher from Velocity.
-[01:27:40] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[01:27:40] [Server thread/INFO]: Preparing level "world"
-[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
-[01:27:41] [Server thread/INFO]: Preparing spawn area: 100%
-[01:27:41] [Server thread/INFO]: Prepared spawn area in 1 ms
-[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
-[01:27:41] [Server thread/INFO]: Prepared spawn area in 0 ms
-[01:27:41] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_end'...
-[01:27:41] [Server thread/INFO]: Prepared spawn area in 0 ms
-[01:27:41] [Server thread/INFO]: Done preparing level "world" (1.268s)
-[01:27:42] [Server thread/INFO]: [spark] Starting background profiler...
-[01:27:42] [Server thread/INFO]: Running delayed init tasks
-[01:27:42] [Server thread/INFO]: Done (21.871s)! For help, type "help"
-
-
-[6/6] Aktuelle PROXY Konfiguration
-JAVA_PROXY_PROTOCOL_DOMAINS=testserver222.free.mc-serverhost.net
-365:def effective_java_client_ip(
-379:def normalize_java_fqdn(
-401:def build_java_proxy_line(
-
-============================================================
-FIX2_STATUS_COMPLETE
-package=V25_REAL_CLIENT_LOG_SNAPSHOT
-domain=testserver222.free.mc-serverhost.net
-xhoelserver_modified=NO
-mikrotik_modified=NO
-gateway_modified=NO
-paper_modified=NO
-server_power_changes=NONE
-next=ANALYZE_REAL_CLIENT_LOG
-result=SUCCESS
-end=2026-08-22T14:13:54+00:00
-============================================================
+[2/6] Sofort-Logging beim TCP Accept einbauen ...
+handle_java peer/local block not found
