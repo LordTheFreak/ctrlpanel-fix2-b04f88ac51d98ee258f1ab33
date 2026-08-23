@@ -1,62 +1,52 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-23T23:09:09+00:00
+published_at=2026-08-23T23:30:03+00:00
 ============================================================
 
 ============================================================
- FREE SERVER CREATION CPU PLACEMENT FIX V1
+ FREE SERVER CREATION V6 STATUS CHECK
 ============================================================
-time=2026-08-23T23:09:02+00:00
+time=2026-08-23T23:29:58+00:00
+package=FREE_SERVER_CREATION_V6_STATUS_CHECK
+changes_made=NO
 
-[1/6] Aktuellen Node sichern ...
-NODE_BACKUP=OK
-old_cpu_capacity=20000
+=== PATCH STATUS ===
+CONTROLLER_V6=NO
+SERVICE_V6=NO
+PRODUCT_STRING_ID_FIX=YES
+
+=== PHP SYNTAX ===
+No syntax errors detected in app/Http/Controllers/ServerController.php
+No syntax errors detected in app/Services/ServerCreationService.php
+
+=== CURRENT NODE ===
+cpu_capacity=20000
 allocated_cpu=20000
 reported_cpu=6400
+memory_free=19864576
+disk_free=818941520
 health=healthy
+disabled=0
+drain=0
 
-[2/6] Free-Hosting Voraussetzungen prüfen ...
-free_hosting=YES
-max_running_servers=20
-product_cpu=150
-product_memory=3072
-product_disk=10000
-node_has_product=YES
-free_allocation=1446
-node_health=healthy
+=== FREE ALLOCATION ===
+FREE_ALLOCATION=1446
 
-[3/6] CPU Placement Kapazität korrigieren ...
-allocated_before=20000
-capacity_before=20000
-placement_headroom=15000
-new_capacity=35000
-CPU_CAPACITY_UPDATE=OK
+=== SERVICE PLACEMENT TEST ===
+SERVICE_PLACEMENT=FAILED
 
-[4/6] Ergebnis prüfen ...
-cpu_capacity=35000
-allocated_cpu=20000
-free_placement_cpu=15000
-free_server_cpu=150
-can_place_free_server=YES
-memory_free_mb=19864576
-disk_free_mb=818941520
+=== CONTROLLER VALIDATION TEST ===
+CONTROLLER_VALIDATION=FAILED
+RESULT=The selected location does not have the required memory, disk, or is overloaded.
 
-[5/6] Cache leeren ...
-CACHE_CLEAR=OK
-
-[6/6] Dienste prüfen ...
+=== HEALTH ===
 ssh=active
 wake_api=active
 wake_gateway=active
 
-   INFO  No failed jobs found.  
-
-
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=FREE_SERVER_CPU_PLACEMENT_FIX_V1
-expected_cpu_capacity=35000_or_higher
-expected_can_place_free_server=YES
-backup=/root/node-cpu-placement-before-20260823-230902.json
+package=FREE_SERVER_CREATION_V6_STATUS_CHECK
+changes_made=NO
 ============================================================
