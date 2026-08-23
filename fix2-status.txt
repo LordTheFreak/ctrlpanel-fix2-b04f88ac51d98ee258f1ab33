@@ -1,180 +1,62 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-23T23:37:47+00:00
+published_at=2026-08-23T23:39:52+00:00
 ============================================================
 
 ============================================================
- FREE SERVER CPU DOUBLE-CHECK PROBE V8
+ FREE SERVER CREATION FINAL FIX V9
 ============================================================
-SCRIPT_VERSION=FREE_SERVER_CPU_DOUBLE_CHECK_PROBE_V8
-time=2026-08-23T23:37:47+00:00
-changes_made=NO
+SCRIPT_VERSION=FREE_SERVER_CREATION_FINAL_FIX_V9
+time=2026-08-23T23:39:46+00:00
 
-=== CHECKNODERESOURCES SOURCE ===
-METHOD_LINE=1109
-  1094	     */
-  1095	    public function getClientUser()
-  1096	    {
-  1097	        return $this->client->get('client/account');
-  1098	    }
-  1099	
-  1100	    /**
-  1101	     * Check if node has enough free resources to allocate the given resources
-  1102	     *
-  1103	     * @param  Node  $node
-  1104	     * @param  int  $requireMemory
-  1105	     * @param  int  $requireDisk
-  1106	     * @param  int  $requireCpu
-  1107	     * @return bool
-  1108	     */
-  1109	    public function checkNodeResources(Node $node, int $requireMemory, int $requireDisk, int $requireCpu = 0)
-  1110	    {
-  1111	        try {
-  1112	            $response = $this->application->get("application/nodes/{$node->id}");
-  1113	        } catch (\Throwable $e) {
-  1114	            throw $this->providerException(
-  1115	                self::OPERATION_GET_NODE_CAPACITY,
-  1116	                $e,
-  1117	                ['node_id' => $node->id],
-  1118	            );
-  1119	        }
-  1120	        if ($response->failed()) {
-  1121	            throw $this->providerException(
-  1122	                self::OPERATION_GET_NODE_CAPACITY,
-  1123	                $response,
-  1124	                ['node_id' => $node->id],
-  1125	            );
-  1126	        }
-  1127	        $nodeAttributes = $response['attributes'];
-  1128	        $memoryCapacity = (int) floor($nodeAttributes['memory'] * ($nodeAttributes['memory_overallocate'] + 100) / 100);
-  1129	        $diskCapacity = (int) floor($nodeAttributes['disk'] * ($nodeAttributes['disk_overallocate'] + 100) / 100);
-  1130	        $freeMemory = $memoryCapacity - $nodeAttributes['allocated_resources']['memory'];
-  1131	        $freeDisk = $diskCapacity - $nodeAttributes['allocated_resources']['disk'];
-  1132	        $cpuCapacity = (int) ($node->cpu_capacity_percent ?: $node->reported_cpu_capacity_percent);
-  1133	        $allocatedCpu = 0;
-  1134	        $hasUnlimitedMemory = false;
-  1135	        $hasUnlimitedDisk = false;
-  1136	        $hasUnlimitedCpu = false;
-  1137	        foreach ($this->getServers() as $server) {
-  1138	            if ((int) data_get($server, 'attributes.node', 0) !== (int) $node->id) {
-  1139	                continue;
-  1140	            }
-  1141	
-  1142	            $memoryLimit = max(0, (int) data_get($server, 'attributes.limits.memory', 0));
-  1143	            $diskLimit = max(0, (int) data_get($server, 'attributes.limits.disk', 0));
-  1144	            $cpuLimit = max(0, (int) data_get($server, 'attributes.limits.cpu', 0));
-  1145	            $hasUnlimitedMemory = $hasUnlimitedMemory || $memoryLimit === 0;
-  1146	            $hasUnlimitedDisk = $hasUnlimitedDisk || $diskLimit === 0;
-  1147	            $hasUnlimitedCpu = $hasUnlimitedCpu || $cpuLimit === 0;
-  1148	            if ($cpuLimit > 0) {
-  1149	                $allocatedCpu += $cpuLimit;
-  1150	            }
-  1151	        }
-  1152	        if ($hasUnlimitedMemory) {
-  1153	            $freeMemory = 0;
-  1154	        }
-  1155	        if ($hasUnlimitedDisk) {
-  1156	            $freeDisk = 0;
-  1157	        }
-  1158	        if ($requireMemory === 0) {
-  1159	            $requireMemory = $memoryCapacity;
-  1160	        }
-  1161	        if ($requireDisk === 0) {
-  1162	            $requireDisk = $diskCapacity;
-  1163	        }
-  1164	        if ($freeMemory < $requireMemory) {
-  1165	            return false;
-  1166	        }
-  1167	        if ($freeDisk < $requireDisk) {
-  1168	            return false;
-  1169	        }
-  1170	        if ($cpuCapacity <= 0) {
-  1171	            return false;
-  1172	        }
-  1173	        if ($requireCpu === 0) {
-  1174	            $requireCpu = $cpuCapacity;
-  1175	        }
-  1176	        if ($hasUnlimitedCpu) {
-  1177	            $allocatedCpu = $cpuCapacity;
-  1178	        }
-  1179	        if ($cpuCapacity - $allocatedCpu - max(0, (int) $node->reserved_cpu_percent) < $requireCpu) {
-  1180	            return false;
-  1181	        }
-  1182	
-  1183	        return true;
-  1184	    }
-  1185	
-  1186	    private function getEnvironmentVariables(Egg $egg, $variables)
-  1187	    {
-  1188	        $environment = [];
-  1189	        // Support for front-end and api variables format.
-  1190	        $variables = collect(is_string($variables) ? json_decode($variables, true) : $variables);
-  1191	
-  1192	        foreach ($egg->environment as $envVariable) {
-  1193	            if (!empty($envVariable['default_value'])) {
-  1194	                $environment[$envVariable['env_variable']] = $envVariable['default_value'];
-  1195	            }
-  1196	        }
-  1197	
-  1198	        $environment = array_merge($environment, $variables->toArray());
-  1199	
+[1/6] Controller korrigieren ...
+PRODUCT_ID_FIX=ALREADY_OK
+CONTROLLER_FREE_PRECHECK=PATCHED
 
-=== FREE HOSTING BOOST CALCULATOR ===
-     1	<?php
-     2	
-     3	namespace App\Services;
-     4	
-     5	use App\Models\UserFreeHostingBoost;
-     6	
-     7	final class FreeHostingBoostCalculator
-     8	{
-     9	    /**
-    10	     * @param array{memory:int,cpu:int,disk:int,backups:int,databases:int,allocations:int} $limits
-    11	     * @return array{memory:int,cpu:int,disk:int,backups:int,databases:int,allocations:int}
-    12	     */
-    13	    public function apply(array $limits, ?UserFreeHostingBoost $boost): array
-    14	    {
-    15	        if (! $boost?->enabled) {
-    16	            return $limits;
-    17	        }
-    18	
-    19	        return [
-    20	            'memory' => $this->addResourceLimit($limits['memory'], $boost->memory_mb),
-    21	            'cpu' => $this->addResourceLimit($limits['cpu'], $boost->cpu_percent),
-    22	            'disk' => $this->addResourceLimit($limits['disk'], $boost->disk_mb),
-    23	            'backups' => $this->addFeatureLimit($limits['backups'], $boost->backups),
-    24	            'databases' => $this->addFeatureLimit($limits['databases'], $boost->databases),
-    25	            'allocations' => $this->addFeatureLimit($limits['allocations'], $boost->allocations),
-    26	        ];
-    27	    }
-    28	
-    29	    private function addResourceLimit(int $base, int $bonus): int
-    30	    {
-    31	        // Pterodactyl treats zero resource limits as unlimited. Never turn an
-    32	        // unlimited RAM, CPU, or disk resource into a finite one.
-    33	        if ($base === 0) {
-    34	            return 0;
-    35	        }
-    36	
-    37	        return $this->safeAdd($base, $bonus);
-    38	    }
-    39	
-    40	    private function addFeatureLimit(int $base, int $bonus): int
-    41	    {
-    42	        // Unlike resources, a zero Pterodactyl feature limit means that the
-    43	        // feature is unavailable. An administrator boost must be able to grant
-    44	        // the first backup, database, or additional allocation.
-    45	        return $this->safeAdd($base, $bonus);
-    46	    }
-    47	
-    48	    private function safeAdd(int $base, int $bonus): int
-    49	    {
-    50	        $base = max(0, $base);
-    51	        $bonus = max(0, $bonus);
-    52	
-    53	        return $bonus > PHP_INT_MAX - $base ? PHP_INT_MAX : $base + $bonus;
-    54	    }
-    55	}
+[2/6] NodePlacementService: optional CPU-Ignore einbauen ...
+NODE_PLACEMENT_PATCH=PATCHED
 
-=== REAL PLACEMENT TEST MATRIX ===
-PHP Parse error:  syntax error, unexpected token "." in /tmp/fix2-v8-placement.php on line 74
+[3/6] Live Pterodactyl Resource-Check erweitern ...
+LIVE_CPU_PATCH=PATCHED
+
+[4/6] ServerCreationService auf Free-Hosting-Modus umstellen ...
+SERVER_CREATION_PATCH=PATCHED
+
+[5/6] Syntax + echte Placement-Prüfung ...
+No syntax errors detected in app/Http/Controllers/ServerController.php
+No syntax errors detected in app/Services/ServerCreationService.php
+No syntax errors detected in app/Services/Placement/NodePlacementService.php
+No syntax errors detected in app/Classes/PterodactylClient.php
+REAL_PRODUCT_CPU=150
+PRODUCT_MEMORY=3072
+PRODUCT_DISK=10000
+NORMAL_CPU_PLACEMENT=FAIL
+FREE_CPU_PLACEMENT=PASS
+FREE_ALLOCATION=1446
+SERVICE_PLACEMENT=PASS
+PLACEMENT_NODE=1
+PLACEMENT_ALLOCATION=1446
+CONTROLLER_VALIDATION=PASS
+TEST_RESULT=PASS
+
+[6/6] Finaler Zustand ...
+cpu_capacity=20000
+cpu_allocated=20000
+real_server_cpu_limit=150
+real_server_memory=3072
+real_server_disk=10000
+
+============================================================
+FIX2_STATUS_COMPLETE
+result=SUCCESS
+package=FREE_SERVER_CREATION_FINAL_FIX_V9
+free_cpu_placement=IGNORED
+free_live_cpu_capacity=IGNORED
+real_server_cpu_limit=UNCHANGED
+memory_check=ACTIVE
+disk_check=ACTIVE
+allocation_check=ACTIVE
+service_placement=PASS
+controller_validation=PASS
+backup=/root/free-create-final-v9-20260823-233946
+============================================================
