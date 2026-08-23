@@ -1,260 +1,180 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-23T23:35:22+00:00
+published_at=2026-08-23T23:37:47+00:00
 ============================================================
 
 ============================================================
- FREE SERVER PLACEMENT EXACT PROBE V7B
+ FREE SERVER CPU DOUBLE-CHECK PROBE V8
 ============================================================
-SCRIPT_VERSION=FREE_SERVER_PLACEMENT_EXACT_PROBE_V7B
-time=2026-08-23T23:35:18+00:00
+SCRIPT_VERSION=FREE_SERVER_CPU_DOUBLE_CHECK_PROBE_V8
+time=2026-08-23T23:37:47+00:00
 changes_made=NO
 
-=== SERVER CREATION SERVICE PLACEMENT SOURCE ===
-   540	
-   541	        $identifier = trim((string) $identifier);
-   542	        if ($identifier === '' || strlen($identifier) > 128) {
-   543	            return null;
-   544	        }
-   545	
-   546	        return preg_match('/\A[A-Za-z0-9][A-Za-z0-9._:-]{0,127}\z/D', $identifier) === 1
-   547	            ? $identifier
-   548	            : null;
-   549	    }
-   550	
-   551	    /** @return array{node:Node,allocation_id:int}|null */
-   552	    private function findAvailableNodeWithAllocation(string $locationId, Product $product, User $user): ?array
-   553	    {
-   554	        $requiredLimits = [
-   555	            'memory' => (int) $product->memory,
-   556	            'cpu' => (int) $product->cpu,
-   557	            'disk' => (int) $product->disk,
-   558	            'backups' => (int) $product->backups,
-   559	            'databases' => (int) $product->databases,
-   560	            'allocations' => (int) $product->allocations,
-   561	        ];
-   562	        if ($this->usesFreeHostingAllocations($product)) {
-   563	            $requiredLimits = $this->freeHostingBoostCalculator->apply(
-   564	                $requiredLimits,
-   565	                $user->freeHostingBoost,
-   566	            );
-   567	        }
-   568	
-   569	        $nodes = Node::where('location_id', $locationId)
-   570	            ->whereHas('products', fn($q) => $q->where('product_id', $product->id))
-   571	            ->get();
-   572	
-   573	        $rankedNodes = $this->nodePlacement->rank($nodes, $requiredLimits);
-   574	
-   575	        foreach ($rankedNodes as $node) {
-   576	            try {
-   577	                if (! $this->pterodactylClient->checkNodeResources(
-   578	                    $node,
-   579	                    $requiredLimits['memory'],
-   580	                    $requiredLimits['disk'],
-   581	                    $requiredLimits['cpu'],
-   582	                )) {
-   583	                    continue;
-   584	                }
-   585	
-   586	                $allocationId = $this->usesFreeHostingAllocations($product)
-   587	                    ? $this->freeHostingAllocations->getFreeAllocationId($node)
-   588	                    : $this->pterodactylClient->getFreeAllocationId($node);
-   589	
-   590	                if ($allocationId !== null && (int) $allocationId > 0) {
-   591	                    return ['node' => $node, 'allocation_id' => (int) $allocationId];
-   592	                }
-   593	            } catch (\Throwable $exception) {
-   594	                logger()->warning(
-   595	                    'Provisioning node candidate could not be verified',
-   596	                    $this->providerLogContext(self::OPERATION_NODE_CAPACITY, null, $exception),
-   597	                );
-   598	            }
-   599	        }
-   600	
-   601	        return null;
-   602	    }
-   603	
-   604	    private function usesFreeHostingAllocations(Product $product): bool
-   605	    {
-   606	        return $this->freeHostingSettings->enabled
-   607	            && $this->freeHostingSettings->appliesToProduct($product->id);
-   608	    }
-   609	
-   610	}
+=== CHECKNODERESOURCES SOURCE ===
+METHOD_LINE=1109
+  1094	     */
+  1095	    public function getClientUser()
+  1096	    {
+  1097	        return $this->client->get('client/account');
+  1098	    }
+  1099	
+  1100	    /**
+  1101	     * Check if node has enough free resources to allocate the given resources
+  1102	     *
+  1103	     * @param  Node  $node
+  1104	     * @param  int  $requireMemory
+  1105	     * @param  int  $requireDisk
+  1106	     * @param  int  $requireCpu
+  1107	     * @return bool
+  1108	     */
+  1109	    public function checkNodeResources(Node $node, int $requireMemory, int $requireDisk, int $requireCpu = 0)
+  1110	    {
+  1111	        try {
+  1112	            $response = $this->application->get("application/nodes/{$node->id}");
+  1113	        } catch (\Throwable $e) {
+  1114	            throw $this->providerException(
+  1115	                self::OPERATION_GET_NODE_CAPACITY,
+  1116	                $e,
+  1117	                ['node_id' => $node->id],
+  1118	            );
+  1119	        }
+  1120	        if ($response->failed()) {
+  1121	            throw $this->providerException(
+  1122	                self::OPERATION_GET_NODE_CAPACITY,
+  1123	                $response,
+  1124	                ['node_id' => $node->id],
+  1125	            );
+  1126	        }
+  1127	        $nodeAttributes = $response['attributes'];
+  1128	        $memoryCapacity = (int) floor($nodeAttributes['memory'] * ($nodeAttributes['memory_overallocate'] + 100) / 100);
+  1129	        $diskCapacity = (int) floor($nodeAttributes['disk'] * ($nodeAttributes['disk_overallocate'] + 100) / 100);
+  1130	        $freeMemory = $memoryCapacity - $nodeAttributes['allocated_resources']['memory'];
+  1131	        $freeDisk = $diskCapacity - $nodeAttributes['allocated_resources']['disk'];
+  1132	        $cpuCapacity = (int) ($node->cpu_capacity_percent ?: $node->reported_cpu_capacity_percent);
+  1133	        $allocatedCpu = 0;
+  1134	        $hasUnlimitedMemory = false;
+  1135	        $hasUnlimitedDisk = false;
+  1136	        $hasUnlimitedCpu = false;
+  1137	        foreach ($this->getServers() as $server) {
+  1138	            if ((int) data_get($server, 'attributes.node', 0) !== (int) $node->id) {
+  1139	                continue;
+  1140	            }
+  1141	
+  1142	            $memoryLimit = max(0, (int) data_get($server, 'attributes.limits.memory', 0));
+  1143	            $diskLimit = max(0, (int) data_get($server, 'attributes.limits.disk', 0));
+  1144	            $cpuLimit = max(0, (int) data_get($server, 'attributes.limits.cpu', 0));
+  1145	            $hasUnlimitedMemory = $hasUnlimitedMemory || $memoryLimit === 0;
+  1146	            $hasUnlimitedDisk = $hasUnlimitedDisk || $diskLimit === 0;
+  1147	            $hasUnlimitedCpu = $hasUnlimitedCpu || $cpuLimit === 0;
+  1148	            if ($cpuLimit > 0) {
+  1149	                $allocatedCpu += $cpuLimit;
+  1150	            }
+  1151	        }
+  1152	        if ($hasUnlimitedMemory) {
+  1153	            $freeMemory = 0;
+  1154	        }
+  1155	        if ($hasUnlimitedDisk) {
+  1156	            $freeDisk = 0;
+  1157	        }
+  1158	        if ($requireMemory === 0) {
+  1159	            $requireMemory = $memoryCapacity;
+  1160	        }
+  1161	        if ($requireDisk === 0) {
+  1162	            $requireDisk = $diskCapacity;
+  1163	        }
+  1164	        if ($freeMemory < $requireMemory) {
+  1165	            return false;
+  1166	        }
+  1167	        if ($freeDisk < $requireDisk) {
+  1168	            return false;
+  1169	        }
+  1170	        if ($cpuCapacity <= 0) {
+  1171	            return false;
+  1172	        }
+  1173	        if ($requireCpu === 0) {
+  1174	            $requireCpu = $cpuCapacity;
+  1175	        }
+  1176	        if ($hasUnlimitedCpu) {
+  1177	            $allocatedCpu = $cpuCapacity;
+  1178	        }
+  1179	        if ($cpuCapacity - $allocatedCpu - max(0, (int) $node->reserved_cpu_percent) < $requireCpu) {
+  1180	            return false;
+  1181	        }
+  1182	
+  1183	        return true;
+  1184	    }
+  1185	
+  1186	    private function getEnvironmentVariables(Egg $egg, $variables)
+  1187	    {
+  1188	        $environment = [];
+  1189	        // Support for front-end and api variables format.
+  1190	        $variables = collect(is_string($variables) ? json_decode($variables, true) : $variables);
+  1191	
+  1192	        foreach ($egg->environment as $envVariable) {
+  1193	            if (!empty($envVariable['default_value'])) {
+  1194	                $environment[$envVariable['env_variable']] = $envVariable['default_value'];
+  1195	            }
+  1196	        }
+  1197	
+  1198	        $environment = array_merge($environment, $variables->toArray());
+  1199	
 
-=== NODE PLACEMENT SERVICE ===
+=== FREE HOSTING BOOST CALCULATOR ===
      1	<?php
      2	
-     3	namespace App\Services\Placement;
+     3	namespace App\Services;
      4	
-     5	use App\Models\Pterodactyl\Node;
-     6	use Illuminate\Support\Collection;
-     7	
-     8	final class NodePlacementService
-     9	{
-    10	    private const HEALTH_FRESHNESS_MINUTES = 10;
-    11	
-    12	    /**
-    13	     * Rank eligible nodes deterministically. The provider is still queried immediately
-    14	     * before an allocation is selected, so a stale snapshot can never overrule the live
-    15	     * memory, disk, or allocation checks.
-    16	     *
-    17	     * @param Collection<int, Node> $nodes
-    18	     * @param array{memory:int,cpu:int,disk:int} $required
-    19	     * @return Collection<int, Node>
-    20	     */
-    21	    public function rank(Collection $nodes, array $required): Collection
-    22	    {
-    23	        return $nodes
-    24	            ->filter(fn (Node $node): bool => $this->isEligible($node, $required))
-    25	            ->sort(function (Node $left, Node $right): int {
-    26	                $scoreOrder = $this->score($right) <=> $this->score($left);
-    27	
-    28	                return $scoreOrder !== 0
-    29	                    ? $scoreOrder
-    30	                    : ((int) $left->getKey() <=> (int) $right->getKey());
-    31	            })
-    32	            ->values();
-    33	    }
-    34	
-    35	    /** @param array{memory:int,cpu:int,disk:int} $required */
-    36	    public function isEligible(Node $node, array $required): bool
-    37	    {
-    38	        if (
-    39	            $node->disabled
-    40	            || $node->maintenance_mode
-    41	            || $node->provider_maintenance_mode
-    42	            || $node->drain_new_servers
-    43	            || $node->health_status !== 'healthy'
-    44	            || $node->last_health_check_at === null
-    45	            || $node->last_health_check_at->lt(now()->subMinutes(self::HEALTH_FRESHNESS_MINUTES))
-    46	        ) {
-    47	            return false;
-    48	        }
-    49	
-    50	        return $this->hasCapacity(
-    51	            $node->memory_capacity_mb,
-    52	            $node->allocated_memory_mb,
-    53	            $node->reserved_memory_mb,
-    54	            max(0, (int) $required['memory']),
-    55	        ) && $this->hasCapacity(
-    56	            $node->disk_capacity_mb,
-    57	            $node->allocated_disk_mb,
-    58	            $node->reserved_disk_mb,
-    59	            max(0, (int) $required['disk']),
-    60	        ) && $this->hasCapacity(
-    61	            $this->cpuCapacity($node),
-    62	            $node->allocated_cpu_percent,
-    63	            $node->reserved_cpu_percent,
-    64	            max(0, (int) $required['cpu']),
-    65	        );
-    66	    }
-    67	
-    68	    private function hasCapacity(mixed $capacity, mixed $allocated, mixed $reserved, int $required): bool
-    69	    {
-    70	        // Placement is fail-closed. A missing capacity must never turn an unknown node
-    71	        // into an unlimited one; the snapshot refresher fills CPU from Wings when an
-    72	        // administrator has not supplied an explicit value.
-    73	        if ($capacity === null || (int) $capacity <= 0) {
-    74	            return false;
-    75	        }
-    76	
-    77	        // CtrlPanel/Pterodactyl use zero as "unlimited", not "no resource".
-    78	        // Reserve the complete node capacity so an unlimited server can only be
-    79	        // provisioned on an otherwise empty node.
-    80	        if ($required === 0) {
-    81	            $required = (int) $capacity;
-    82	        }
-    83	
-    84	        return (int) $capacity - max(0, (int) $allocated) - max(0, (int) $reserved) >= $required;
-    85	    }
-    86	
-    87	    private function score(Node $node): float
-    88	    {
-    89	        $headroom = collect([
-    90	            $this->headroom($node->memory_capacity_mb, $node->allocated_memory_mb, $node->reserved_memory_mb),
-    91	            $this->headroom($node->disk_capacity_mb, $node->allocated_disk_mb, $node->reserved_disk_mb),
-    92	            $this->headroom($this->cpuCapacity($node), $node->allocated_cpu_percent, $node->reserved_cpu_percent),
-    93	        ])->filter(fn (?float $value): bool => $value !== null);
-    94	
-    95	        $averageHeadroom = $headroom->isEmpty() ? 0.5 : (float) $headroom->avg();
-    96	        $healthBonus = $node->health_status === 'healthy' ? 50.0 : 0.0;
-    97	        $loadPenalty = $node->cpu_load_percent === null
-    98	            ? 0.0
-    99	            : min(1000.0, max(0.0, (float) $node->cpu_load_percent));
-   100	
-   101	        // Weight is the administrator's primary policy control; headroom and live load
-   102	        // balance otherwise equivalent nodes without making selection non-deterministic.
-   103	        return max(1, (int) $node->placement_weight) * 1000
-   104	            + $averageHeadroom * 100
-   105	            + $healthBonus
-   106	            - $loadPenalty;
-   107	    }
-   108	
-   109	    private function headroom(mixed $capacity, mixed $allocated, mixed $reserved): ?float
-   110	    {
-   111	        $capacity = (int) $capacity;
-   112	        if ($capacity <= 0) {
-   113	            return null;
-   114	        }
-   115	
-   116	        $free = max(0, $capacity - max(0, (int) $allocated) - max(0, (int) $reserved));
-   117	
-   118	        return min(1.0, $free / $capacity);
-   119	    }
-   120	
-   121	    private function cpuCapacity(Node $node): ?int
-   122	    {
-   123	        $override = (int) $node->cpu_capacity_percent;
-   124	        if ($override > 0) {
-   125	            return $override;
-   126	        }
-   127	
-   128	        $reported = (int) $node->reported_cpu_capacity_percent;
-   129	
-   130	        return $reported > 0 ? $reported : null;
-   131	    }
-   132	}
+     5	use App\Models\UserFreeHostingBoost;
+     6	
+     7	final class FreeHostingBoostCalculator
+     8	{
+     9	    /**
+    10	     * @param array{memory:int,cpu:int,disk:int,backups:int,databases:int,allocations:int} $limits
+    11	     * @return array{memory:int,cpu:int,disk:int,backups:int,databases:int,allocations:int}
+    12	     */
+    13	    public function apply(array $limits, ?UserFreeHostingBoost $boost): array
+    14	    {
+    15	        if (! $boost?->enabled) {
+    16	            return $limits;
+    17	        }
+    18	
+    19	        return [
+    20	            'memory' => $this->addResourceLimit($limits['memory'], $boost->memory_mb),
+    21	            'cpu' => $this->addResourceLimit($limits['cpu'], $boost->cpu_percent),
+    22	            'disk' => $this->addResourceLimit($limits['disk'], $boost->disk_mb),
+    23	            'backups' => $this->addFeatureLimit($limits['backups'], $boost->backups),
+    24	            'databases' => $this->addFeatureLimit($limits['databases'], $boost->databases),
+    25	            'allocations' => $this->addFeatureLimit($limits['allocations'], $boost->allocations),
+    26	        ];
+    27	    }
+    28	
+    29	    private function addResourceLimit(int $base, int $bonus): int
+    30	    {
+    31	        // Pterodactyl treats zero resource limits as unlimited. Never turn an
+    32	        // unlimited RAM, CPU, or disk resource into a finite one.
+    33	        if ($base === 0) {
+    34	            return 0;
+    35	        }
+    36	
+    37	        return $this->safeAdd($base, $bonus);
+    38	    }
+    39	
+    40	    private function addFeatureLimit(int $base, int $bonus): int
+    41	    {
+    42	        // Unlike resources, a zero Pterodactyl feature limit means that the
+    43	        // feature is unavailable. An administrator boost must be able to grant
+    44	        // the first backup, database, or additional allocation.
+    45	        return $this->safeAdd($base, $bonus);
+    46	    }
+    47	
+    48	    private function safeAdd(int $base, int $bonus): int
+    49	    {
+    50	        $base = max(0, $base);
+    51	        $bonus = max(0, $bonus);
+    52	
+    53	        return $bonus > PHP_INT_MAX - $base ? PHP_INT_MAX : $base + $bonus;
+    54	    }
+    55	}
 
-=== NODE / PRODUCT STATE ===
-node_id=1
-location_id=1
-disabled=0
-maintenance=0
-provider_maintenance=0
-drain=0
-health=healthy
-memory_capacity=20582400
-memory_allocated=717824
-memory_reserved=0
-disk_capacity=823296000
-disk_allocated=4354480
-disk_reserved=0
-cpu_capacity=20000
-cpu_reported=6400
-cpu_allocated=20000
-cpu_reserved=0
-product_id=bBHZOZYpw6h25Ra4QU7_W
-product_memory=3072
-product_disk=10000
-product_cpu=150
-product_assigned_to_node=YES
-
-=== DIRECT NODEPLACEMENT MATRIX ===
-
-In fix2-v7b.php line 24:
-                                                                                
-  Method App\Services\Placement\NodePlacementService::canHost() does not exist  
-                                                                                
-
-
-=== FREE ALLOCATION ===
-FREE_ALLOCATION=1446
-
-============================================================
-FIX2_STATUS_COMPLETE
-result=SUCCESS
-package=FREE_SERVER_PLACEMENT_EXACT_PROBE_V7B
-changes_made=NO
-============================================================
+=== REAL PLACEMENT TEST MATRIX ===
+PHP Parse error:  syntax error, unexpected token "." in /tmp/fix2-v8-placement.php on line 74
