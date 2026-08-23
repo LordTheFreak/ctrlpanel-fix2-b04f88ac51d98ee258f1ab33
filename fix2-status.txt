@@ -1,43 +1,62 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-22T16:23:52+00:00
+published_at=2026-08-23T23:09:09+00:00
 ============================================================
 
 ============================================================
- V53 - WAN PORT 28000 TEST
+ FREE SERVER CREATION CPU PLACEMENT FIX V1
 ============================================================
+time=2026-08-23T23:09:02+00:00
 
-[1/3] Gateway
-active
-LISTEN 0      512      0.0.0.0:28000 0.0.0.0:* users:(("python3",pid=72894,fd=6))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+[1/6] Aktuellen Node sichern ...
+NODE_BACKUP=OK
+old_cpu_capacity=20000
+allocated_cpu=20000
+reported_cpu=6400
+health=healthy
 
-[2/3] Capture
+[2/6] Free-Hosting Voraussetzungen prüfen ...
+free_hosting=YES
+max_running_servers=20
+product_cpu=150
+product_memory=3072
+product_disk=10000
+node_has_product=YES
+free_allocation=1446
+node_health=healthy
 
-============================================================
-JETZT 60 SEKUNDEN ZEIT.
+[3/6] CPU Placement Kapazität korrigieren ...
+allocated_before=20000
+capacity_before=20000
+placement_headroom=15000
+new_capacity=35000
+CPU_CAPACITY_UPDATE=OK
 
-Wichtig:
-Mit HANDY-MOBILFUNK, NICHT deinem WLAN,
-Minecraft verbinden mit:
+[4/6] Ergebnis prüfen ...
+cpu_capacity=35000
+allocated_cpu=20000
+free_placement_cpu=15000
+free_server_cpu=150
+can_place_free_server=YES
+memory_free_mb=19864576
+disk_free_mb=818941520
 
-testserver222.free.mc-serverhost.net:28000
+[5/6] Cache leeren ...
+CACHE_CLEAR=OK
 
-Also diesmal PORT 28000 DIREKT angeben.
-============================================================
+[6/6] Dienste prüfen ...
+ssh=active
+wake_api=active
+wake_gateway=active
 
-[3/3] Ergebnis
-table inet ctrlpanel_v53_wan { # handle 14
-	chain input { # handle 1
-		type filter hook input priority raw; policy accept;
-		tcp dport 28000 counter packets 0 bytes 0 comment "WAN_28000_IN" # handle 2
-	}
-}
+   INFO  No failed jobs found.  
 
-===== GATEWAY LOG =====
--- No entries --
 
 ============================================================
 FIX2_STATUS_COMPLETE
-package=V53_WAN_28000
 result=SUCCESS
+package=FREE_SERVER_CPU_PLACEMENT_FIX_V1
+expected_cpu_capacity=35000_or_higher
+expected_can_place_free_server=YES
+backup=/root/node-cpu-placement-before-20260823-230902.json
 ============================================================
