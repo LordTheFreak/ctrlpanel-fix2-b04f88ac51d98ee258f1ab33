@@ -1,62 +1,68 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-23T23:39:52+00:00
+published_at=2026-08-23T23:43:39+00:00
 ============================================================
 
 ============================================================
- FREE SERVER CREATION FINAL FIX V9
+ FREE SERVER PRODUCT STRING VALIDATION FIX V10
 ============================================================
-SCRIPT_VERSION=FREE_SERVER_CREATION_FINAL_FIX_V9
-time=2026-08-23T23:39:46+00:00
+SCRIPT_VERSION=FREE_SERVER_PRODUCT_STRING_VALIDATION_FIX_V10
+time=2026-08-23T23:43:37+00:00
 
-[1/6] Controller korrigieren ...
-PRODUCT_ID_FIX=ALREADY_OK
-CONTROLLER_FREE_PRECHECK=PATCHED
+[1/5] Aktuelle Product-Regeln suchen ...
+265-        $rules = [
+266-            'name' => 'required|max:191',
+267-            'location' => 'required|integer|min:1|exists:locations,id',
+268-            'egg' => 'required|integer|min:1|exists:eggs,id',
+269:            'product' => 'required|integer|min:1|exists:products,id',
+270-            'egg_variables' => 'nullable|string',
+271-            'billing_priority' => ['nullable', new Enum(BillingPriority::class)],
+272-        ];
+273-
+274-        $leafEggId = (int) config('leafmc.egg_id', 1);
+275-        if ((int) $request->input('egg') === $leafEggId) {
+276-            $rules['minecraft_version'] = [
+277-                'required',
 
-[2/6] NodePlacementService: optional CPU-Ignore einbauen ...
-NODE_PLACEMENT_PATCH=PATCHED
+[2/5] Product-ID Validierung auf String umstellen ...
+PRODUCT_LOOKUP=STRING_OK
+VALIDATION_CHANGES=1
+PRODUCT_VALIDATION=STRING
+PRODUCT_INTEGER_VALIDATION=REMOVED
 
-[3/6] Live Pterodactyl Resource-Check erweitern ...
-LIVE_CPU_PATCH=PATCHED
-
-[4/6] ServerCreationService auf Free-Hosting-Modus umstellen ...
-SERVER_CREATION_PATCH=PATCHED
-
-[5/6] Syntax + echte Placement-Prüfung ...
+[3/5] PHP Syntax prüfen ...
 No syntax errors detected in app/Http/Controllers/ServerController.php
-No syntax errors detected in app/Services/ServerCreationService.php
-No syntax errors detected in app/Services/Placement/NodePlacementService.php
-No syntax errors detected in app/Classes/PterodactylClient.php
-REAL_PRODUCT_CPU=150
-PRODUCT_MEMORY=3072
-PRODUCT_DISK=10000
-NORMAL_CPU_PLACEMENT=FAIL
-FREE_CPU_PLACEMENT=PASS
-FREE_ALLOCATION=1446
-SERVICE_PLACEMENT=PASS
-PLACEMENT_NODE=1
-PLACEMENT_ALLOCATION=1446
-CONTROLLER_VALIDATION=PASS
-TEST_RESULT=PASS
 
-[6/6] Finaler Zustand ...
-cpu_capacity=20000
-cpu_allocated=20000
-real_server_cpu_limit=150
-real_server_memory=3072
-real_server_disk=10000
+[4/5] Ergebnis anzeigen ...
+265-        $rules = [
+266-            'name' => 'required|max:191',
+267-            'location' => 'required|integer|min:1|exists:locations,id',
+268-            'egg' => 'required|integer|min:1|exists:eggs,id',
+269:            'product' => 'required|string|min:1|exists:products,id',
+270-            'egg_variables' => 'nullable|string',
+271-            'billing_priority' => ['nullable', new Enum(BillingPriority::class)],
+272-        ];
+273-
+274-        $leafEggId = (int) config('leafmc.egg_id', 1);
+275-        if ((int) $request->input('egg') === $leafEggId) {
+276-            $rules['minecraft_version'] = [
+277-                'required',
+
+--- PRODUCT LOOKUP ---
+287:            $product = Product::findOrFail($validated['product']);
+337:            $product = Product::findOrFail($request->input('product'));
+
+[5/5] Produkt-ID direkt testen ...
+PRODUCT_ID=bBHZOZYpw6h25Ra4QU7_W
+PRODUCT_FOUND=YES
+PRODUCT_NAME=Free Minecraft
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=FREE_SERVER_CREATION_FINAL_FIX_V9
-free_cpu_placement=IGNORED
-free_live_cpu_capacity=IGNORED
-real_server_cpu_limit=UNCHANGED
-memory_check=ACTIVE
-disk_check=ACTIVE
-allocation_check=ACTIVE
-service_placement=PASS
-controller_validation=PASS
-backup=/root/free-create-final-v9-20260823-233946
+package=FREE_SERVER_PRODUCT_STRING_VALIDATION_FIX_V10
+product_validation=STRING
+product_integer_validation=REMOVED
+product_lookup=STRING
+backup=/root/ServerController.php.product-validation-20260823-234337.bak
 ============================================================
