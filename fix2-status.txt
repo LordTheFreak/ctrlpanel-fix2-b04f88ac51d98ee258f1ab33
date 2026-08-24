@@ -1,68 +1,866 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-23T23:43:39+00:00
+published_at=2026-08-24T19:53:49+00:00
 ============================================================
 
 ============================================================
- FREE SERVER PRODUCT STRING VALIDATION FIX V10
+ ADMIN USER EDIT 500 EXACT PROBE V1
 ============================================================
-SCRIPT_VERSION=FREE_SERVER_PRODUCT_STRING_VALIDATION_FIX_V10
-time=2026-08-23T23:43:37+00:00
+SCRIPT_VERSION=ADMIN_USER_EDIT_500_ACB5A27A_PROBE_V1
+time=2026-08-24T19:53:44+00:00
+changes_made=NO
 
-[1/5] Aktuelle Product-Regeln suchen ...
-265-        $rules = [
-266-            'name' => 'required|max:191',
-267-            'location' => 'required|integer|min:1|exists:locations,id',
-268-            'egg' => 'required|integer|min:1|exists:eggs,id',
-269:            'product' => 'required|integer|min:1|exists:products,id',
-270-            'egg_variables' => 'nullable|string',
-271-            'billing_priority' => ['nullable', new Enum(BillingPriority::class)],
-272-        ];
-273-
-274-        $leafEggId = (int) config('leafmc.egg_id', 1);
-275-        if ((int) $request->input('egg') === $leafEggId) {
-276-            $rules['minecraft_version'] = [
-277-                'required',
+=== 1. EXACT ERROR REFERENCE ===
 
-[2/5] Product-ID Validierung auf String umstellen ...
-PRODUCT_LOOKUP=STRING_OK
-VALIDATION_CHANGES=1
-PRODUCT_VALIDATION=STRING
-PRODUCT_INTEGER_VALIDATION=REMOVED
+LOG_FILE=storage/logs/laravel-2026-08-24.log
+38-[2026-08-24 00:36:26] production.ERROR: Unexpected application failure {"error_id":"ERR-07AB8FB5","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/27599d7e83e1266afe49b087356e8ff5.php","line":40},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"servers.console","request_method":"GET","user_id":1,"execution":"http"} 
+39-[2026-08-24 00:36:26] production.ERROR: Unexpected application failure {"error_id":"ERR-7DB5B810","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/27599d7e83e1266afe49b087356e8ff5.php","line":40},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"servers.console","request_method":"GET","user_id":1,"execution":"http"} 
+40-[2026-08-24 00:45:13] production.ERROR: Unexpected application failure {"error_id":"ERR-056AB1BA","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/27599d7e83e1266afe49b087356e8ff5.php","line":40},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"servers.console","request_method":"GET","user_id":1,"execution":"http"} 
+41-[2026-08-24 00:45:14] production.ERROR: Unexpected application failure {"error_id":"ERR-7579FB9F","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/27599d7e83e1266afe49b087356e8ff5.php","line":40},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"servers.console","request_method":"GET","user_id":1,"execution":"http"} 
+42-[2026-08-24 01:35:19] production.ERROR: Unexpected application failure {"error_id":"ERR-7E135D1E","exception_class":"ReflectionException","origin":{"file":"/tmp/fix2-v7b.php","line":24},"trace":[{"file":"/tmp/fix2-v7b.php","line":24,"class":"ReflectionMethod","function":"__construct"}],"route_name":null,"request_method":null,"user_id":null,"execution":"console"} 
+43-[2026-08-24 01:44:08] production.ERROR: Unexpected application failure {"error_id":"ERR-A5039176","exception_class":"RuntimeException","origin":{"file":"/var/www/ctrlpanel/app/Services/Wake/LeafProxyProtocolFiles.php","line":137},"trace":[{"file":"/var/www/ctrlpanel/app/Services/Wake/LeafProxyProtocolRollout.php","line":55,"class":"App\\Services\\Wake\\LeafProxyProtocolFiles","function":"state"},{"file":"/var/www/ctrlpanel/app/Services/Wake/LeafProxyProtocolRollout.php","line":45,"class":"App\\Services\\Wake\\LeafProxyProtocolRollout","function":"configureLocked"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Cache/Lock.php","line":131,"class":"App\\Services\\Wake\\LeafProxyProtocolRollout","function":"App\\Services\\Wake\\{closure}"},{"file":"/var/www/ctrlpanel/app/Services/Wake/ServerRuntimeLock.php","line":32,"class":"Illuminate\\Cache\\Lock","function":"block"},{"file":"/var/www/ctrlpanel/app/Services/Wake/LeafProxyProtocolRollout.php","line":41,"class":"App\\Services\\Wake\\ServerRuntimeLock","function":"blockFor"},{"file":"/var/www/ctrlpanel/app/Services/Wake/ProxyProtocolRollout.php","line":24,"class":"App\\Services\\Wake\\LeafProxyProtocolRollout","function":"configure"},{"file":"/var/www/ctrlpanel/app/Jobs/ConfigureLeafProxyProtocolJob.php","line":54,"class":"App\\Services\\Wake\\ProxyProtocolRollout","function":"configure"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":36,"class":"App\\Jobs\\ConfigureLeafProxyProtocolJob","function":"handle"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/Util.php","line":43,"class":"Illuminate\\Container\\BoundMethod","function":"Illuminate\\Container\\{closure}"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":96,"class":"Illuminate\\Container\\Util","function":"unwrapIfClosure"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":35,"class":"Illuminate\\Container\\BoundMethod","function":"callBoundMethod"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/Container.php","line":799,"class":"Illuminate\\Container\\BoundMethod","function":"call"}],"route_name":null,"request_method":null,"user_id":null,"execution":"console"} 
+44-[2026-08-24 01:44:56] production.ERROR: Unexpected application failure {"error_id":"ERR-11AB8B64","exception_class":"RuntimeException","origin":{"file":"/var/www/ctrlpanel/app/Services/Wake/LeafProxyProtocolFiles.php","line":137},"trace":[{"file":"/var/www/ctrlpanel/app/Services/Wake/CrossplayProxyProtocolRollout.php","line":42,"class":"App\\Services\\Wake\\LeafProxyProtocolFiles","function":"state"},{"file":"/var/www/ctrlpanel/app/Services/Wake/CrossplayProxyProtocolRollout.php","line":33,"class":"App\\Services\\Wake\\CrossplayProxyProtocolRollout","function":"configureLocked"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Cache/Lock.php","line":131,"class":"App\\Services\\Wake\\CrossplayProxyProtocolRollout","function":"App\\Services\\Wake\\{closure}"},{"file":"/var/www/ctrlpanel/app/Services/Wake/ServerRuntimeLock.php","line":32,"class":"Illuminate\\Cache\\Lock","function":"block"},{"file":"/var/www/ctrlpanel/app/Services/Wake/CrossplayProxyProtocolRollout.php","line":29,"class":"App\\Services\\Wake\\ServerRuntimeLock","function":"blockFor"},{"file":"/var/www/ctrlpanel/app/Services/Wake/ProxyProtocolRollout.php","line":27,"class":"App\\Services\\Wake\\CrossplayProxyProtocolRollout","function":"configure"},{"file":"/var/www/ctrlpanel/app/Jobs/ConfigureLeafProxyProtocolJob.php","line":54,"class":"App\\Services\\Wake\\ProxyProtocolRollout","function":"configure"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":36,"class":"App\\Jobs\\ConfigureLeafProxyProtocolJob","function":"handle"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/Util.php","line":43,"class":"Illuminate\\Container\\BoundMethod","function":"Illuminate\\Container\\{closure}"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":96,"class":"Illuminate\\Container\\Util","function":"unwrapIfClosure"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":35,"class":"Illuminate\\Container\\BoundMethod","function":"callBoundMethod"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/Container.php","line":799,"class":"Illuminate\\Container\\BoundMethod","function":"call"}],"route_name":null,"request_method":null,"user_id":null,"execution":"console"} 
+45-[2026-08-24 01:44:59] production.WARNING: Free-panel server power action failed {"server_id":"6Cn6_7qKTt2mCSwcvlJ_i","operation":"state","reason":"resource_state_unavailable","upstream_status":409,"exception_class":"App\\Exceptions\\ServerPowerException"} 
+46-[2026-08-24 01:51:53] production.ERROR: Unexpected application failure {"error_id":"ERR-440C0040","exception_class":"RuntimeException","origin":{"file":"/var/www/ctrlpanel/app/Services/Wake/CrossplayProxyProtocolRollout.php","line":103},"trace":[{"file":"/var/www/ctrlpanel/app/Services/Wake/CrossplayProxyProtocolRollout.php","line":33,"class":"App\\Services\\Wake\\CrossplayProxyProtocolRollout","function":"configureLocked"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Cache/Lock.php","line":131,"class":"App\\Services\\Wake\\CrossplayProxyProtocolRollout","function":"App\\Services\\Wake\\{closure}"},{"file":"/var/www/ctrlpanel/app/Services/Wake/ServerRuntimeLock.php","line":32,"class":"Illuminate\\Cache\\Lock","function":"block"},{"file":"/var/www/ctrlpanel/app/Services/Wake/CrossplayProxyProtocolRollout.php","line":29,"class":"App\\Services\\Wake\\ServerRuntimeLock","function":"blockFor"},{"file":"/var/www/ctrlpanel/app/Services/Wake/ProxyProtocolRollout.php","line":27,"class":"App\\Services\\Wake\\CrossplayProxyProtocolRollout","function":"configure"},{"file":"/var/www/ctrlpanel/app/Jobs/ConfigureLeafProxyProtocolJob.php","line":54,"class":"App\\Services\\Wake\\ProxyProtocolRollout","function":"configure"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":36,"class":"App\\Jobs\\ConfigureLeafProxyProtocolJob","function":"handle"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/Util.php","line":43,"class":"Illuminate\\Container\\BoundMethod","function":"Illuminate\\Container\\{closure}"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":96,"class":"Illuminate\\Container\\Util","function":"unwrapIfClosure"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php","line":35,"class":"Illuminate\\Container\\BoundMethod","function":"callBoundMethod"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Container/Container.php","line":799,"class":"Illuminate\\Container\\BoundMethod","function":"call"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php","line":129,"class":"Illuminate\\Container\\Container","function":"call"}],"route_name":null,"request_method":null,"user_id":null,"execution":"console"} 
+47-[2026-08-24 21:47:06] production.ERROR: Unexpected application failure {"error_id":"ERR-32C502EF","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php","line":331},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"admin.users.edit","request_method":"GET","user_id":1,"execution":"http"} 
+48-[2026-08-24 21:47:08] production.ERROR: Unexpected application failure {"error_id":"ERR-EA7BC242","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php","line":331},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"admin.users.edit","request_method":"GET","user_id":1,"execution":"http"} 
+49-[2026-08-24 21:47:37] production.ERROR: Unexpected application failure {"error_id":"ERR-A040F515","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php","line":331},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"admin.users.edit","request_method":"GET","user_id":1,"execution":"http"} 
+50-[2026-08-24 21:48:10] production.ERROR: Unexpected application failure {"error_id":"ERR-B1034229","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php","line":331},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"admin.users.edit","request_method":"GET","user_id":1,"execution":"http"} 
+51-[2026-08-24 21:48:13] production.ERROR: Unexpected application failure {"error_id":"ERR-EBDA820A","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php","line":331},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"admin.users.edit","request_method":"GET","user_id":1,"execution":"http"} 
+52-[2026-08-24 21:49:21] production.ERROR: Unexpected application failure {"error_id":"ERR-6D4A7795","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php","line":331},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"admin.users.edit","request_method":"GET","user_id":1,"execution":"http"} 
+53:[2026-08-24 21:49:36] production.ERROR: Unexpected application failure {"error_id":"ERR-ACB5A27A","exception_class":"Illuminate\\View\\ViewException","origin":{"file":"/var/www/ctrlpanel/storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php","line":331},"trace":[{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php","line":59,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"handleViewException"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php","line":76,"class":"Illuminate\\View\\Engines\\PhpEngine","function":"evaluatePath"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":208,"class":"Illuminate\\View\\Engines\\CompilerEngine","function":"get"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":191,"class":"Illuminate\\View\\View","function":"getContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/View/View.php","line":160,"class":"Illuminate\\View\\View","function":"renderContents"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":78,"class":"Illuminate\\View\\View","function":"render"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Http/Response.php","line":34,"class":"Illuminate\\Http\\Response","function":"setContent"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":939,"class":"Illuminate\\Http\\Response","function":"__construct"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":906,"class":"Illuminate\\Routing\\Router","function":"toResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Routing/Router.php","line":821,"class":"Illuminate\\Routing\\Router","function":"prepareResponse"},{"file":"/var/www/ctrlpanel/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php","line":180,"class":"Illuminate\\Routing\\Router","function":"Illuminate\\Routing\\{closure}"},{"file":"/var/www/ctrlpanel/app/Http/Middleware/TrackAuthenticatedSession.php","line":41,"class":"Illuminate\\Pipeline\\Pipeline","function":"Illuminate\\Pipeline\\{closure}"}],"route_name":"admin.users.edit","request_method":"GET","user_id":1,"execution":"http"} 
 
-[3/5] PHP Syntax prüfen ...
-No syntax errors detected in app/Http/Controllers/ServerController.php
+=== 2. ROUTE ===
+  GET|HEAD        admin/users/{user}/edit .................................................................. admin.users.edit › Admin\UserController@edit
 
-[4/5] Ergebnis anzeigen ...
-265-        $rules = [
-266-            'name' => 'required|max:191',
-267-            'location' => 'required|integer|min:1|exists:locations,id',
-268-            'egg' => 'required|integer|min:1|exists:eggs,id',
-269:            'product' => 'required|string|min:1|exists:products,id',
-270-            'egg_variables' => 'nullable|string',
-271-            'billing_priority' => ['nullable', new Enum(BillingPriority::class)],
-272-        ];
-273-
-274-        $leafEggId = (int) config('leafmc.egg_id', 1);
-275-        if ((int) $request->input('egg') === $leafEggId) {
-276-            $rules['minecraft_version'] = [
-277-                'required',
+=== 3. USER 6 DB CHECK ===
+USER_FOUND=YES
+USER_ID=6
+USER_NAME=crunchy9702
+USER_EMAIL=jace.burns097@gmail.com
+SERVER_LIMIT=1
+SERVERS=1
 
---- PRODUCT LOOKUP ---
-287:            $product = Product::findOrFail($validated['product']);
-337:            $product = Product::findOrFail($request->input('product'));
+=== 4. ADMIN USER CONTROLLER CANDIDATES ===
+app/Http/Controllers/Api/UserController.php:33:class UserController extends Controller
+app/Http/Controllers/Admin/CouponController.php:122:    public function edit(Coupon $coupon)
+app/Http/Controllers/Admin/VoucherController.php:93:    public function edit(Voucher $voucher, GeneralSettings $general_settings)
+app/Http/Controllers/Admin/UsefulLinkController.php:91:    public function edit(UsefulLink $usefullink)
+app/Http/Controllers/Admin/PartnerController.php:71:    public function edit(PartnerDiscount $partner)
+app/Http/Controllers/Admin/RoleController.php:99:    public function edit(Role $role)
+app/Http/Controllers/Admin/ProductController.php:142:    public function edit(Product $product, GeneralSettings $general_settings)
+app/Http/Controllers/Admin/ServerController.php:78:    public function edit(
+app/Http/Controllers/Admin/ActivityLogController.php:110:    public function edit($id)
+app/Http/Controllers/Admin/ApplicationApiController.php:85:    public function edit(ApplicationApi $applicationApi)
+app/Http/Controllers/Admin/ShopProductController.php:90:    public function edit(ShopProduct $shopProduct, GeneralSettings $general_settings)
+app/Http/Controllers/Admin/UserController.php:42:class UserController extends Controller
+app/Http/Controllers/Admin/UserController.php:188:    public function edit(User $user, GeneralSettings $general_settings, RiskAssessmentService $risk)
+app/Http/Controllers/Admin/UserController.php:199:        return view('admin.users.edit')->with([
+app/Http/Controllers/Admin/UserController.php:672:                <a data-content="' . __('Edit') . '" data-toggle="popover" data-trigger="hover" data-placement="top"  href="' . route('admin.users.edit', $user->id) . '" class="mr-1 btn btn-sm btn-info"><i class="fas fa-pen"></i></a>
 
-[5/5] Produkt-ID direkt testen ...
-PRODUCT_ID=bBHZOZYpw6h25Ra4QU7_W
-PRODUCT_FOUND=YES
-PRODUCT_NAME=Free Minecraft
+=== 5. EDIT METHOD CONTEXT ===
+
+FILE=/var/www/ctrlpanel/app/Http/Controllers/Admin/CouponController.php
+  102:         return redirect()->route('admin.coupons.index')->with('success', __("The coupon's was registered successfully."));
+  103:     }
+  104: 
+  105:     /**
+  106:      * Display the specified resource.
+  107:      *
+  108:      * @param  \App\Models\Coupon  $coupon
+  109:      * @return \Illuminate\Http\Response
+  110:      */
+  111:     public function show(Coupon $coupon)
+  112:     {
+  113:         //
+  114:     }
+  115: 
+  116:     /**
+  117:      * Show the form for editing the specified resource.
+  118:      *
+  119:      * @param  \App\Models\Coupon  $coupon
+  120:      * @return \Illuminate\Http\Response
+  121:      */
+  122:     public function edit(Coupon $coupon)
+  123:     {
+  124:         $this->checkPermission(self::WRITE_PERMISSION);
+  125: 
+  126:         return view('admin.coupons.edit', [
+  127:             'coupon' => $coupon,
+  128:             'expired_at' => $coupon->expires_at ? Carbon::createFromTimestamp($coupon->expires_at) : null
+  129:         ]);
+  130:     }
+  131: 
+  132:     /**
+  133:      * Update the specified resource in storage.
+  134:      *
+  135:      * @param  \Illuminate\Http\Request  $request
+  136:      * @param  \App\Models\Coupon  $coupon
+  137:      * @return \Illuminate\Http\Response
+  138:      */
+  139:     public function update(Request $request, Coupon $coupon)
+  140:     {
+  141:         $this->checkPermission(self::WRITE_PERMISSION);
+  142: 
+  143:         $rules = $this->requestRules($request);
+  144: 
+  145:         $request->validate($rules);
+  146:         $data = $request->except('_token');
+  147:         $data['max_uses_per_user'] = $this->normalizeMaxUsesPerUser($request);
+  148:         $coupon->update($data);
+  149: 
+  150:         return redirect()->route('admin.coupons.index')->with('success', __('coupon has been updated!'));
+  151:     }
+  152: 
+  153:     /**
+  154:      * Remove the specified resource from storage.
+  155:      *
+  156:      * @param  \App\Models\Coupon  $coupon
+  157:      * @return \Illuminate\Http\Response
+  158:      */
+  159:     public function destroy(Coupon $coupon)
+  160:     {
+  161:         $this->checkPermission(self::WRITE_PERMISSION);
+  162: 
+  163:         if ($coupon->pendingUses() > 0) {
+  164:             return redirect()->back()->with('error', __('This coupon cannot be deleted because there are pending payments using it.'));
+  165:         }
+  166: 
+  167:         \DB::transaction(function () use ($coupon) {
+  168:             $coupon->delete();
+  169:         });
+  170: 
+  171:         return redirect()->back()->with('success', __('coupon has been removed!'));
+  172:     }
+  173: 
+  174:     private function requestRules(Request $request)
+  175:     {
+  176:         return [
+  177:             "code" => "required|string|min:4",
+  178:             "type" => "required|string|in:percentage,amount",
+  179:             // Set to -1 for unlimited uses globally, or a positive integer within DB range.
+  180:             "max_uses" => [
+  181:                 'required',
+  182:                 'integer',
+  183:                 function ($attribute, $value, $fail) {
+  184:                     if ((int) $value === -1) {
+  185:                         return;
+  186:                     }
+  187:                     if ((int) $value <= 0 || (int) $value > 2147483647) {
+  188:                         $fail(__('Max uses must be -1 for unlimited or a positive integer up to :max.', ['max' => 2147483647]));
+  189:                     }
+  190:                 }
+  191:             ],
+  192:             // Set to -1 for unlimited per user. Empty falls back to coupon settings.
+  193:             "max_uses_per_user" => [
+  194:                 'nullable',
+  195:                 'integer',
+  196:                 function ($attribute, $value, $fail) {
+  197:                     if ((int) $value === -1 || is_null($value)) {
+  198:                         return;
+  199:                     }
+  200:                     if ((int) $value <= 0 || (int) $value > 2147483647) {
+  201:                         $fail(__('Max uses per user must be -1 for unlimited, or a positive integer up to :max.', ['max' => 2147483647]));
+  202:                     }
+  203:                 }
+  204:             ],
+  205:             "value" => $request->input('type') === 'percentage' ? 'required|numeric|between:1,100' : 'required|numeric|min:0.01|max:9007199254740991',
+  206:             "min_product_price" => "required|numeric|min:0|max:9007199254740991",
+  207:             "expires_at" => "nullable|date|after:now"
+  208:         ];
+  209:     }
+  210: 
+  211:     /**
+  212:      * Normalize optional per-user max uses input.
+  213:      * Empty input means fallback to global coupon settings.
+  214:      */
+  215:     private function normalizeMaxUsesPerUser(Request $request): ?int
+  216:     {
+  217:         $value = $request->input('max_uses_per_user');
+  218: 
+  219:         if ($value === null || $value === '') {
+  220:             return null;
+  221:         }
+
+FILE=/var/www/ctrlpanel/app/Http/Controllers/Admin/VoucherController.php
+   73:         return redirect()->route('admin.vouchers.index')->with('success', __('voucher has been created!'));
+   74:     }
+   75: 
+   76:     /**
+   77:      * Display the specified resource.
+   78:      *
+   79:      * @param  Voucher  $voucher
+   80:      * @return Response
+   81:      */
+   82:     public function show(Voucher $voucher)
+   83:     {
+   84:         //
+   85:     }
+   86: 
+   87:     /**
+   88:      * Show the form for editing the specified resource.
+   89:      *
+   90:      * @param  Voucher  $voucher
+   91:      * @return Application|Factory|View
+   92:      */
+   93:     public function edit(Voucher $voucher, GeneralSettings $general_settings)
+   94:     {
+   95:         $this->checkPermission(self::WRITE_PERMISSION);
+   96:         return view('admin.vouchers.edit', [
+   97:             'voucher' => $voucher,
+   98:             'credits_display_name' => $general_settings->credits_display_name
+   99:         ]);
+  100:     }
+  101: 
+  102:     /**
+  103:      * Update the specified resource in storage.
+  104:      *
+  105:      * @param  Request  $request
+  106:      * @param  Voucher  $voucher
+  107:      * @return RedirectResponse
+  108:      */
+  109:     public function update(Request $request, Voucher $voucher)
+  110:     {
+  111:         $this->checkPermission(self::WRITE_PERMISSION);
+  112: 
+  113:         $request->validate([
+  114:             'memo' => 'nullable|string|max:191',
+  115:             'code' => "required|string|alpha_dash|max:36|min:4|unique:vouchers,code,{$voucher->id}",
+  116:             'uses' => 'required|numeric|max:2147483647|min:1',
+  117:             'credits' => 'required|numeric|min:0.01|max:9223372036854775',
+  118:             'expires_at' => 'nullable|multiple_date_format:d-m-Y H:i:s,d-m-Y|after:now|before:10 years',
+  119:         ]);
+  120: 
+  121:         $voucher->update($request->except('_token'));
+  122: 
+  123:         return redirect()->route('admin.vouchers.index')->with('success', __('voucher has been updated!'));
+  124:     }
+  125: 
+  126:     /**
+  127:      * Remove the specified resource from storage.
+  128:      *
+  129:      * @param  Voucher  $voucher
+  130:      * @return RedirectResponse
+  131:      */
+  132:     public function destroy(Voucher $voucher)
+  133:     {
+  134:         $this->checkPermission(self::WRITE_PERMISSION);
+  135:         $voucher->delete();
+  136: 
+  137:         return redirect()->back()->with('success', __('voucher has been removed!'));
+  138:     }
+  139: 
+  140:     public function users(Voucher $voucher, LocaleSettings $locale_settings, GeneralSettings $general_settings)
+  141:     {
+  142:         $this->checkPermission(self::READ_PERMISSION);
+  143: 
+  144:         return view('admin.vouchers.users', [
+  145:             'voucher' => $voucher,
+  146:             'locale_datatables' => $locale_settings->datatables,
+  147:             'credits_display_name' => $general_settings->credits_display_name
+  148:         ]);
+  149:     }
+  150: 
+  151:     /**
+  152:      * @param  Request  $request
+  153:      * @return JsonResponse
+  154:      *
+  155:      * @throws ValidationException
+  156:      */
+  157:     public function redeem(Request $request, GeneralSettings $general_settings, CurrencyHelper $currencyHelper)
+  158:     {
+  159:         //general validations
+  160:         $request->validate([
+  161:             'code' => 'required|exists:vouchers,code',
+  162:         ]);
+  163: 
+  164:         //get voucher by code
+  165:         $voucher = Voucher::where('code', '=', $request->input('code'))->firstOrFail();
+  166: 
+  167:         //extra validations
+  168:         if ($voucher->getStatus() == 'USES_LIMIT_REACHED') {
+  169:             throw ValidationException::withMessages([
+  170:                 'code' => __('This voucher has reached the maximum amount of uses'),
+  171:             ]);
+  172:         }
+  173: 
+  174:         if ($voucher->getStatus() == 'EXPIRED') {
+  175:             throw ValidationException::withMessages([
+  176:                 'code' => __('This voucher has expired'),
+  177:             ]);
+  178:         }
+  179: 
+  180:         if (! $request->user()->vouchers()->where('id', '=', $voucher->id)->get()->isEmpty()) {
+  181:             throw ValidationException::withMessages([
+  182:                 'code' => __('You already redeemed this voucher code'),
+  183:             ]);
+  184:         }
+  185: 
+  186:         if ($request->user()->credits + $voucher->credits >= 99999999) {
+  187:             throw ValidationException::withMessages([
+  188:                 'code' => "You can't redeem this voucher because you would exceed the  limit of " . $general_settings->credits_display_name,
+  189:             ]);
+  190:         }
+  191: 
+  192:         //redeem voucher
+
+FILE=/var/www/ctrlpanel/app/Http/Controllers/Admin/PartnerController.php
+   51:             'user_id' => 'required|integer|min:0',
+   52:             'partner_discount' => 'required|integer|max:100|min:0',
+   53:             'registered_user_discount' => 'required|integer|max:100|min:0',
+   54:         ]);
+   55: 
+   56:         if(PartnerDiscount::where("user_id",$request->user_id)->exists()){
+   57:             return redirect()->route('admin.partners.index')->with('error', __('Partner already exists'));
+   58:         }
+   59: 
+   60:         PartnerDiscount::create($request->all());
+   61: 
+   62:         return redirect()->route('admin.partners.index')->with('success', __('partner has been created!'));
+   63:     }
+   64: 
+   65:     /**
+   66:      * Show the form for editing the specified resource.
+   67:      *
+   68:      * @param  Partner  $partner
+   69:      * @return Application|Factory|View
+   70:      */
+   71:     public function edit(PartnerDiscount $partner)
+   72:     {
+   73:         $this->checkPermission(self::WRITE_PERMISSION);
+   74: 
+   75:         return view('admin.partners.edit', [
+   76:             'partners' => PartnerDiscount::get(),
+   77:             'partner' => $partner,
+   78:             'users' => User::orderBy('name')->get(),
+   79:         ]);
+   80:     }
+   81: 
+   82:     /**
+   83:      * Update the specified resource in storage.
+   84:      *
+   85:      * @param  Request  $request
+   86:      * @param  Partner  $partner
+   87:      * @return RedirectResponse
+   88:      */
+   89:     public function update(Request $request, PartnerDiscount $partner)
+   90:     {
+   91:         $this->checkPermission(self::WRITE_PERMISSION);
+   92: 
+   93:         //dd($request);
+   94:         $request->validate([
+   95:             'user_id' => 'required|integer|min:0',
+   96:             'partner_discount' => 'required|integer|max:100|min:0',
+   97:             'registered_user_discount' => 'required|integer|max:100|min:0',
+   98:         ]);
+   99: 
+  100:         $partner->update($request->all());
+  101: 
+  102:         return redirect()->route('admin.partners.index')->with('success', __('partner has been updated!'));
+  103:     }
+  104: 
+  105:     /**
+  106:      * Remove the specified resource from storage.
+  107:      *
+  108:      * @param  Partner  $partner
+  109:      * @return RedirectResponse
+  110:      */
+  111:     public function destroy(PartnerDiscount $partner)
+  112:     {
+  113:         $this->checkPermission(self::WRITE_PERMISSION);
+  114: 
+  115:         $partner->delete();
+  116: 
+  117:         return redirect()->back()->with('success', __('partner has been removed!'));
+  118:     }
+  119: 
+  120: 
+  121: 
+  122:     public function dataTable()
+  123:     {
+  124:         $this->checkAnyPermission([self::WRITE_PERMISSION,self::READ_PERMISSION]);
+  125: 
+  126:         $query = PartnerDiscount::query();
+  127: 
+  128:         return datatables($query)
+  129:             ->addColumn('actions', function (PartnerDiscount $partner) {
+  130:                 return '
+  131:                             <a data-content="'.__('Edit').'" data-toggle="popover" data-trigger="hover" data-placement="top" href="'.route('admin.partners.edit', $partner->id).'" class="mr-1 btn btn-sm btn-info"><i class="fas fa-pen"></i></a>
+  132:                            <form class="d-inline" onsubmit="return submitResult();" method="post" action="'.route('admin.partners.destroy', $partner->id).'">
+  133:                             '.csrf_field().'
+  134:                             '.method_field('DELETE').'
+  135:                            <button data-content="'.__('Delete').'" data-toggle="popover" data-trigger="hover" data-placement="top" class="mr-1 btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+  136:                        </form>
+  137:                 ';
+  138:             })
+  139:             ->addColumn('user', function (PartnerDiscount $partner) {
+  140:                 return ($user = User::where('id', $partner->user_id)->first()) ? '<a href="'.route('admin.users.show', $partner->user_id) . '">' . $user->name . '</a>' : __('Unknown user');
+  141:             })
+  142:             ->editColumn('created_at', function (PartnerDiscount $partner) {
+  143:                 return $partner->created_at ? $partner->created_at->diffForHumans() : '';
+  144:             })
+  145:             ->editColumn('partner_discount', function (PartnerDiscount $partner) {
+  146:                 return $partner->partner_discount ? $partner->partner_discount . '%' : '0%';
+  147:             })
+  148:             ->editColumn('registered_user_discount', function (PartnerDiscount $partner) {
+  149:                 return $partner->registered_user_discount ? $partner->registered_user_discount . '%' : '0%';
+  150:             })
+  151:             ->editColumn('referral_system_commission', function (PartnerDiscount $partner, ReferralSettings $referral_settings) {
+  152:                 return $partner->referral_system_commission >= 0 ? $partner->referral_system_commission . '%' : __('Default') . ' ('.$referral_settings->percentage . '%)';
+  153:             })
+  154:             ->orderColumn('user', 'user_id $1')
+  155:             ->rawColumns(['user', 'actions'])
+  156:             ->make();
+  157:     }
+  158: }
+
+FILE=/var/www/ctrlpanel/app/Http/Controllers/Admin/RoleController.php
+   79: 
+   80:         return redirect()
+   81:             ->route('admin.roles.index')
+   82:             ->with('success', __('Role saved'));
+   83:     }
+   84: 
+   85:     /**
+   86:      * Display the specified resource.
+   87:      */
+   88:     public function show()
+   89:     {
+   90:         abort(404);
+   91:     }
+   92: 
+   93:     /**
+   94:      * Show the form for editing the specified resource.
+   95:      *
+   96:      * @param Role $role
+   97:      * @return Application|Factory|View
+   98:      */
+   99:     public function edit(Role $role)
+  100:     {
+  101:         $this->checkPermission(self::EDIT_PERMISSION);
+  102: 
+  103:         if(Auth::user()->roles[0]->power < $role->power){
+  104:             return back()->with("error","You dont have enough Power to edit that Role");
+  105:         }
+  106: 
+  107:         $permissions = Permission::all();
+  108: 
+  109:         return view('admin.roles.edit', compact('role', 'permissions'));
+  110:     }
+  111: 
+  112:     /**
+  113:      * Update the specified resource in storage.
+  114:      *
+  115:      * @param Role $role
+  116:      * @return RedirectResponse
+  117:      */
+  118:     public function update(Request $request, Role $role)
+  119:     {
+  120:         $this->checkPermission(self::EDIT_PERMISSION);
+  121: 
+  122:         if(Auth::user()->roles[0]->power < $role->power){
+  123:             return back()->with("error","You dont have enough Power to edit that Role");
+  124:         }
+  125: 
+  126:         if ($request->permissions) {
+  127:             if($role->id != 1){ //disable admin permissions change
+  128:                 $collectedPermissions = collect($request->permissions)->map(fn($val)=>(int)$val);
+  129:                 $role->syncPermissions($collectedPermissions);
+  130:             }
+  131:         }
+  132: 
+  133:         //if($role->id == 1 || $role->id == 3 || $role->id == 4){ //dont let the user change the names of these roles
+  134:         //    $role->update([
+  135:         //        'color' => $request->color
+  136:         //    ]);
+  137:         //}else{
+  138:             $role->update([
+  139:                 'name' => $request->name,
+  140:                 'color' => $request->color,
+  141:                 'power' => $request->power
+  142:             ]);
+  143:         //}
+  144: 
+  145:         //if($role->id == 1){
+  146:         //    return redirect()->route('admin.roles.index')->with('success', __('Role updated. Name and Permissions of this Role cannot be changed'));
+  147:         //}elseif($role->id == 4 || $role->id == 3){
+  148:         //    return redirect()->route('admin.roles.index')->with('success', __('Role updated. Name of this Role cannot be changed'));
+  149:        // }else{
+  150:             return redirect()
+  151:                 ->route('admin.roles.index')
+  152:                 ->with('success', __('Role saved'));
+  153:         //}
+  154:     }
+  155: 
+  156:     /**
+  157:      * Remove the specified resource from storage.
+  158:      *
+  159:      * @return RedirectResponse
+  160:      */
+  161:     public function destroy(Role $role)
+  162:     {
+  163:         $this->checkPermission(self::DELETE_PERMISSION);
+  164: 
+  165:         if($role->id == 1 || $role->id == 3 || $role->id == 4){ //cannot delete the hard coded roles
+  166:             return back()->with("error","You cannot delete that role");
+  167:         }
+  168: 
+  169:         $users = User::role($role)->get();
+  170: 
+  171:         foreach($users as $user){
+  172:             //$user->syncRoles(['Member']);
+  173:             $user->syncRoles(4);
+  174:         }
+  175: 
+  176:         $role->delete();
+  177: 
+  178:         return redirect()
+  179:             ->route('admin.roles.index')
+  180:             ->with('success', __('Role removed'));
+  181:     }
+  182: 
+  183:     /**
+  184:      * @return mixed
+  185:      * @throws Exception
+  186:      */
+  187:     public function dataTable()
+  188:     {
+  189:         $this->checkPermission(self::READ_PERMISSION);
+  190: 
+  191:         $query = Role::query()->withCount(['users', 'permissions'])->get();
+  192: 
+  193:         return datatables($query)
+  194:             ->editColumn('id', function (Role $role) {
+  195:                 return $role->id;
+  196:             })
+  197:             ->addColumn('actions', function (Role $role) {
+  198:                 return '
+
+FILE=/var/www/ctrlpanel/app/Http/Controllers/Admin/ServerController.php
+   58:     /**
+   59:      * Display a listing of the resource.
+   60:      *
+   61:      * @return Application|Factory|View|Response
+   62:      */
+   63:     public function index(LocaleSettings $locale_settings)
+   64:     {
+   65:         $this->checkAnyPermission(self::ANY_PERMISSION);
+   66: 
+   67:         return view('admin.servers.index', [
+   68:             'locale_datatables' => $locale_settings->datatables
+   69:         ]);
+   70:     }
+   71: 
+   72:     /**
+   73:      * Show the form for editing the specified resource.
+   74:      *
+   75:      * @param  Server  $server
+   76:      * @return View
+   77:      */
+   78:     public function edit(
+   79:         Server $server,
+   80:         ObservedPlayerUsageQueryService $observedUsage,
+   81:         PlayerUsageQueryService $verifiedUsage,
+   82:         ServerRuntimeMetricsQueryService $runtimeMetrics,
+   83:         IdleShutdownPolicyResolver $idlePolicyResolver,
+   84:     )
+   85:     {
+   86:         $this->checkAnyPermission([
+   87:             self::WRITE_PERMISSION,
+   88:             self::CHANGEOWNER_PERMISSION,
+   89:             self::CHANGE_IDENTIFIER_PERMISSION,
+   90:             self::REPAIR_PERMISSION,
+   91:         ]);
+   92: 
+   93:         // get all users from the database
+   94:         $users = User::all();
+   95: 
+   96:         $server->load(['product', 'user', 'egg', 'freeDomain.adRuntimeAccount']);
+   97:         $domain = $server->freeDomain;
+   98:         $usage = $domain ? $observedUsage->summary($domain) : null;
+   99:         $verified = $domain ? $verifiedUsage->summary($domain) : null;
+  100:         $latestRepair = $server->repairRuns()->with('actor')->latest('id')->first();
+  101: 
+  102:         return view('admin.servers.edit')->with([
+  103:             'server' => $server,
+  104:             'users' => $users,
+  105:             'domain' => $domain,
+  106:             'usage' => $usage,
+  107:             'verifiedUsage' => $verified,
+  108:             'runtimeMetrics' => $domain ? $runtimeMetrics->details($domain) : null,
+  109:             'latestRepair' => $latestRepair,
+  110:             'activeWakeSessions' => WakeSession::query()
+  111:                 ->where('server_id', $server->id)
+  112:                 ->whereIn('state', WakeSession::ACTIVE_STATES)
+  113:                 ->count(),
+  114:             'backupCount' => $server->googleDriveBackupExports()->count()
+  115:                 + $server->worldBackups()->count(),
+  116:             'idlePolicy' => $idlePolicyResolver->resolve($server),
+  117:         ]);
+  118:     }
+  119: 
+  120:     public function checkServer(Server $server, ServerRepairService $repair): RedirectResponse
+  121:     {
+  122:         $this->checkPermission(self::REPAIR_PERMISSION);
+  123:         try {
+  124:             $result = $repair->run($server, Auth::user(), ServerRepairRun::MODE_CHECK);
+  125: 
+  126:             return redirect()->route('admin.servers.edit', $server)
+  127:                 ->with('success', __('Server check completed.').' '.($result['summary']['errors'] ?? 0).' '.__('errors').', '.($result['summary']['warnings'] ?? 0).' '.__('warnings').'.');
+  128:         } catch (\Throwable) {
+  129:             return redirect()->route('admin.servers.edit', $server)
+  130:                 ->with('error', __('The server check could not be completed. No changes were made.'));
+  131:         }
+  132:     }
+  133: 
+  134:     public function repairServer(Server $server, ServerRepairService $repair): RedirectResponse
+  135:     {
+  136:         $this->checkPermission(self::REPAIR_PERMISSION);
+  137:         try {
+  138:             $result = $repair->run($server, Auth::user(), ServerRepairRun::MODE_REPAIR);
+  139: 
+  140:             return redirect()->route('admin.servers.edit', $server)
+  141:                 ->with('success', __('Safe server repair completed.').' '.($result['summary']['repairs'] ?? 0).' '.__('repairs applied').'.');
+  142:         } catch (\Throwable) {
+  143:             return redirect()->route('admin.servers.edit', $server)
+  144:                 ->with('error', __('The safe repair could not be completed. No destructive fallback was attempted.'));
+  145:         }
+  146:     }
+  147: 
+  148:     /**
+  149:      * Update the specified resource in storage.
+  150:      *
+  151:      * @param  Request  $request
+  152:      * @param  Server  $server
+  153:      */
+  154:     public function update(Request $request, Server $server, DiscordSettings $discord_settings)
+  155:     {
+  156:         $this->checkAnyPermission([
+  157:             self::WRITE_PERMISSION,
+  158:             self::CHANGEOWNER_PERMISSION,
+  159:             self::CHANGE_IDENTIFIER_PERMISSION,
+  160:         ]);
+  161: 
+  162:         $request->validate([
+  163:             'identifier' => 'required|string',
+  164:             'user_id' => 'required|integer',
+  165:             'idle_shutdown_minutes_override' => [
+  166:                 'nullable',
+  167:                 'integer',
+  168:                 'min:0',
+  169:                 'max:1440',
+  170:                 static function (string $attribute, mixed $value, \Closure $fail): void {
+  171:                     if ($value !== null && (int) $value > 0 && (int) $value < 5) {
+  172:                         $fail(__('Idle shutdown must be 0 (disabled), empty (inherit), or at least 5 minutes.'));
+  173:                     }
+  174:                 },
+  175:             ],
+  176:             'idle_shutdown_protected' => 'nullable|boolean',
+  177:         ]);
+
+FILE=/var/www/ctrlpanel/app/Http/Controllers/Admin/ActivityLogController.php
+   90:         abort(403, __('User does not have the right permissions.'));
+   91:     }
+   92: 
+   93:     /**
+   94:      * Display the specified resource.
+   95:      *
+   96:      * @param  int  $id
+   97:      * @return Response
+   98:      */
+   99:     public function show($id)
+  100:     {
+  101:         //
+  102:     }
+  103: 
+  104:     /**
+  105:      * Show the form for editing the specified resource.
+  106:      *
+  107:      * @param  int  $id
+  108:      * @return Response
+  109:      */
+  110:     public function edit($id)
+  111:     {
+  112:         //
+  113:     }
+  114: 
+  115:     /**
+  116:      * Update the specified resource in storage.
+  117:      *
+  118:      * @param  Request  $request
+  119:      * @param  int  $id
+  120:      * @return Response
+  121:      */
+  122:     public function update(Request $request, $id)
+  123:     {
+  124:         abort(403, __('User does not have the right permissions.'));
+  125:     }
+  126: 
+  127:     /**
+  128:      * Remove the specified resource from storage.
+  129:      *
+  130:      * @param  int  $id
+  131:      * @return Response
+  132:      */
+  133:     public function destroy($id)
+  134:     {
+  135:         //
+  136:     }
+  137: }
+
+FILE=/var/www/ctrlpanel/app/Http/Controllers/Admin/UserController.php
+  168: 
+  169:             $user = User::query()->findOrFail($request->input('user_id'));
+  170:             $user->avatarUrl = $user->getAvatar();
+  171: 
+  172:             return $user;
+  173:         }
+  174: 
+  175:         return $users->map(function ($item) {
+  176:             $item->avatarUrl = $item->getAvatar();
+  177: 
+  178:             return $item;
+  179:         });
+  180:     }
+  181: 
+  182:     /**
+  183:      * Show the form for editing the specified resource.
+  184:      *
+  185:      * @param  User  $user
+  186:      * @return Application|Factory|View|Response
+  187:      */
+  188:     public function edit(User $user, GeneralSettings $general_settings, RiskAssessmentService $risk)
+  189:     {
+  190:         $allConstants = (new \ReflectionClass(__CLASS__))->getConstants();
+  191:         $permissions = array_filter($allConstants, fn($key) => str_starts_with($key, 'admin.users.write'));
+  192:         $permissions[] = self::RISK_READ_PERMISSION;
+  193:         $this->checkAnyPermission($permissions);
+  194: 
+  195:         $roles = Role::all();
+  196:         $riskProfile = $this->canAny([self::RISK_READ_PERMISSION])
+  197:             ? $risk->assess($user)
+  198:             : null;
+  199:         return view('admin.users.edit')->with([
+  200:             'user' => $user,
+  201:             'credits_display_name' => $general_settings->credits_display_name,
+  202:             'roles' => $roles,
+  203:             'riskProfile' => $riskProfile,
+  204:         ]);
+  205:     }
+  206: 
+  207:     public function refreshRisk(Request $request, User $user, RiskAssessmentService $risk): RedirectResponse
+  208:     {
+  209:         $this->checkPermission(self::RISK_REFRESH_PERMISSION);
+  210:         $profile = $risk->assess($user);
+  211: 
+  212:         activity()
+  213:             ->causedBy($request->user())
+  214:             ->performedOn($user)
+  215:             ->withProperties([
+  216:                 'risk_score' => $profile['risk_score'],
+  217:                 'trust_score' => $profile['trust_score'],
+  218:                 'risk_level' => $profile['risk_level'],
+  219:             ])
+  220:             ->log('refreshed a user risk assessment');
+  221: 
+  222:         return back()->with('success', __('Risk and trust scores were refreshed. No automatic action was taken.'));
+  223:     }
+  224: 
+  225:     /**
+  226:      * Update the specified resource in storage.
+  227:      *
+  228:      * @param  Request  $request
+  229:      * @param  User  $user
+  230:      * @return RedirectResponse
+  231:      *
+  232:      * @throws Exception
+  233:      */
+  234:     public function update(Request $request, User $user)
+  235:     {
+  236:         $this->checkAnyPermission([
+  237:             self::WRITE_PERMISSION,
+  238:             self::CHANGE_EMAIL_PERMISSION,
+  239:             self::CHANGE_CREDITS_PERMISSION,
+  240:             self::CHANGE_USERNAME_PERMISSION,
+  241:             self::CHANGE_PASSWORD_PERMISSION,
+  242:             self::CHANGE_ROLE_PERMISSION,
+  243:             self::CHANGE_REFERRAL_PERMISSION,
+  244:             self::CHANGE_PTERO_PERMISSION,
+  245:             self::CHANGE_SERVERLIMIT_PERMISSION,
+  246:             self::CHANGE_FREE_HOSTING_BOOST_PERMISSION,
+  247:         ]);
+  248: 
+  249:         $boostFields = [
+  250:             'free_hosting_boost_enabled',
+  251:             'free_hosting_memory_mb',
+  252:             'free_hosting_cpu_percent',
+  253:             'free_hosting_disk_mb',
+  254:             'free_hosting_backups',
+  255:             'free_hosting_databases',
+  256:             'free_hosting_allocations',
+  257:             'free_hosting_billing_priority',
+  258:         ];
+  259:         $boostSubmitted = $request->hasAny($boostFields);
+  260:         $boostRequired = Rule::requiredIf($boostSubmitted);
+  261: 
+  262:         $data = $request->validate([
+  263:             'name' => 'required|string|min:4|max:30',
+  264:             'pterodactyl_id' => "required|numeric|unique:users,pterodactyl_id,{$user->id}",
+  265:             'email' => 'required|string|email',
+  266:             'credits' => 'required|numeric|min:0|max:99999999',
+  267:             'server_limit' => 'required|numeric|min:0|max:1000000',
+  268:             'referral_code' => "required|string|min:2|max:32|unique:users,referral_code,{$user->id}",
+  269:             'free_hosting_boost_enabled' => [$boostRequired, 'boolean'],
+  270:             'free_hosting_memory_mb' => [$boostRequired, 'integer', 'min:0', 'max:1000000'],
+  271:             'free_hosting_cpu_percent' => [$boostRequired, 'integer', 'min:0', 'max:1000000'],
+  272:             'free_hosting_disk_mb' => [$boostRequired, 'integer', 'min:0', 'max:1000000'],
+  273:             'free_hosting_backups' => [$boostRequired, 'integer', 'min:0', 'max:1000000'],
+  274:             'free_hosting_databases' => [$boostRequired, 'integer', 'min:0', 'max:1000000'],
+  275:             'free_hosting_allocations' => [$boostRequired, 'integer', 'min:0', 'max:1000000'],
+  276:             'free_hosting_billing_priority' => [
+  277:                 'nullable',
+  278:                 'integer',
+  279:                 Rule::in(array_map(static fn (BillingPriority $priority): int => $priority->value, BillingPriority::cases())),
+  280:             ],
+  281:         ]);
+  282: 
+  283:         //update roles
+  284:         if ($request->roles && $this->can(self::CHANGE_ROLE_PERMISSION)) {
+  285:             $collectedRoles = collect($request->roles)->map(fn($val)=>(int)$val);
+  286:             $user->syncRoles($collectedRoles);
+  287:         }
+
+=== 6. ADMIN USER EDIT VIEWS ===
+themes/default/views/admin/vouchers/users.blade.php
+themes/default/views/admin/users/show.blade.php
+themes/default/views/admin/users/notifications.blade.php
+themes/default/views/admin/users/edit.blade.php
+themes/default/views/admin/users/index.blade.php
+
+=== 7. SUSPICIOUS UNDEFINED VARIABLES IN USER EDIT ===
+themes/default/views/admin/users/notifications.blade.php:46:                                            @foreach($roles as $role)
+themes/default/views/admin/users/edit.blade.php:184:                                            @foreach($roles as $role)
+
+=== 8. PHP SYNTAX ===
+No syntax errors detected in app/Http/Controllers/Admin/UserController.php
+
+=== 9. VIEW CACHE TEST ===
+
+
+   INFO  Blade templates cached successfully.  
+
+VIEW_CACHE=PASS
+
+=== 10. HEALTH ===
+ssh=active
+php_fpm=active
+wake_api=active
+wake_gateway=active
 
 ============================================================
 FIX2_STATUS_COMPLETE
 result=SUCCESS
-package=FREE_SERVER_PRODUCT_STRING_VALIDATION_FIX_V10
-product_validation=STRING
-product_integer_validation=REMOVED
-product_lookup=STRING
-backup=/root/ServerController.php.product-validation-20260823-234337.bak
+package=ADMIN_USER_EDIT_500_ACB5A27A_PROBE_V1
+changes_made=NO
+reference=ERR-ACB5A27A
 ============================================================
