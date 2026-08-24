@@ -1,28 +1,247 @@
 ============================================================
 FIX2_GITHUB_REMOTE_LOG
-published_at=2026-08-24T20:05:06+00:00
+published_at=2026-08-24T20:07:39+00:00
 ============================================================
 
 ============================================================
- ADMIN USER EDIT VIEW CACHE FIX V4
+ ADMIN USER BLADE COMPILER EXACT PROBE V5
 ============================================================
-SCRIPT_VERSION=ADMIN_USER_EDIT_VIEW_CACHE_FIX_V4
-time=2026-08-24T20:05:04+00:00
+SCRIPT_VERSION=ADMIN_USER_BLADE_COMPILER_EXACT_PROBE_V5
+time=2026-08-24T20:07:38+00:00
+changes_made=NO
 
-[1/4] Blade Cache komplett löschen ...
+=== 1. CACHED VIEW FINDEN ===
+CACHED_VIEW=storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php
 
-   INFO  Compiled views cleared successfully.  
+=== 2. RAW BLADE IM AKTUELLEN CACHE ===
+181:                                               @checked((bool) old('free_hosting_boost_enabled', $freeBoost?->enabled ?? false))>
+192:                                                   class="form-control @error('free_hosting_memory_mb') is-invalid @enderror">
+193:                                            @error('free_hosting_memory_mb')<div class="invalid-feedback">{{ $message }}</div>@enderror
+200:                                                   class="form-control @error('free_hosting_cpu_percent') is-invalid @enderror">
+201:                                            @error('free_hosting_cpu_percent')<div class="invalid-feedback">{{ $message }}</div>@enderror
+208:                                                   class="form-control @error('free_hosting_disk_mb') is-invalid @enderror">
+209:                                            @error('free_hosting_disk_mb')<div class="invalid-feedback">{{ $message }}</div>@enderror
+216:                                                   class="form-control @error('free_hosting_backups') is-invalid @enderror">
+217:                                            @error('free_hosting_backups')<div class="invalid-feedback">{{ $message }}</div>@enderror
+224:                                                   class="form-control @error('free_hosting_databases') is-invalid @enderror">
+225:                                            @error('free_hosting_databases')<div class="invalid-feedback">{{ $message }}</div>@enderror
+232:                                                   class="form-control @error('free_hosting_allocations') is-invalid @enderror">
+233:                                            @error('free_hosting_allocations')<div class="invalid-feedback">{{ $message }}</div>@enderror
+239:                                                class="custom-select @error('free_hosting_billing_priority') is-invalid @enderror">
+241:                                            @foreach(App\Enums\BillingPriority::cases() as $priority)
+243:                                                    @selected((string) old('free_hosting_billing_priority', $freeBoost?->billing_priority?->value) === (string) $priority->value)>
+246:                                            @endforeach
+248:                                        @error('free_hosting_billing_priority')<div class="invalid-feedback">{{ $message }}</div>@enderror
+250:                                @endcanany
+255:                                                class="custom-select @error('role') is-invalid @enderror"
+257:                                            @foreach($roles as $role)
+259:                                                        @if(isset($user) && $user->roles->contains($role)) selected
+260:                                                        @endif value="{{$role->id}}">{{$role->name}}</option>
+261:                                            @endforeach
+268:                                               class="form-control @error('referral_code') is-invalid @enderror" required="required">
+269:                                        @error('referral_code')
+273:                                        @enderror
+275:                                @error('role')
+279:                                @enderror
+294:                                        autocomplete="new-password" class="form-control @error('new_password') is-invalid @enderror"
+297:                                    @error('new_password')
+301:                                    @enderror
+307:                                        class="form-control @error('new_password_confirmation') is-invalid @enderror"
+311:                                    @error('new_password_confirmation')
+315:                                    @enderror
+322:                    @if($riskProfile)
+323:                        @php
+CACHE_RAW_COUNT=37
 
-VIEW_CLEAR=OK
+=== 3. SOURCE-DIREKTIVEN ===
+1:@extends('layouts.main')
+3:@section('content')
+33:                                @csrf
+34:                                @method('PATCH')
+38:                                           class="form-control @error('name') is-invalid @enderror" required="required">
+39:                                    @error('name')
+43:                                    @enderror
+48:                                           class="form-control @error('email') is-invalid @enderror"
+50:                                    @error('email')
+54:                                    @enderror
+60:                                           class="form-control @error('pterodactyl_id') is-invalid @enderror"
+62:                                    @error('pterodactyl_id')
+66:                                    @enderror
+76:                                           type="number" class="form-control @error('credits') is-invalid @enderror"
+78:                                    @error('credits')
+82:                                    @enderror
+89:                                           class="form-control @error('server_limit') is-invalid @enderror"
+91:                                    @error('server_limit')
+95:                                    @enderror
+97:                                @canany(['admin.users.write', 'admin.users.write.free_hosting_boost'])
+98:                                    @php($freeBoost = $user->freeHostingBoost)
+108:                                               @checked((bool) old('free_hosting_boost_enabled', $freeBoost?->enabled ?? false))>
+119:                                                   class="form-control @error('free_hosting_memory_mb') is-invalid @enderror">
+120:                                            @error('free_hosting_memory_mb')<div class="invalid-feedback">{{ $message }}</div>@enderror
+127:                                                   class="form-control @error('free_hosting_cpu_percent') is-invalid @enderror">
+128:                                            @error('free_hosting_cpu_percent')<div class="invalid-feedback">{{ $message }}</div>@enderror
+135:                                                   class="form-control @error('free_hosting_disk_mb') is-invalid @enderror">
+136:                                            @error('free_hosting_disk_mb')<div class="invalid-feedback">{{ $message }}</div>@enderror
+143:                                                   class="form-control @error('free_hosting_backups') is-invalid @enderror">
+144:                                            @error('free_hosting_backups')<div class="invalid-feedback">{{ $message }}</div>@enderror
+151:                                                   class="form-control @error('free_hosting_databases') is-invalid @enderror">
+152:                                            @error('free_hosting_databases')<div class="invalid-feedback">{{ $message }}</div>@enderror
+159:                                                   class="form-control @error('free_hosting_allocations') is-invalid @enderror">
+160:                                            @error('free_hosting_allocations')<div class="invalid-feedback">{{ $message }}</div>@enderror
+166:                                                class="custom-select @error('free_hosting_billing_priority') is-invalid @enderror">
+168:                                            @foreach(App\Enums\BillingPriority::cases() as $priority)
+170:                                                    @selected((string) old('free_hosting_billing_priority', $freeBoost?->billing_priority?->value) === (string) $priority->value)>
+173:                                            @endforeach
+175:                                        @error('free_hosting_billing_priority')<div class="invalid-feedback">{{ $message }}</div>@enderror
+177:                                @endcanany
+182:                                                class="custom-select @error('role') is-invalid @enderror"
+184:                                            @foreach($roles as $role)
+186:                                                        @if(isset($user) && $user->roles->contains($role)) selected
+187:                                                        @endif value="{{$role->id}}">{{$role->name}}</option>
+188:                                            @endforeach
+195:                                               class="form-control @error('referral_code') is-invalid @enderror" required="required">
+196:                                        @error('referral_code')
+200:                                        @enderror
+202:                                @error('role')
+206:                                @enderror
+221:                                        autocomplete="new-password" class="form-control @error('new_password') is-invalid @enderror"
+224:                                    @error('new_password')
+228:                                    @enderror
+234:                                        class="form-control @error('new_password_confirmation') is-invalid @enderror"
+238:                                    @error('new_password_confirmation')
+242:                                    @enderror
+249:                    @if($riskProfile)
+250:                        @php
+257:                        @endphp
+271:                                    @forelse($riskProfile['signals'] as $signal)
+273:                                    @empty
+275:                                    @endforelse
+279:                                    @forelse($riskProfile['factors'] as $factor)
+281:                                    @empty
+283:                                    @endforelse
+285:                                @can('admin.risk.refresh')
+287:                                        @csrf
+290:                                @endcan
+293:                    @endif
+304:@endsection
 
-[2/4] Blade Cache neu aufbauen ...
+=== 4. LARAVEL BLADE COMPILER DIREKT AUFRUFEN ===
+COMPILER_CLASS=Illuminate\View\Compilers\BladeCompiler
+COMPILE_STRING=PASS
+COMPILED_LENGTH=25906
+DIRECT_RAW_COUNT=55
+RAW_LINE_181=@checked((bool) old('free_hosting_boost_enabled', $freeBoost?->enabled ?? false))>
+RAW_LINE_192=class="form-control @error('free_hosting_memory_mb') is-invalid @enderror">
+RAW_LINE_193=@error('free_hosting_memory_mb')<div class="invalid-feedback">{{ $message }}</div>@enderror
+RAW_LINE_200=class="form-control @error('free_hosting_cpu_percent') is-invalid @enderror">
+RAW_LINE_201=@error('free_hosting_cpu_percent')<div class="invalid-feedback">{{ $message }}</div>@enderror
+RAW_LINE_208=class="form-control @error('free_hosting_disk_mb') is-invalid @enderror">
+RAW_LINE_209=@error('free_hosting_disk_mb')<div class="invalid-feedback">{{ $message }}</div>@enderror
+RAW_LINE_216=class="form-control @error('free_hosting_backups') is-invalid @enderror">
+RAW_LINE_217=@error('free_hosting_backups')<div class="invalid-feedback">{{ $message }}</div>@enderror
+RAW_LINE_224=class="form-control @error('free_hosting_databases') is-invalid @enderror">
+RAW_LINE_225=@error('free_hosting_databases')<div class="invalid-feedback">{{ $message }}</div>@enderror
+RAW_LINE_232=class="form-control @error('free_hosting_allocations') is-invalid @enderror">
+RAW_LINE_233=@error('free_hosting_allocations')<div class="invalid-feedback">{{ $message }}</div>@enderror
+RAW_LINE_239=class="custom-select @error('free_hosting_billing_priority') is-invalid @enderror">
+RAW_LINE_241=@foreach(App\Enums\BillingPriority::cases() as $priority)
+RAW_LINE_243=@selected((string) old('free_hosting_billing_priority', $freeBoost?->billing_priority?->value) === (string) $priority->value)>
+RAW_LINE_246=@endforeach
+RAW_LINE_248=@error('free_hosting_billing_priority')<div class="invalid-feedback">{{ $message }}</div>@enderror
+RAW_LINE_250=@endcanany
+RAW_LINE_255=class="custom-select @error('role') is-invalid @enderror"
+RAW_LINE_257=@foreach($roles as $role)
+RAW_LINE_259=@if(isset($user) && $user->roles->contains($role)) selected
+RAW_LINE_260=@endif value="{{$role->id}}">{{$role->name}}</option>
+RAW_LINE_261=@endforeach
+RAW_LINE_268=class="form-control @error('referral_code') is-invalid @enderror" required="required">
+RAW_LINE_269=@error('referral_code')
+RAW_LINE_273=@enderror
+RAW_LINE_275=@error('role')
+RAW_LINE_279=@enderror
+RAW_LINE_294=autocomplete="new-password" class="form-control @error('new_password') is-invalid @enderror"
+RAW_LINE_297=@error('new_password')
+RAW_LINE_301=@enderror
+RAW_LINE_307=class="form-control @error('new_password_confirmation') is-invalid @enderror"
+RAW_LINE_311=@error('new_password_confirmation')
+RAW_LINE_315=@enderror
+RAW_LINE_322=@if($riskProfile)
+RAW_LINE_323=@php
 
+=== 5. DIRECT COMPILE PHP SYNTAX ===
+No syntax errors detected in /tmp/admin-users-edit-direct-compiled.php
 
-   INFO  Blade templates cached successfully.  
+=== 6. RISK BLOCK IM DIRECT COMPILE ===
+DIRECT_RISK_LINE=333
+   313	                                        {{$message}}
+   314	                                    </div>
+   315	                                    @enderror
+   316	                                </div>
+   317	                            </div>
+   318	                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+   319	                          </form>
+   320	                        </div>
+   321	                    </div>
+   322	                    @if($riskProfile)
+   323	                        @php
+   324	                            $riskBadge = match($riskProfile['risk_level']) {
+   325	                                'critical' => 'danger',
+   326	                                'high' => 'warning',
+   327	                                'elevated' => 'info',
+   328	                                default => 'success',
+   329	                            };
+   330	                        ?>
+   331	                        <div class="card card-outline card-<?php echo e($riskBadge); ?>">
+   332	                            <div class="card-header">
+   333	                                <h3 class="card-title"><i class="fas fa-shield-alt mr-2"></i><?php echo e(__('Risk and trust assessment')); ?></h3>
+   334	                                <span class="badge badge-<?php echo e($riskBadge); ?> float-right"><?php echo e(strtoupper($riskProfile['risk_level'])); ?></span>
+   335	                            </div>
+   336	                            <div class="card-body">
+   337	                                <div class="row text-center mb-3">
+   338	                                    <div class="col-6"><small class="d-block text-muted"><?php echo e(__('Risk score')); ?></small><strong class="h4"><?php echo e($riskProfile['risk_score']); ?>/100</strong></div>
+   339	                                    <div class="col-6"><small class="d-block text-muted"><?php echo e(__('Trust score')); ?></small><strong class="h4"><?php echo e($riskProfile['trust_score']); ?>/100</strong></div>
+   340	                                </div>
+   341	                                <p class="small text-muted"><?php echo e(__('The score combines several signals and never suspends or restricts an account automatically. Human review is always required.')); ?></p>
+   342	                                <h6><?php echo e(__('Risk signals')); ?></h6>
+   343	                                <ul class="pl-3 small">
+   344	                                    <?php $__empty_1 = true; $__currentLoopData = $riskProfile['signals']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $signal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+   345	                                        <li class="mb-1"><strong>+<?php echo e($signal['points']); ?></strong> <?php echo e($signal['message']); ?></li>
+   346	                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+   347	                                        <li class="text-muted"><?php echo e(__('No current risk signals.')); ?></li>
+   348	                                    <?php endif; ?>
+   349	                                </ul>
+   350	                                <h6><?php echo e(__('Trust factors')); ?></h6>
+   351	                                <ul class="pl-3 small">
+   352	                                    <?php $__empty_1 = true; $__currentLoopData = $riskProfile['factors']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $factor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+   353	                                        <li class="mb-1"><strong>+<?php echo e($factor['points']); ?></strong> <?php echo e($factor['message']); ?></li>
+   354	                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+   355	                                        <li class="text-muted"><?php echo e(__('No trust factors have been confirmed yet.')); ?></li>
+   356	                                    <?php endif; ?>
+   357	                                </ul>
+   358	                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin.risk.refresh')): ?>
+   359	                                    <form method="POST" action="<?php echo e(route('admin.users.risk.refresh', $user)); ?>">
+   360	                                        <?php echo csrf_field(); ?>
+   361	                                        <button class="btn btn-outline-<?php echo e($riskBadge); ?> btn-block" type="submit"><i class="fas fa-sync-alt mr-1"></i><?php echo e(__('Refresh assessment')); ?></button>
+   362	                                    </form>
+   363	                                <?php endif; ?>
+   364	                            </div>
+   365	                        </div>
+   366	                    <?php endif; ?>
+   367	                </div>
+   368	            </div>
 
-VIEW_CACHE_BUILD=OK
+=== 7. CACHE VS DIRECT HASH ===
+7e1fe822a0780554418ee7d5769ea915749f7eed786e8ecb8dc364bf716f8b29  storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php
+7cd50218194e4fc807c4eefca91c92ffbf2e0e3f28a244c3c227bcb76fb5015c  /tmp/admin-users-edit-direct-compiled.php
 
-[3/4] User-Edit View prüfen ...
-COMPILED_VIEW=storage/framework/views/c708d07e9d585fd286ef8786ee22b24e.php
-RAW_BLADE_DIRECTIVES=31
-RESULT=FAILED_RAW_BLADE
+=== 8. SERVICES ===
+php_fpm=active
+ssh=active
+
+============================================================
+FIX2_STATUS_COMPLETE
+result=SUCCESS
+package=ADMIN_USER_BLADE_COMPILER_EXACT_PROBE_V5
+changes_made=NO
+cache_raw_count=37
+============================================================
